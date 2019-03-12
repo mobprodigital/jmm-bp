@@ -14,12 +14,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
 		<title>Media Adserver<?php //echo $title_for_admin;?></title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<link href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<!-- Font Awesome Icons -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 		<!-- Theme style -->
 		 <link href="<?php echo base_url();?>assets/dist/css/AdminLTE.min.css"  rel="stylesheet" type="text/css">
 		<!-- iCheck -->
@@ -46,11 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!--<link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/dashboard-widget.css">
 		-->
 
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- jQuery 2.1.4 -->
-    <script src="<?php echo base_url();?>assets/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
-    
 		
 
 		<script>
@@ -83,18 +82,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					
 					
 						<ul class="nav navbar-nav">
-							<li class="dropdown notifications-menu ">
+
+							<li class="dropdown notifications-menu "  style="cursor: pointer;">
 							
 							<?php //print_r($this->session->userdata('notification_array'));
-							$my_array = $this->session->userdata('notification_array'); 
-							//print_r($my_array);
-							//print_r($this->session->userdata('countNotifications')); 
-							$count = count($this->session->userdata('notification_array')); ?>
+							if($this->session->userdata('notification_array'))
+							{
+								$my_array = $this->session->userdata('notification_array'); 
+								$count = count($this->session->userdata('notification_array'));
+							}
+							else
+							{
+								$my_array = array(); 
+								$count = '';
+							}
+							 ?>
 							<a  data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false" id="notify" >
-							
-								<i class="fa fa-bell"></i>
-									<span class="label label-warning" id="abc"><?php echo $count;?></span>
-								</a>
+									<i class="fa fa-bell"></i>
+									<span class="label label-warning"  id="abc"><?php echo $count;?></span>
+							</a>
 								
 								<ul class="dropdown-menu" >
 									<li class="header">You have <?php echo $count;?> notifications</li>
@@ -102,7 +108,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<!-- inner menu: contains the actual data -->
 
 									<ul class="menu" >
-									<?php $i=0;   
+									<?php $i=0;  
 									foreach($my_array as $CampData)
 									{ 
 										$camp_type = $CampData['type'];
@@ -114,15 +120,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<?php
 											if($camp_type == 'under_delivered')
 											{
-											echo '<b>Under-Delivery</b> -Detected:Today Line item <b>'.$CampData['campaignname'].'</b> in order '.$CampData['campaignname'].' may not meat its delivery goal. It has delivered <b>'.$CampData['per'].'%</b> of what was  expect by now and ends on <b>'.$CampData['expire_time'].'</b>'; 
+											echo '<b>Under-Delivery</b> -Detected:Today Campaign <b>'.$CampData['campaignname'].'</b> in order to advertiser <b>'.$CampData['clientName'].' </b> may not meat its delivery goal. It has delivered <b>'.$CampData['per'].'%</b> of what was  expect by now and ends on <b>'.$CampData['expire_time'].'</b>'; 
 											} 
 											elseif($camp_type == 'active')
 											{
-											echo '<b>Active</b> - Detected:Today Line item <b>'.$CampData['campaignname'].'</b> in order '.$CampData['campaignname'].' is activate within last 24 hours and ends on <b>'.$CampData['expire_time'].'</b>'; 
+											echo '<b>Active</b> - Detected:Today Campaign <b>'.$CampData['campaignname'].'</b> in order to advertiser <b>'.$CampData['clientName'].' </b> is activate within last 24 hours and ends on <b>'.$CampData['expire_time'].'</b>'; 
 											}
 											elseif($camp_type == 'expired')
 											{
-											echo '<b>Expired</b> - Detected:Today Line item <b>'.$CampData['campaignname'].'</b> in order '.$CampData['campaignname'].' was expired on <b>'.$CampData['expire_time'].'</b>'; 
+											echo '<b>Expired</b> - Detected:Today Campaign <b>'.$CampData['campaignname'].'</b> in order to advertiser <b>'.$CampData['clientName'].' </b> was expired on <b>'.$CampData['expire_time'].'</b>'; 
 											}
 											?>
 											</a>

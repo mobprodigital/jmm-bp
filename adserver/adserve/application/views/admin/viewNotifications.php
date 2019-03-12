@@ -36,24 +36,35 @@
 									<?php $i=1; foreach($my_array as $CampData){?>
 									<tr style="background-color:#ffffff;">
 										<td><?php echo $i;?></td>
-										<td><a href=""><?php echo $CampData['campaignname'];?></a></td>
+										<td><a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $CampData['clientId'];?>&campaignid=<?php echo $CampData['campaignId'];?>"><?php echo $CampData['campaignname'];?></a></td>
+		
 										<td>
 										<?php if($CampData['type'] == 'under_delivered')
 										{ ?>
-										<div  class="btn bg-maroon btn-xs">Under Delivered</div>
+										<div  class="btn bg-green btn-xs">Under Delivered</div>
 										<?php } elseif($CampData['type'] == 'active') { ?>
-										<div  style="width: 70%;" class="btn bg-green btn-xs">Activated</div>
+										<div  style="width: 97%;" class="btn bg-purple btn-xs">Activated</div>
 										<?php } elseif($CampData['type'] == 'expired') { ?>
-										<div  style="width: 70%;" class="btn bg-purple btn-xs">Expired</div>
+										<div  style="width: 97%;" class="btn bg-maroon btn-xs">Expired</div>
+										<?php }  elseif($CampData['type'] == 'upcoming') {  ?>
+										<div  style="width: 97%;" class="btn bg-orange btn-xs">Upcoming</div>
+										<?php } elseif($CampData['type'] == 'pause') { ?>
+										<div  style="width: 97%;" class="btn bg-blue btn-xs">Paused</div>
 										<?php } ?>
 										</td>
 
-										<td><div><?php echo $CampData['views'];?></div></td>
-										<td><div><?php if(!empty($CampData['impressions'])) { echo $CampData['impressions']; } else { echo "0";} ?>
-										</div></td>
+										<!-- <td><div><?php echo $CampData['views'];?></div></td> -->
+										<td>
+											<div><?php if(!empty($CampData['views']) && ($CampData['views'] != '-1')) { echo $CampData['views']; } elseif(!empty($CampData['views']) && ($CampData['views'] == '-1')) { echo "Unlimiited"; } else { echo "0";} ?>
+											</div>
+										</td>
+										<td>
+											<div><?php if(!empty($CampData['impressions'])) { echo $CampData['impressions']; } else { echo "0";} ?>
+											</div>
+										</td>
 										<td><div><?php echo $CampData['per'];?></div></td>
-										<td><?php echo date("d M Y",strtotime($CampData['activate_time']));?></td>
-										<td><?php echo date("d M Y",strtotime($CampData['expire_time']));?></td>
+										<td><?php echo $CampData['activate_time'];?></td>
+										<td><?php echo $CampData['expire_time'];?></td>
 
 										
 
