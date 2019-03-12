@@ -6,7 +6,7 @@ class User extends CI_Controller {
 
     /**
     * Check if the user is logged in, if he's not, 
-    * send him to the login page
+    * send him to the login page ff
     * @return void
     */	
 	function index(){
