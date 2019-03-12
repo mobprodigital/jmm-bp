@@ -45,15 +45,15 @@ class User extends CI_Controller {
 			$this->load->model('Notification_Model');
 			$data['get_under_dlvr_campaigns'] = array();
 			$data['get_active_campaigns'] = array();
-			$data['get_expired_campaigns'] = array();
+			
 
 			$data['get_under_dlvr_campaigns']= $this->Notification_Model->get_under_dlvr_campaigns();
 			$data['get_active_campaigns']= $this->Notification_Model->get_active_campaigns();
-			$data['get_expired_campaigns']= $this->Notification_Model->get_expired_campaigns();
+			
 			if(empty($data['get_under_dlvr_campaigns'])) { $data['get_under_dlvr_campaigns'] = array(); }
 			if(empty($data['get_active_campaigns'])) { $data['get_active_campaigns'] = array(); }
-			if(empty($data['get_expired_campaigns'])) { $data['get_expired_campaigns'] = array(); }
-			$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns'],$data['get_expired_campaigns']);
+			
+			$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns']);
 			
 			
 			//print_r($data['my_array']);
@@ -81,11 +81,13 @@ class User extends CI_Controller {
 			ini_set('session.gc_maxlifetime', 7200);
 			session_set_cookie_params(7200);
 
-			//echo '<pre>';print_r($data);die;
+			//echo '<pre>';print_r($data);
 			$this->session->set_userdata(array_merge($data,$data1));
+			
 			//print_r($this->session->userdata('countNotifications')); 
 			//die;
-			redirect('admin/dashboard');
+			//redirect('admin/dashboard');
+			redirect('users/dashboard/home');
 			
 			// incorrect username or password 
 		}else {

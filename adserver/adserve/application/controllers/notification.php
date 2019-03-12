@@ -29,10 +29,16 @@ class Notification extends CI_Controller{
 		$data['get_under_dlvr_campaigns']= $this->Notification_Model->get_under_dlvr_campaigns();
 		$data['get_active_campaigns']= $this->Notification_Model->get_active_campaigns();
 		$data['get_expired_campaigns']= $this->Notification_Model->get_expired_campaigns();
+		$data['get_upcoming_campaigns']= $this->Notification_Model->get_upcoming_campaigns();
+		$data['get_pause_campaigns']= $this->Notification_Model->get_pause_campaigns();
+
 		if(empty($data['get_under_dlvr_campaigns'])) { $data['get_under_dlvr_campaigns'] = array(); }
 		if(empty($data['get_active_campaigns'])) { $data['get_active_campaigns'] = array(); }
 		if(empty($data['get_expired_campaigns'])) { $data['get_expired_campaigns'] = array(); }
-		$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns'],$data['get_expired_campaigns']);
+		if(empty($data['get_upcoming_campaigns'])) { $data['get_upcoming_campaigns'] = array(); }
+		if(empty($data['get_pause_campaigns'])) { $data['get_pause_campaigns'] = array(); }
+
+		$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns'],$data['get_expired_campaigns'],$data['get_upcoming_campaigns'],$data['get_pause_campaigns']);
 		//print_r($data['my_array']);
 		//die;
 		 
