@@ -30,7 +30,7 @@ class Classes extends CI_Controller
     }
 	
 	 function json_get_classes() {
-		//comment
+		//comment test nf
 		$data=$this->Classes_Model->fetchclasses();
         echo json_encode($data);
  }
