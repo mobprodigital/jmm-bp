@@ -19,15 +19,17 @@ class Notification_Model extends CI_Model {
 		$this->db->from('campaigns');
 		$this->db->where('activate_time <=', $prevday);
 		//$this->db->where('activate_time <', $nextday);
-		$this->db->where('expire_time >=', $today);
+		$where = "(expire_time >= '$today' OR expire_time = '0000-00-00')";
+		$this->db->where($where);
 		$this->db->where('status ', 1);
 		$query = $this->db->get();
-		//echo $this->db->last_query(); echo '<br>'; die; 
-		$count = $query->num_rows();
+		//echo $this->db->last_query(); 
+		$count = $query->num_rows(); 
 		if($count > 0)
 		{
 			for($i=0;$i<$count;$i++)
-			{
+			{ 
+			
 				$arr= $query->result_array();
 				$campaignId = $arr[$i]['campaignid'];
 				$campaignname = $arr[$i]['campaignname'];
@@ -65,12 +67,21 @@ class Notification_Model extends CI_Model {
 												m.campaignid
 											");
 				$campaign_arr = $campaign_qry->result_array();
+				
 				//echo $this->db->last_query(); echo '<br>'; die; 
 				//echo $count1 = $campaign_qry->num_rows();
 				$response = array();
-		  		foreach($campaign_arr as $camp_data)
+		  	foreach($campaign_arr as $camp_data)
 				{
-					$per = ($camp_data['impressions']*100)/$views;
+					if($camp_data['impressions'] > 0 && $views > 0)
+					{
+						$per = ($camp_data['impressions']*100)/$views;
+					}
+					else
+					{
+						$per = '0';
+					}
+						
 					$response['clientName'] = $camp_data['clientname'];
 					$response['clientId'] = $camp_data['clientid'];
 					$response['clientEmail'] = $camp_data['email'];
@@ -84,8 +95,9 @@ class Notification_Model extends CI_Model {
 					$response['type'] = 'under_delivered';
 					$response['per'] = $per.'%';
 					$response['count'] = $count;
-				  	$new[] = $response;
+				  $new[] = $response;
 				}
+				
 			}
 			//print_r($new);
 			//die;
@@ -103,10 +115,13 @@ class Notification_Model extends CI_Model {
 		$this->db->select('campaignid,views,campaignname,expire_time,activate_time,status');
 		$this->db->from('campaigns');
 		$this->db->where('activate_time', $prevday);
-		$this->db->where('expire_time >=', $today);
+		//$this->db->where('expire_time >=', $today);
+		$where = "(expire_time >= '$today' OR expire_time = '0000-00-00')";
+		$this->db->where($where);
+
 		$this->db->where('status ', 1);
 		$query = $this->db->get();
-    	//echo $this->db->last_query(); 
+    		//echo $this->db->last_query();  die;
 		$count = $query->num_rows(); 
 		if($count > 0)
 		{
@@ -169,9 +184,18 @@ class Notification_Model extends CI_Model {
 				//echo $count1 = $campaign_qry->num_rows();
 				//echo $this->db->last_query(); echo '<br>';  die;
 				$response = array();
-		  		foreach($campaign_arr as $camp_data)
+		  	foreach($campaign_arr as $camp_data)
 				{
-					$per = ($camp_data['impressions']*100)/$views;
+					if($camp_data['impressions'] > 0 && $views > 0)
+					{
+						$per = ($camp_data['impressions']*100)/$views;
+					}
+					else
+					{
+						$per = '0';
+					}
+
+					//$per = ($camp_data['impressions']*100)/$views;
 					$response['clientName'] = $camp_data['clientname'];
 					$response['clientId'] = $camp_data['clientid'];
 					$response['clientEmail'] = $camp_data['email'];
@@ -268,9 +292,17 @@ class Notification_Model extends CI_Model {
 				$campaign_arr = $campaign_qry->result_array();
 				//echo $count1 = $campaign_qry->num_rows();
 				$response = array();
-		  		foreach($campaign_arr as $camp_data)
+		  	foreach($campaign_arr as $camp_data)
 				{
-					$per = ($camp_data['impressions']*100)/$views;
+					if($camp_data['impressions'] > 0 && $views > 0)
+					{
+						$per = ($camp_data['impressions']*100)/$views;
+					}
+					else
+					{
+						$per = '0';
+					}
+					//$per = ($camp_data['impressions']*100)/$views;
 					$response['clientName'] = $camp_data['clientname'];
 					$response['clientId'] = $camp_data['clientid'];
 					$response['clientEmail'] = $camp_data['email'];
@@ -302,7 +334,11 @@ class Notification_Model extends CI_Model {
 		$this->db->from('campaigns');
 		$this->db->where('activate_time >', $today);
 		//$this->db->where('activate_time <', $nextday);
-		$this->db->where('expire_time >', $today);
+		//$this->db->where('expire_time >', $today);
+
+		$where = "(expire_time > '$today' OR expire_time = '0000-00-00')";
+		$this->db->where($where);
+
 		$this->db->where('status ', 1);
 		$query = $this->db->get();
 		//echo $this->db->last_query(); echo '<br>'; die; 
@@ -351,9 +387,18 @@ class Notification_Model extends CI_Model {
 				//echo $this->db->last_query(); echo '<br>'; die; 
 				//echo $count1 = $campaign_qry->num_rows();
 				$response = array();
-		  		foreach($campaign_arr as $camp_data)
+		  	foreach($campaign_arr as $camp_data)
 				{
-					$per = ($camp_data['impressions']*100)/$views;
+					if($camp_data['impressions'] > 0 && $views > 0)
+					{
+						$per = ($camp_data['impressions']*100)/$views;
+					}
+					else
+					{
+						$per = '0';
+					}
+
+					//$per = ($camp_data['impressions']*100)/$views;
 					$response['clientName'] = $camp_data['clientname'];
 					$response['clientId'] = $camp_data['clientid'];
 					$response['clientEmail'] = $camp_data['email'];
@@ -384,7 +429,11 @@ class Notification_Model extends CI_Model {
 		$this->db->select('campaignid,views,campaignname,expire_time,activate_time,status');
 		$this->db->from('campaigns');
 		$this->db->where('activate_time <', $today);
-		$this->db->where('expire_time >=', $today);
+		//$this->db->where('expire_time >=', $today);
+
+		$where = "(expire_time >= '$today' OR expire_time = '0000-00-00')";
+		$this->db->where($where);
+
 		$this->db->where('status ', 0);
 		$query = $this->db->get();
 		//echo $this->db->last_query(); echo '<br>'; die; 
@@ -433,9 +482,17 @@ class Notification_Model extends CI_Model {
 				//echo $this->db->last_query(); echo '<br>'; die; 
 				//echo $count1 = $campaign_qry->num_rows();
 				$response = array();
-		  		foreach($campaign_arr as $camp_data)
+		  	foreach($campaign_arr as $camp_data)
 				{
-					$per = ($camp_data['impressions']*100)/$views;
+					if($camp_data['impressions'] > 0 && $views > 0)
+					{
+						$per = ($camp_data['impressions']*100)/$views;
+					}
+					else
+					{
+						$per = '0';
+					}
+					//$per = ($camp_data['impressions']*100)/$views;
 					$response['clientName'] = $camp_data['clientname'];
 					$response['clientId'] = $camp_data['clientid'];
 					$response['clientEmail'] = $camp_data['email'];
