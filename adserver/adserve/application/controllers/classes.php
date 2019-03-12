@@ -14,7 +14,7 @@ class Classes extends CI_Controller
         if(!$this->session->userdata('is_logged_in')){
             redirect('admin/login');
         }
-		//// hello
+		 
 		$this->load->database();
 		$this->load->helper('form','url');
 		$this->load->model('Classes_Model');
