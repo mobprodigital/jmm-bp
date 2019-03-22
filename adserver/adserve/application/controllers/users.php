@@ -6448,5 +6448,9 @@ class Users extends CI_Controller{
 			echo $result = $id;
 		}
 	}
+	public function hello()
+	{
+	echo "hii";
+	}
 }
 ?>
