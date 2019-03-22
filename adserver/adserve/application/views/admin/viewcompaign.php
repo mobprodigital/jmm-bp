@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
+
 <div class="content-wrapper">
 	<section class="content-header">
 	<label><input  name="campaigns"  id="campaigns" class="search form-control" style="width:295px;" placeholder="Search" value="<?php if(isset($searchInput)){echo $searchInput;}?>"></label>
@@ -14,18 +16,51 @@
 						<img src="<?php echo base_url()?>assets/upimages/icon-campaign-large.png"/><span>Campaings <?php if(!(empty($campaign))){echo 'of '.$campaign[0]->clientname;}?></span>
 						<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
-					<?php if(isset($advertiserlist)){?>
+					<!-- <?php if(isset($advertiserlist)){?>
+
 					<select  name="advertiserlist" id="advertiserlist"  class="right-corner-select"/>
-						<?php if(isset($nocampaign)){ ?>
-						<option value="<?php echo $nocampaign[0]->clientid;?>"><?php echo $nocampaign[0]->clientname;?></option>
-						<?php } ?>
 						<option value="">--select advertiser--</option>
 						<?php foreach($advertiserlist as $key => $value){?>
-						<option value="<?php echo $value->clientid;?>"><?php echo $value->clientname;?></option>
+						<option value="<?php echo $value->clientid;?>" <?php if(isset($_GET['clientid']) && $_GET['clientid']==$value->clientid){echo 'selected';} ?>><?php echo $value->clientname;?></option>
 						<?php } ?>
 					</select>
-					<?php } ?>
+
+					<?php } ?> -->
 					<div class="box-body">
+					<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+					<?php if(isset($new)) 
+					{ 	$sortBy = $new['sortBy']; $AdvId = $new['AdvId']; } 
+					?>
+					<form action="<?php echo base_url()?>users/viewcompaign" method="post" name="filter_form" id="filter_form" autocomplete="off">
+                        <div class="row ">
+							<div class="col-md-2 form-group">
+								<select class="view-banner-filter" name="campaign_sort_type" id="campaign_sort_type" style="margin-left: 625px;">
+									<option value="name"
+										<?php if(isset($sortBy) && $sortBy=='name'){echo 'selected';} ?>>Name
+									</option>
+									<option value="date"
+										<?php if(isset($sortBy) && $sortBy== 'date'){echo 'selected';} ?>>Date
+									</option>
+								</select>
+							</div>
+							<div class="col-md-2 form-group">
+								<?php if(isset($advertiserlist))
+								{ ?>
+									<select  name="advertiserlist" id="advertiserlist"  class="view-banner-filter" style="width:190px;margin-left: 612px;"/>
+										<option value="">- - - - - - FILTER - - - - - -</option>
+										<?php foreach($advertiserlist as $key => $value){?>
+										<option value="<?php echo $value->clientid;?>" <?php if(isset($AdvId) && $AdvId==$value->clientid){echo 'selected';} ?>><?php echo $value->clientname;?></option>
+										<?php } ?>
+									</select>
+								<?php } ?>
+							</div>
+							<div class="col-md-2 form-group">
+								<input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit" id="submit" style="margin-left: 637px;">
+							</div>
+                        </div>
+					</form>
+                <!---------------------------- Filter Section Ends ---------------------------------------------------------------->	
+
 						<div>
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
@@ -40,7 +75,12 @@
 								<?php if(!empty($campaign)){ ?>
 									<?php foreach($campaign as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
+										<td>
+											<img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;
+											<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>">
+												<?php echo $value->campaignname;?>
+											</a>
+										</td>
 										<td class="center-align">
 											<span class="camstatus" id="<?php echo $value->campaignid;?>" style="cursor: pointer;color:
 												<?php if($value->camp_stat==1){echo 'green';}else{echo '#eb7e23';}?>">

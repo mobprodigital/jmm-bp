@@ -114,7 +114,7 @@ class Notification_Model extends CI_Model {
 
 		$this->db->select('campaignid,views,campaignname,expire_time,activate_time,status');
 		$this->db->from('campaigns');
-		$this->db->where('activate_time', $prevday);
+		$this->db->where('activate_time', $today);
 		//$this->db->where('expire_time >=', $today);
 		$where = "(expire_time >= '$today' OR expire_time = '0000-00-00')";
 		$this->db->where($where);

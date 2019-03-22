@@ -8,7 +8,12 @@ hr {
 <div class="content-wrapper">
     <section class="content-header">
 		<img src="<?php echo base_url()?>assets/upimages/icon-campaign-add-large.png" class="header-image"/>
+		<?php if(isset($_GET['campaignid']) && isset($_GET['clientid']))
+		{ ?>
+		<h3 class="header"><span style="color:#333333;">Edit campaign</span></h3>
+		<?php } else { ?>
 		<h3 class="header"><span style="color:#333333;">Add new campaign</span></h3>
+		<?php } ?>
     </section>
 	<section class="content">
 		<div class="row" >
@@ -17,6 +22,7 @@ hr {
 				<?php if(isset($_GET['campaignid'])){ ?>
 				<?php $this->load->view('admin_includes/campaign_header');?>
 				<?php } ?>
+				<!-- <?php print_r($campaign); ?> -->
 						<form method="post"   name="addcampaign"	id="addcampaign">
 						<div class="box-body">
 							<div class="message localMessage" style="display:<?php if(isset($msg)){echo 'block';}else{echo 'none';}?>">
@@ -35,9 +41,8 @@ hr {
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="name" class="fieldlabel">Name<font color="red">*</font></label>
-									<input type="text" class="formfield" name="campaign" id ="campaign" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->campaignname;}?><?php if(isset($defaultCampaign)){echo $defaultCampaign;?> - Default Campaign<?php } ?>"/></br>
-									<label for="name" class="fieldlabel"></label
-									<span style="color:red;margin-left:40px;" id ="span_campaign"></span>
+									<input type="text" class="formfield" name="campaign" id ="campaign" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->campaignname;}?><?php if(isset($defaultCampaign)){echo $defaultCampaign;?> - Default Campaign<?php } ?>" required/></br>
+								  <span style="color:red" id="span_campaign"></span>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -69,27 +74,42 @@ hr {
 								<div class="form-group">
 									<label class="fieldlabel">Start Date</label>
 									<input style="margin-left:40px;" id="startSet_immediate" name="startSet" value="f" <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc !='yes'){echo 'checked="checked"';}}else{echo 'checked="checked"';} ?> type="radio">&nbsp;&nbsp;&nbsp;<span>Start immediately</span>
-
-									<br><input style="margin-left:196px;" id="startSet_specific" name="startSet" <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc =='yes'){echo 'checked="checked"';}} ?>value="t" type="radio"><span>&nbsp;&nbsp;&nbsp;Set specific date</span>
+									<br>
+									<input style="margin-left:196px;" id="startSet_specific" name="startSet" <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc =='yes'){echo 'checked="checked"';}} ?>value="t" type="radio"><span>&nbsp;&nbsp;&nbsp;Set specific date</span>
 									<span id="specificStartDateSpan" style="display: <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc=='yes'){echo 'block';}else{echo 'none';}}else{echo 'none';}?>">
+										
 										<div style="width: 22%;margin-left:223px;padding-bottom: 20px;" class='input-group date' id="activate_time1">
 											<input type='text' class="form-control" name="activate_time" id="activate_time" placeholder="dd-mm-yyyy" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->activate_time;}?>"/>
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
 										</div>
+
 									</span>
     							</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="name" class="fieldlabel">End Date</label>
-									<input style="margin-left:40px;" id="endSet_immediate" name="endSet" value="f" <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->expirationtion_calc !='yes'){echo 'checked="checked"';}}else{echo 'checked="checked"';} ?> type="radio"><span for="endSet_immediate">&nbsp;&nbsp;&nbsp;Don't expire</span>
+									<input style="margin-left:40px;" id="endSet_immediate" name="endSet" value="f" 
+									<?php if(isset($campaign[0]->campaignid))
+									{
+										if($campaign[0]->expirationtion_calc !='yes')
+										{
+											echo 'checked="checked"';
+										}
+									}
+									else
+									{
+										echo 'checked="checked"';
+									} 
+									?> type="radio"><span for="endSet_immediate">&nbsp;&nbsp;&nbsp;Don't expire</span>
 
 									<br><input style="margin-left:196px;" id="endSet_specific" name="endSet" value="t" <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->expirationtion_calc =='yes'){echo 'checked="checked"';}} ?> type="radio"><span>&nbsp;&nbsp;&nbsp;Set specific date</span>
 									<span id="specificEndDateSpan" style="display: <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->expirationtion_calc=='yes'){echo 'block';}else{echo 'none';}}else{echo 'none';}?>">
 										<div style="width: 22%;margin-left:223px;" class='input-group date' id="expire_time1">
-											<input type='text' class="form-control" name="expire_time" id="expire_time" placeholder="dd-mm-yyyy" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->expire_time;}?>"/>
+											<input type='text' class="form-control" name="expire_time" id="expire_time" placeholder="dd-mm-yyyy" value="<?php if(isset($campaign[0]->campaignid) && (!empty($campaign[0]->expire_time)) && (($campaign[0]->expire_time)!= '0000-00-00'))
+											{echo $campaign[0]->expire_time;} else{echo date('d-m-Y');}?>"/>
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -123,8 +143,9 @@ hr {
 							
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="name" class="fieldlabel">Rate / Price</label>
-									<input type="text" class="formfield"  name="revenue" id="revenue" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->revenue;}?>"/>
+									<label for="name" class="fieldlabel">Rate / Price<font style="color:red;">*</font></label>
+									<input type="text" class="formfield"  name="revenue" id="revenue" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->revenue;}?>" required/>
+									<span style="color:red" id="span_revenue"></span>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -239,12 +260,12 @@ hr {
 							<div class="col-md-6">
 								<h2 class="formfieldheading">Miscellaneous</h2></br>
 								<img class="border-img" width="100%" style="height:1px;" src="<?php echo base_url()?>/assets/upimages/break.gif">
-							    <div class="form-group">
+							    <div class="form-group" style="display:none;">
 									<label for="name" class="fieldlabel">Miscellaneous</label>
 									<input type="checkbox" 	 name="anonymous" id="anonymous" value="t" class="camp-chk" <?php if(isset($campaign[0]) && $campaign[0]->anonymous == 't'){echo 'checked';}?>/>&nbsp;&nbsp;Hide the advertiser and websites of this campaign.
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-6" style="display:none;">
 								<div class="form-group">
 									<label for="name" class="fieldlabel">Miscellaneous</label>
 									<input type="checkbox" 	 name="companion" id="companion" value="1" class="camp-chk" <?php if(isset($campaign[0]) && $campaign[0]->companion == 1){echo 'checked';}?>/>&nbsp;&nbsp;Companion positioning:

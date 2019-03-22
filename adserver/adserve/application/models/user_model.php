@@ -2223,7 +2223,8 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-		$this->db->order_by("bannerid",'desc');
+		//$this->db->order_by("bannerid",'desc');
+		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
 		$query 			= $this->db->get();
 		if($row){
 			$result			= $query->row();
@@ -2803,4 +2804,126 @@ class User_Model extends CI_Model {
     $this->db->delete('users', array('id' => $itemid));
 	
   }
+
+  /**********************Added By Riccha ********/
+//   function getActivebanner($banner_status){
+// 	$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+// 	$this->db->from('banners');
+// 	$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
+// 	if($banner_status == 1){
+// 		$this->db->where('banners.status =', $banner_status);
+// 	}
+// 	$this->db->order_by("bannerid",'desc');
+// 	$query 			= $this->db->get();
+// 	$result			= $query->result();
+	
+// 	//print_r($result);
+// 	//die;
+// 	return $result;
+// }
+
+public function getSortedBanner($banner_status,$sortBy)
+{
+	$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+	$this->db->from('banners');
+	$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
+	
+	if($sortBy == 'name' && $banner_status == 1)
+	{ 
+		$this->db->where('banners.status =', $banner_status);
+		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+	}
+	elseif($sortBy == 'name' && $banner_status == 0)
+	{ 
+		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+	}
+	elseif($sortBy == 'date' && $banner_status == 1)
+	{ 
+		$this->db->where('banners.status =', $banner_status);
+		$this->db->order_by("banners.updated",'desc'); 
+	}
+	elseif($sortBy == 'date' && $banner_status == 0)
+	{ 
+		$this->db->order_by("banners.updated",'desc'); 
+	}
+	
+
+	$query 			= $this->db->get();
+	//echo $this->db->last_query(); echo '<br>';
+	$result			= $query->result();
+	
+	//print_r($result);
+	//die;
+	return $result;
+}
+
+public function getSortedAdvertiser($sortBy)
+{
+	$this->db->select("*");
+	$this->db->from('clients');
+	if($sortBy == 'name')
+	{ $this->db->order_by("clientname",'asc'); }
+	elseif($sortBy == 'date')
+	{ $this->db->order_by("updated",'desc'); }
+	else
+	{ $this->db->order_by("clientid",'desc'); }
+	
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	return $result;
+}
+
+public function getSortedCampaign($AdvId,$campaignSortType)
+{
+	$this->db->select("*,campaigns.status as camp_stat");
+	$this->db->from('campaigns');
+	$this->db->join('clients', 'clients.clientid = campaigns.clientid');
+	
+	
+	if(!is_null($AdvId) && !empty($AdvId))
+	{
+		$this->db->where('clients.clientid', $AdvId);
+	}
+
+	if(!is_null($campaignSortType) && $campaignSortType == 'name')
+	{
+		$this->db->order_by("campaigns.campaignname",'asc');
+	}
+	elseif(!is_null($campaignSortType) && $campaignSortType == 'date')
+	{
+		$this->db->order_by("campaigns.activate_time",'desc');
+	}
+	else
+	{
+		$this->db->order_by("campaignid",'desc');
+	}
+	
+	$query 			= $this->db->get();
+	//echo $this->db->last_query();
+	$result			= $query->result();
+	return $result;
+
+}
+
+public function deleteBannerByIds($advertzId)
+{
+	//Delete Banner record
+	$updateData = array(
+		'status' => '0'
+	);
+	$this->db->where_in('bannerid', $advertzId);
+	$this->db->update('banner', $updateData);	
+	echo $this->db->last_query();
+	die;
+	$report = array();
+	$report['error'] = $this->db->_error_number();
+	$report['message'] = $this->db->_error_message();
+	
+	if($report !== 0){
+		return true;
+	}else{
+		return false;
+	}
+}
+/**************************** Ends ******************/
 }

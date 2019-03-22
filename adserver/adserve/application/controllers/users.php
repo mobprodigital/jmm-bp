@@ -1512,7 +1512,7 @@ class Users extends CI_Controller{
 		
 		//echo $zoneId.'<br>'.$publisherId.'<br>'.$campaignId;die;
 		 
-		//echo '<pre>';print_r($data);die;
+		//echo '<pre>';print_r($data);
 		$this->load->view('admin_includes/header', $data);
 		$this->load->view('admin_includes/left_sidebar', $data);
 		$this->load->view("statistics/webzone", $data);
@@ -4450,7 +4450,7 @@ class Users extends CI_Controller{
 		//echo '<pre>';print_r($data);die;
 		
 		if(isset($_POST['submit'])){
-			//echo '<pre>';print_r($_POST);die;
+			//echo '<pre>';print_r($_POST);
 			$input			= $this->input->post('acl');
 			$aclPlugins		= '';
 			$compiledLimitPrefix	= 'Max_check';
@@ -5278,8 +5278,24 @@ class Users extends CI_Controller{
 			
 		}
 		//echo '<pre>';print_r($clientIds);print_r($campaignIds);die;
-		
-		if(isset($_GET['campaignid'])){
+		/********************* Added By Riccha ***********************/
+		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) ){
+			$banner_status		= $this->input->post('banner_status'); echo '<br>';
+			$sortBy					= $this->input->post('sort_type');
+			if(empty($banner_status)) { $banner_status = 0;}
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['new']		= array("sortBy"=>$sortBy,"banner_status"=>$banner_status);
+			$data['banner']		= $this->User_Model->getSortedBanner($banner_status,$sortBy);
+			
+		}
+		// elseif(isset($_GET['sort_type'])){
+		// 	$sortBy					= $this->input->post('sort_type');
+		// 	if(empty($sortBy)) { $sortBy = 'name';}
+		// 	$data['banner']				= $this->User_Model->getSortedBanner($sortBy);
+		// 	//print_r($data['banner']);	
+		// }
+		/****************************** End **************************/
+		elseif(isset($_GET['campaignid'])){
 			$campaignid					= $this->input->get('campaignid');
 			$data['banner']				= $this->User_Model->getbanner($campaignid, null, null);
 			
@@ -5299,7 +5315,7 @@ class Users extends CI_Controller{
 			}
 		}
 		
-		//echo '<pre>';print_r($data['banner']);die;
+		//print_r($data['new']);
 		$this->load->view('admin_includes/header', $data);
 		$this->load->view('admin_includes/left_sidebar',		$data);
 		$this->load->view("admin/viewbanner",	$data);
@@ -5324,7 +5340,9 @@ class Users extends CI_Controller{
 
 			
 		if ($this->input->post('submit')) {
-			//echo '<pre>';print_r($_POST);die;
+			// print_r($_POST);
+			// echo '<br>';
+			// echo '<br>';
 			$campaign['campaignname']				= $this->input->post("campaign");
 			$campaign['campaign_type']				= $this->input->post("campaign_type");
 			
@@ -5450,7 +5468,8 @@ class Users extends CI_Controller{
 				
 				
 				
-				if(!is_null($data['campaign'][0]->expire_time)){
+				// if(!is_null($data['campaign'][0]->expire_time)){
+				if(!empty($data['campaign'][0]->expire_time) && $data['campaign'][0]->expire_time != '0000-00-00'){
 					$data['campaign'][0]->expirationtion_calc	= 'yes';
 					$active 							= $data['campaign'][0]->expire_time;
 					$utformat							= date('d-m-Y',strtotime($active));
@@ -5547,17 +5566,12 @@ class Users extends CI_Controller{
 	function changebannerstatus(){
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
-        }
-		$bannerId		= $this->input->post('bannerid');
-		$status			= $this->User_Model->getbannerstatus($bannerId);
-		if($status == 0){
-			$newStatus	= 1;
-		}else{
-			$newStatus	= 0;
-			
 		}
+		//print_r($_POST);
+		$bannerId	= $this->input->post('bannerid');
+		$newStatus	= $this->input->post('banner_stat');
 		$result			= $this->User_Model->changebannerstatus($bannerId, $newStatus);
-		echo json_encode(array('newstatus' => $newStatus));
+		if($result) { echo json_encode(array('status' => 'true')); } else { echo json_encode(array('status' => 'false'));}
 	}
 	
 	function changecampaignstatus(){
@@ -5596,13 +5610,22 @@ class Users extends CI_Controller{
 		$data['advertiserlist']			= $this->User_Model->getadvertiser($userId);
 		$clientId						= $this->User_Model->getclients($userId);
 		
-		
-		if(isset($_GET['clientid'])){
+		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
+			$campaignSortType		= $this->input->post('campaign_sort_type'); echo '<br>';
+			$AdvId					= $this->input->post('advertiserlist');
+			if(empty($AdvId)) { $AdvId = 0;}
+			
+			$data['new']		= array("sortBy"=>$campaignSortType,"AdvId"=>$AdvId);
+			$data['campaign']		= $this->User_Model->getSortedCampaign($AdvId,$campaignSortType);
+			
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
 			$clientType					= 'Single';
 			$data['campaign']			= $this->User_Model->getcampaigns($clientid, null, $clientType);
 			if(empty($data['campaign'])){
 				$data['nocampaign']		= $this->User_Model->getadvertiser(null, $clientid);
+				//print_r($data['nocampaign']);
 			}
 			
 		}elseif(isset($_GET['campaignid'])){
@@ -5987,7 +6010,13 @@ class Users extends CI_Controller{
 			
 		}
 		
-		if(isset($_GET['clientid'])){
+		if(isset($_GET['sortBy'])){
+			$sortBy					= $this->input->get('sortBy');
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['advertiser']				= $this->User_Model->getSortedAdvertiser($sortBy);
+			$data['new']		= array("sortBy"=>$sortBy);	
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $clientid);
 		}else{

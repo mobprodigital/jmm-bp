@@ -6,7 +6,11 @@ hr {
 <div class="content-wrapper">
     <section class="content-header">
 		<img src="<?php echo base_url()?>assets/upimages/icon-advertiser-add-large.png" class="header-image"/>
+		<?php if(isset($_GET['id'])){ ?>
+		<h3 class="header"><span style="color:#333333;">Edit advertiser</span></h3>
+		<?php } else { ?>
 		<h3 class="header"><span style="color:#333333;">Add new advertiser</span></h3>
+		<?php } ?>
     </section>
 	<section class="content">
 		<div class="row" >
@@ -15,6 +19,7 @@ hr {
 					<?php if(isset($advertiser[0]->clientname)){$this->load->view('admin_includes/advertiser_header');}?>
 					<form method="post" name="addadvertiser" id="addadvertiser" >
 						<div class="box-body">
+					
 						<div class="message localMessage" style="display:<?php if(isset($msg)){echo 'block';}else{echo 'none';}?>">
 							<div class="panelMessage confirm">
 								<div class="icon"></div>
@@ -31,23 +36,23 @@ hr {
 								<img width="100%" style="height:1px;" src="<?php echo base_url()?>/assets/upimages/break.gif">
 							<div class="col-md-7">
 								<div class="form-group">
-									<label class="fieldlabel">Name<font style="color:#900;">*</font></label>
-									<input class="formfield" type="text" name="name" id="name" value="<?php if(isset($advertiser[0]->clientname)){echo $advertiser[0]->clientname;}?>"/>
+									<label class="fieldlabel">Name<font style="color:red;">*</font></label>
+									<input class="formfield" type="text" name="name" id="name" value="<?php if(isset($advertiser[0]->clientname)){echo $advertiser[0]->clientname;}?>" required/>
 									<span style="color:red" id="span_name"></span>
 
 								</div>
 							</div>
 							<div class="col-md-7">
 								<div class="form-group">
-									<label class="fieldlabel">Contact<font style="color:#900;">*</font></label>
-									<input type="text" class="formfield"  id="contact" name="contact" value="<?php if(isset($advertiser[0]->contact)){echo $advertiser[0]->contact;}?>"/>
+									<label class="fieldlabel">Phone No<font style="color:red;">*</font></label>
+									<input type="text" class="formfield"  id="contact" name="contact" value="<?php if(isset($advertiser[0]->contact)){echo $advertiser[0]->contact;}?>" required/>
 									<span style="color:red" id="span_contact"></span>
 								</div>
 							</div>
 							<div class="col-md-7">
 								<div class="form-group">
-									<label class="fieldlabel">Email<font style="color:#900;">*</font></label>
-									<input type="text" class="formfield" id="email" name="email" value="<?php if(isset($advertiser[0]->email)){echo $advertiser[0]->email;}?>">
+									<label class="fieldlabel">Email<font style="color:red;">*</font></label>
+									<input type="text" class="formfield" id="email" name="email" value="<?php if(isset($advertiser[0]->email)){echo $advertiser[0]->email;}?>" required>
 									<span style="color:red" id="span_email"></span>
 								</div>
 							</div>
@@ -82,7 +87,7 @@ hr {
 								<img width="100%" style="height:1px;" src="<?php echo base_url()?>/assets/upimages/break.gif">
 							
 
-								<div class="form-group">
+								<div class="form-group" style="display:none;">
 									<input type="checkbox"  id="adlimitation" name="adlimitation" value="1" <?php if(isset($advertiser[0]->advertiser_limitation)){echo "checked";}?>>
 									<label> Display only one banner from this advertiser on a web page </label>
 									<span style="color:red"></span>

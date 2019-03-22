@@ -48,4 +48,64 @@ color:#11b516;
 color: #e4df43
 }
 
-
+/**************** Custom css added by akash******************************/
+.date{
+border: solid 2px #e4e4e4;
+    border-radius: 6px;
+    height: 30px;
+width:100%;}
+.p-lr-5
+{
+padding:0px 5px;
+}
+.btn-submit
+{
+background: transparent;
+    border: 0;}
+.btn-icon
+{
+width:150%;
+}
+.pagination-container{
+    text-align: center;
+}
+.pagination-container a,strong 
+{
+	background-color: #e3e3e3;
+    padding: 5px 8px;
+    border-radius: 4px;
+font-size:16px
+		
+	}
+	.page-limit{
+		border: solid 1px #e3e3e3;
+    height: 28px;
+    border-radius: 4px;
+    width: 65px;
+    font-size: 16px;
+}
+.view-banner-filter
+{
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.form-group
+{
+    position: relative;
+    padding: 0px 15px !important;
+}
+/**************** Ends **********************************/

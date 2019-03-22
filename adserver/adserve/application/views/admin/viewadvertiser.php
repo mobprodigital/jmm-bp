@@ -1,4 +1,6 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
 <div class="content-wrapper">
+
 	<section class="content-header">
 		<label><input  name="clients"  id="clients" class="search form-control" style="width:295px;" placeholder="Search" value="<?php if(isset($searchInput)){echo $searchInput;}?>"></label>
 		<input type="submit" class="btn btn-primary" name="submit" id="submit" value="search" >
@@ -14,12 +16,43 @@
 					<img src="<?php echo base_url()?>assets/upimages/icon-advertisers-large.png"/><span>Advertiser</span>
 					<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
+				
+
 					<div class="box-body">
+					<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+					<?php if(isset($new)) 
+					{ 	$sortBy = $new['sortBy']; } 
+					?>
+					<div class="row ">
+							<div class="col-md-2 form-group" style="margin-left: 914px;">
+									<select class="view-banner-filter" name="sort_type" id="sort_type">
+											<option value="">
+														- - - - Filter - - - -
+											</option>
+											<option value="name"
+													<?php if(isset($sortBy) && $sortBy=='name'){echo 'selected';} ?>>Name
+											</option>
+											<option value="date"
+													<?php if(isset($sortBy) && $sortBy== 'date'){echo 'selected';} ?>>Date
+											</option>
+									</select>
+							</div>
+					</div>
+
+
+
+                        
+          <!---------------------------- Filter Section Ends ---------------------------------------------------------------->
+
+
+
+
 						<div>
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
 									<tr class="header-row">
-										<th width="60%">Name</th>
+										<th width="30%">Name</th>
+										<th width="30%">Time</th>
 										<th width="40%" class="center-align">Action</th>
 									</tr>
 								</thead>
@@ -28,6 +61,7 @@
 									<?php foreach($advertiser as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-advertiser.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>users/advertisement?id=<?php echo $value->clientid;?>"><?php echo $value->clientname;?></a></td>
+										<td><?php echo $value->updated;?></td>
 										<td style="float:right;">
 											<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>">&nbsp;&nbsp;&nbsp;<img src="<?php echo base_url();?>assets/upimages/icon-campaign-add.png" style="padding-right: 5px;"/><div  class="btn bg-blue btn-xs">add new compaign</div></a>
 											<a href="<?php echo base_url();?>users/viewcompaign?clientid=<?php echo $value->clientid;?>">&nbsp;&nbsp;&nbsp;<img src="<?php echo base_url();?>assets/upimages/icon-campaigns.png" style="padding-right: 5px;"/><div  class="btn bg-purple btn-xs">compaign</div></a>
@@ -82,7 +116,9 @@
   </div>
 	
 </div>
+
 <?php $this->load->view('admin_includes/footer');?>
+
 
 
       

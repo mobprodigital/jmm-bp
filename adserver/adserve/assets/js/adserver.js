@@ -71,37 +71,39 @@ $("document").ready(function(){
 		});
 	})
 	
-	$(".bannerstatus").click(function(){
-		var banneridString		= $(this).attr("id");
-		var bannerid = banneridString.substring(7);
-		$.ajax({
-			type	:"POST",
-			url		:script+"users/changebannerstatus",
-			data	:"bannerid="+bannerid,
-			success :function(response){
-				//console.log(response);
+	// $(".bannerstatus").click(function(){
+	// 	var banneridString		= $(this).attr("id");
+	// 	var bannerid = banneridString.substring(7);
+	// 	$.ajax({
+	// 		type	:"POST",
+	// 		url		:script+"users/changebannerstatus",
+	// 		data	:"bannerid="+bannerid,
+	// 		success :function(response){
+	// 			//console.log(response);
 				
-				var parse=JSON.parse(response);
-				console.log(parse.newstatus);//return false;
-				if(parse.newstatus){
-					console.log('green');
-					$("#banner_"+bannerid).css("color","green");
-					$("#banner_"+bannerid).text("activate");
+	// 			var parse=JSON.parse(response);
+	// 			console.log(parse.newstatus);//return false;
+	// 			if(parse.newstatus){
+	// 				console.log('green');
+	// 				$("#banner_"+bannerid).css("color","green");
+	// 				$("#banner_"+bannerid).text("activate");
 					
-				}else{
-					console.log('yellow');
-					$("#banner_"+bannerid).css("color","#eb7e23");
-					$("#banner_"+bannerid).text("deactivate");
-				}
+	// 			}else{
+	// 				console.log('yellow');
+	// 				$("#banner_"+bannerid).css("color","#eb7e23");
+	// 				$("#banner_"+bannerid).text("deactivate");
+	// 			}
 				
-				$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
+	// 			$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
 				
-			}
-		});
-	})
+	// 		}
+	// 	});
+	// })
 	
 	$(".camstatus").click(function(){
-		var campaignid		= $(this).attr("id");
+	var campaignid		= $(this).attr("id");
+	var choice = confirm('Do you really want to do this?');
+	if(choice === true) {
 		$.ajax({
 			type	:"POST",
 			url		:script+"users/changecampaignstatus",
@@ -126,7 +128,11 @@ $("document").ready(function(){
 				
 			}
 		});
-	})
+	}
+	return false;
+		
+		
+	});
 
 	$("#savebanner").click(function(){
 		var vast		= $("#vastinput").val();
@@ -145,7 +151,7 @@ $("document").ready(function(){
 				//$('#myModal').modal('toggle');
 			}
 		});
-	})
+	});
 	
 	$("#changebanner").click(function(){
 		$("#vastinput").hide();
@@ -227,10 +233,34 @@ $("document").ready(function(){
 	
 	
 	$("#addcampaign").submit(function(){
+		//alert('in_function');
+		var	campaignName	= $("#campaign").val();
+		var	campaignRevenue	= $("#revenue").val();
 		var	avtivateTime	= $("#activate_time").val();
 		var	expireTime		= $("#expire_time").val();
-		
+		//alert(avtivateTime);
+		//alert(expireTime);
+
 		if(campaign == 'new'){
+			
+			// Validation For Campaign Name
+			var nameReg = /^[a-zA-Z 0-9]*$/;
+			if(!campaignName.match(nameReg))
+			{
+				$("#span_campaign").text("Please Enter Only Alphabets,Number And Space");
+				return false;
+			}
+			// Ends
+
+			// Validation For Campaign Price
+			var priceReg = /^[0-9.]*$/;
+			//alert(priceReg);
+			if(!campaignRevenue.match(priceReg))
+			{
+				$("#span_revenue").text("Please Enter Only Number");
+				return false;
+			}
+			// Ends
 		
 			if(avtivateTime != "" && expireTime !=""){
 				var array 			= avtivateTime.split('-');
@@ -261,7 +291,60 @@ $("document").ready(function(){
 				}
 			}
 		}
-	})
+		if(campaign == 'exist')
+		{
+			//alert('exist');
+			// Validation For Campaign Name
+			var nameReg = /^[a-zA-Z 0-9]*$/
+			if(!campaignName.match(nameReg))
+			{
+				$("#span_campaign").text("Please Enter Only Alphabets,Number And Space");
+				return false;
+			}
+			// Ends
+
+			// Validation For Campaign Price
+			var priceReg = /^[0-9.]*$/
+			//alert(priceReg);
+			//alert(campaignRevenue);
+			if(!campaignRevenue.match(priceReg))
+			{
+				$("#span_revenue").text("Please Enter Only Number");
+				return false;
+			}
+			// Ends
+		
+			// if(avtivateTime != "" && expireTime !="")
+			// {
+			// 	var array 			= avtivateTime.split('-');
+			// 	var date1			= array[1]+'/'+array[0]+'/'+array[2]; 
+				
+			// 	var array 			= expireTime.split('-');
+			// 	var date2			= array[1]+'/'+array[0]+'/'+array[2];
+				
+			// 	var today 			= new Date();
+			// 	var dd 				= today.getDate();
+			// 	var mm 				= today.getMonth()+1; //January is 0!
+			// 	var yyyy 			= today.getFullYear();
+			// 	today 				= mm+'/'+dd+'/'+yyyy;
+				
+			// 	var todayparseDate			= Date.parse(today);
+			// 	var inputstartparseDate		= Date.parse(date1);
+			// 	var inputendparseDate		= Date.parse(date2);
+
+			// 	if(inputstartparseDate < todayparseDate){
+			// 		alert("campaign starts date must be later  or same as  today date");
+			// 		return false;
+
+			// 	}
+			// 	if(inputstartparseDate > inputendparseDate){
+			// 		alert("campaign end date must be later  or same as  start date");
+			// 		return false;
+
+			// 	}
+			// }
+		}
+	});
 	
 	$(".search").keyup(function(){
 		$(".dropdown-content").html("");
@@ -330,10 +413,10 @@ $("document").ready(function(){
 		}
 	});
 	
-	$("#advertiserlist").change(function(){
-		var clientid	= $(this).val();
-		window.location.href='viewcompaign?clientid='+clientid;
-	});
+	// $("#advertiserlist").change(function(){
+	// 	var clientid	= $(this).val();
+	// 	window.location.href='viewcompaign?clientid='+clientid;
+	// });
 	
 	$(".campaign-radio").click(function(){
 		var  activeTypeRadio			= $(this).attr('id');
@@ -685,12 +768,14 @@ $("document").ready(function(){
 			return false;
 		}
 	});
-	
-	$("#addcampaign").submit(function(){
-		var campaign			= $("#campaign").val();
-		console.log(campaign);
-		if(campaign		== '') {$("#span_campaign").text("Compaing name required");return false;}
-	});
+ 
+
+
+	// $("#addcampaign").submit(function(){
+	// 	var campaign			= $("#campaign").val();
+	// 	console.log(campaign);
+	// 	if(campaign		== '') {$("#span_campaign").text("Compaing name required");return false;}
+	// });
 	
 	$(".removeusers").click(function(){
 		var id 			= $(this).attr("id");
@@ -800,11 +885,49 @@ $("document").ready(function(){
 	$("#addadvertiser").submit(function(){
 		var name			= $("#name").val();
 		var contact			= $("#contact").val();
+		//var contactlen      = contact.toString().length;
+		//alert(contactlen);
 		var email			= $("#email").val();
 		
-		if(name		== '') {$("#span_name").text("Please Enter name");return false;}
-		if(contact	== '') {$("#span_contact").text("Please Enter contact");return false;}
-		if(email	== '') {$("#span_email").text("Please Enter email");return false;}
+		// Validation For Name
+
+		//var nameReg = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+		var nameReg = /^[a-zA-Z 0-9]*$/;
+		if(!name.match(nameReg))
+		{
+			$("#span_name").text("Please Enter Only Alphabets,Number And Space");
+			return false;
+		}
+		// Ends
+
+		// Validation For Numbers Only
+		var numericReg = /^[0-9]*$/;
+		if(!contact.match(numericReg))
+		{
+			$("#span_contact").text("Please Enter Only Numbers");
+			return false;
+		}
+		if(contact.length > 15)
+		{
+			$("#span_contact").text("Please Enter Correct Numbers");
+			return false;
+		}
+		// Ends
+
+		//Validation For Email
+		var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
+		if(!email.match(emailReg))
+		{
+			$("#span_email").text("Please Enter Valid Email Address");
+			return false;
+		}
+		// Ends
+		
+
+		
+		//if(name		== '') {$("#span_name").text("Please Enter name dcf");return false;}
+		//if(contact	== '') {$("#span_contact").text("Please Enter contact dc");return false;}
+		//if(email	== '') {$("#span_email").text("Please Enter email zsd");return false;}
 	});
 	
 	$("#adduser").submit(function(){
@@ -826,4 +949,73 @@ $("document").ready(function(){
 	$("#main_0").change(function(){
 		$(".advertiser").prop('checked', $(this).prop("checked"));
 	});
+
+
+
+
+/*************************Added By Roiccha ******************************/
+// $("#revenue_type").change(function(){
+// 	//alert("hi");
+	
+// 	var banner	= $(this).val();
+	
+// 	//alert(banner);
+// 	if(banner != '') { window.location.href='viewbanner?status='+banner; }
+// 	else{ window.location.href='viewbanner';}
+	
+// });
+
+// Set Banner Status In Dropdown On View Banner Page
+$(".bannerstatus").change(function(){
+	//alert('in function');
+	var banneridString		= $(this).attr("id");
+	var bannerid = banneridString.substring(7);
+	//alert(bannerid);
+	var banner_stat	= $(this).val();
+	//alert(banner_stat);
+	var choice = confirm('Do you really want to do this?');
+	if(choice === true) {
+		$.ajax({
+			type	:"POST",
+			url		:script+"users/changebannerstatus",
+			data	:"bannerid="+bannerid+"&banner_stat="+banner_stat,
+			success :function(response){
+				console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.status;
+				//alert(status);
+				if(status == 'true')
+				{
+					alert('Campaign is successfully updated');
+					$(".bannerstatus_"+bannerid).val(banner_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+					//$(".bannerstatus_"+bannerid).val(banner_stat);
+				}
+				//alert(parse.newstatus);
+				//console.log(parse.newstatus);//return false;
+			}
+		});
+	}
+	return false;
+});
+
+//Sort Name And Date Wise On View Advertiser Page
+$("#sort_type").change(function(){
+	//alert("hiiiiii");
+	var sort	= $(this).val();
+	//alert(sort);
+	if(sort != '') { window.location.href='viewadvertiser?sortBy='+sort; }
+	else{ window.location.href='viewadvertiser'; }
+
+	
+});
+
+
+
+
+/******************************* Ends ************************************/
+
 });
