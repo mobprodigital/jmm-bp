@@ -1,0 +1,32 @@
+https://www.vimp.com/en/web/faq-commercialization/items/how-to-use-revive-for-video-ad-delivery.html
+http://localhost/reviveadserver/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0%3DHEREPUTEYOURZONENUMBER&nz=1&source=&r=R0.15132908197119832&block=1&format=vast&charset=UTF-8
+https://www.adserverplugins.com/advanced-video-ads-plugin-for-revive-adserver/
+http://theonion.github.io/videojs-vast-plugin/
+
+
+/** vast tags example **/
+https://support.jwplayer.com/customer/portal/articles/1482127-static-vast-xml-tag
+https://github.com/tbuchok/vast-xml
+http://www.iab.com/insights/vast-2-0-xml-samples-for-testing/
+http://demo.tremorvideo.com/proddev/vast/vast_inline_linear.xml
+https://support.jwplayer.com/customer/portal/articles/1482127-static-vast-xml-tag
+http://loopme.biz/wiki/index.php?title=VAST_ad_tags
+https://support.brightcove.com/en/video-cloud/docs/vast-20-ad-formats-and-format-codes
+https://support.brightcove.com/en/video-cloud/docs/building-blocks-vast-20-xml-code
+http://stackoverflow.com/questions/30024301/liverail-vast-vpaid-xml-for-html5-player-samples-for-testing
+https://www.npmjs.com/package/vast-xml
+http://www.iab.com/wp-content/uploads/2016/01/VAST_4-0_2016-01-21.pdf
+https://support.jwplayer.com/customer/portal/articles/1482127-static-vast-xml-tag
+http://support.ooyala.com/developers/ad-documentation/oadtech/ad_serving/dg/integration_vast_actionscript_parse.html
+http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7e72.html
+https://developers.facebook.com/docs/marketing-api/quickstart
+
+
+
+
+
+
+
+/** banner type */
+http://www.expandablebanners.com/pushdownbanners_dfp.php
+http://jpedroribeiro.com/2011/06/creating-expandable-banners-with-flash-and-javascript/
