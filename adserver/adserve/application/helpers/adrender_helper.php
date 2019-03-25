@@ -363,6 +363,7 @@
 	
 	function ClientOs(){
 		$res = array(
+			'w10'        => 'Windows 10',
 			'w7'        => 'Windows 7',
 			'xp'        => 'Windows XP',
 			'2k'        => 'Windows 2000',
