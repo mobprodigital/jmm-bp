@@ -1,6 +1,57 @@
-<style>
+<?php
+  
+if(isset($_GET['period_preset'])){
+    $period_preset = $_GET['period_preset'];
+  }else{
+    $period_preset = "";
+}
+if(isset($_GET['period_start'])){
+    $period_start = $_GET['period_start'];
+  }else{
+    $period_start = "";
+}
+if(isset($_GET['period_end'])){
+    $period_end = $_GET['period_end'];
+  }else{
+    $period_end = "";
+}
 
+if(isset($_GET['clientid'])){
+    $clientidd = $_GET['clientid'];
+  }else{
+    $clientidd = "";
+}
+
+if(isset($_GET['breakthrough'])){
+    $breakthroughh = $_GET['breakthrough'];
+  }else{
+    $breakthroughh = "";
+}
+ 
+ 
+if(isset($currency)){
+    $currency_value = $currency;
+  }else{
+    $currency_value = '1';
+}
+if($currency_value=='1'){
+   $currency_nm = "INR";
+   $currency_symb = "₹";	
+}elseif ($currency_value=='2') {
+	$currency_nm = "USD";
+	$currency_symb = "$";
+}elseif ($currency_value=='3'){
+	$currency_nm = "EUR";
+	$currency_symb = "€";
+}
+
+?>
+<style type="text/css">
+	.float-right{float: right;} 
+	.mt-15{margin-top: 15px;}
+	.w-100{width: 100%}
 </style>
+
 <div class="content-wrapper">
 	<section class="content" >
 		<div class="row">
@@ -109,7 +160,7 @@
 									<th width="12%">Impr.</th>
 									<th width="12%">Clicks</th>
 									<th width="12%">CTR</th>
-									<th width="12%">ECPM</th>
+									<th width="12%">ECPM (<?php echo $currency_nm; ?>)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -175,8 +226,18 @@
 									<td><?php echo $value->clicks;?></td>
 									<td><?php echo floor(($value->clicks/$value->impressions)*100);?>%</td>
 									
-									<td class="last"><?php echo (($value->impressions / 10000)*2);?></td>
-								</tr>                 
+									<td class="last">
+									<?php
+									    $ecpm = (($value->impressions / 10000)*2);
+
+                           // $currency_value = 200;
+                          if($currency_value=='2'){  $ecpm = $ecpm/68; }elseif ($currency_value=='1') { $ecpm = $ecpm;}elseif ($currency_value=='3') { $ecpm = $ecpm/78; }
+                                          
+									 echo "<b>".$currency_symb."</b>".$ecpm;
+									 ?>
+									 	
+
+									</td>								</tr>                 
 								<?php } ?>
 							</tbody>
 						</table>
@@ -364,6 +425,13 @@
 			var end_date				= document.getElementById('period_end').value;
 			window.location.href		= "adcampstats?bannerid=99&period=specific&start_date="+start_date+"&end_date="+end_date;
 		} */
+function select_currency(currency_value) {           
+             alert(currency_value);
+
+               document.getElementById('currency_val').value = currency_value;
+        
+
+     };
     </script>
 
 

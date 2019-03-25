@@ -9,6 +9,26 @@
     border-radius: 6px;
 	} */
 </style>
+<?php
+
+if(isset($currency)){
+    $currency_value = $currency;
+  }else{
+    $currency_value = '1';
+}
+if($currency_value=='1'){
+   $currency_nm = "INR";  
+   $currency_symb = "₹";
+
+}elseif ($currency_value=='2') {
+	$currency_nm = "USD";
+	$currency_symb = "$";	
+}elseif ($currency_value=='3'){
+	$currency_nm = "EUR";
+	$currency_symb = "€";
+}
+
+?>
 <div class="content-wrapper">
 	<section class="content" >
 		<div class="row">
@@ -155,8 +175,13 @@
 									<td><?php echo $value->clicks;?></td>
 									<td><?php echo floor(($value->clicks/$value->impressions)*100);?>%</td>
 									
-									<td class="last"><?php echo (($value->impressions / 10000)*2);?></td>
-								</tr>                 
+					<td class="last"><?php
+
+									 
+									  $ecpm = (($value->impressions / 10000)*2);
+									if($currency_value=='2'){  $ecpm = $ecpm/68; }elseif ($currency_value=='1') { $ecpm = $ecpm;}elseif ($currency_value=='3') { $ecpm = $ecpm/78; }
+                                     echo "<b>".$currency_symb."</b>".$ecpm; 
+									 ?></td>						</tr>                 
 								<?php } ?>
 							</tbody>
 						</table>
