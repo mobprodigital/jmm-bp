@@ -2,8 +2,100 @@
 if(isset($_GET['all_period'])){
     $period_value = $_GET['all_period'];
   }else{
-    $period_value = "";
+    $period_value = "today";
 }
+if($period_value == 'today'){
+        $period = 'Hour';
+        
+ }elseif($period_value == 'yesterday'){
+        $period  = 'Hour';
+ }elseif($period_value == 'this_month'){
+        $period  = 'Days';
+}elseif($period_value == 'specific'){
+        $period  = 'Days';
+}
+/*if(isset($_GET['currency'])){
+    $currency_value = $_GET['currency'];
+  }else{
+    $currency_value = "USD";
+}*/
+if(isset($currency)){
+    $currency_value = $currency;
+  }else{
+    $currency_value = '1';
+}
+if($currency_value=='1'){
+   $currency_nm = "INR";  
+   $currency_symb = "₹";
+}elseif ($currency_value=='2') {
+  $currency_nm = "USD";
+  $currency_symb = "$"; 
+}elseif ($currency_value=='3'){
+  $currency_nm = "EUR";
+  $currency_symb = "€";
+}
+  // for impressions 
+                //print_r($chart_data);
+                $new_arr = array();
+                $count = count($chart_data);
+
+              for($i=1; $i<=24; $i++){
+                    $impressions =0;  
+                for($j=0; $j<=$count-1; $j++){
+                  if($chart_data[$j]->hour == $i){
+                    $impressions = $chart_data[$j]->impressions;
+                    break;
+                  }else{
+                    $impressions = 0;
+                  } 
+                  
+                }
+                    $new_arr[$i] = $impressions; 
+                      
+               }
+                  
+                 $implode_new_array = implode(",", $new_arr);
+                 $array_val = array_values($new_arr);
+                  $bighest_impression_value = max($new_arr);
+                 if($bighest_impression_value>999){
+                    $chart_impression_unit = "k";
+                 }else if($bighest_impression_value>999999){
+                    $chart_impression_unit = "m";
+                 }else if($bighest_impression_value<999){
+                    $chart_impression_unit = "";
+                 }
+                
+        //  for clicks
+
+                $new_clicks = array();
+                $count = count($chart_data);
+
+              for($i=1; $i<=24; $i++){
+                    $clicks =0;  
+                for($j=0; $j<=$count-1; $j++){
+                  if($chart_data[$j]->hour == $i){
+                    $clicks = $chart_data[$j]->clicks;
+                    break;
+                  }else{
+                    $clicks = 0;
+                  } 
+                  
+                }
+                    $new_clicks[$i] = $clicks; 
+                      
+               }
+                 
+                $implode_new_click = implode(",", $new_clicks);
+                 $bighest_value = max($new_clicks);
+                 if($bighest_value>999){
+                    $chart_click_unit = "k";
+                 }else if($bighest_value>999999){
+                    $chart_click_unit = "m";
+                 }else if($bighest_value<999){
+                    $chart_click_unit = "";
+                 } 
+                $array_click_val = array_values($new_clicks);
+                //print_r($array_click_val); echo "hello";
  ?>
 
 <div class="content-wrapper" >
@@ -28,9 +120,43 @@ if(isset($_GET['all_period'])){
                   <!--   <option value="all_stats"<?php if($period_value == 'all_stats'): ?> selected="selected"<?php endif; ?>>All statistics</option> -->
                     <option value="specific"<?php if($period_value == 'specific'): ?> selected="selected"<?php endif; ?>>Specific dates</option>
                    </select>
+</div>
+              <div class="col-md-10">
+                 <div id="specific_date" <?php if(isset($period_value) && $period_value != 'specific'){ ?> style="display: none;"<?php }else{ ?> style="display: block;"<?php }?>>
+                   <form action="<?php echo base_url()?>users/home" name="period_form" id="period_form" autocomplete="off">
+                    <div class="row">
+                      
+                    
+                   <input type="hidden" tabindex="0" value="specific" id="specific" name="all_period" /> 
+                   <div class="col-md-3 p-lr-5">
+                    <input type="text"  id="period_start" name="period_start" class="date" value="<?php if(isset($_GET['period_start'])){ echo $_GET['period_start']; } ?>" required />
                   </div>
+<div class="col-md-3 p-lr-5">  
+                   <input type="text" id="period_end" name="period_end" class="date" value="<?php if(isset($_GET['period_start'])){ echo $_GET['period_end']; } ?>" required />
+                 </div>
+                   <div class="col-md-3 p-lr-5"> <button class="btn-submit"><img class="btn-icon" border="0" tabindex="6" src="<?php echo base_url();?>assets/upimages/ltr/go_blue.gif"></button></div>
+                   
+                   
+                
+                   <!-- <input type="hidden" tabindex="0" value="specific"   id="specific" name="all_period" class="date" /> -->
+                  <!--  <a onclick="return periodFormSubmit()" href="#"> -->
+                  <!-- </a> -->
+                  </div>
+                </form>
+                </div>
+              </div>
                  
               </div>
+ <!--   <div class="row mt-15">
+                  <div class="col-md-2 float-right">
+                   <select class="form-select" id="currency" onChange="select_currency('<?php echo $period_value?>',this.value);">
+                    <option value="USD"<?php if($currency_value == 'USD'): ?> selected="selected"<?php endif; ?>>USD</option>
+                    <option value="INR"<?php if($currency_value == 'INR'): ?> selected="selected"<?php endif; ?>>INR</option>
+                    <option value="EUR"<?php if($currency_value == 'EUR'): ?> selected="selected"<?php endif; ?>>EUR</option>
+                  </select>
+                  </div>
+                 
+              </div> -->
               <h3 class="box-title">
               <?php 
                  
@@ -78,8 +204,16 @@ if(isset($_GET['all_period'])){
                   <div class="col-md-3">
                    <div class="inner-box">
                     <h4 class="color-yello">Revenue</h4>
-                    <h2  class="color-blue"><?php  if(empty($home_chart[0]->revenue) || $home_chart[0]->revenue==0){ echo "NA"; }else{ echo "<i class='fa fa-rupee'></i>".$home_chart[0]->revenue; } ?></h2>
-                    <!-- <h5  class="color-green"> <i class="fa fa-rupee"></i>+0.088(400%)</h5> -->
+ <h2  class="color-blue">
+                      <?php
+
+                          $rev = $home_chart[0]->revenue;
+                          //$rev = 200;
+                          if($currency_value=='2'){  $rev = $rev/68; }elseif ($currency_value=='1') { $rev = $rev;}elseif ($currency_value=='3') { $rev = $rev/78; }
+                          
+                      if(empty($rev) || $rev=='0'){ echo "NA"; }else{ echo $currency_symb."".round($rev,2); } ?>
+                        
+                    </h2>
                   </div>
                   </div>
           </div>
@@ -91,22 +225,30 @@ if(isset($_GET['all_period'])){
      <div class="row">
        <div class="col-md-6">
          <div class=" home-box" style=" width:100%; height:100%;">
+<h6 class="chart-unit"><?php echo $chart_impression_unit; ?></h6>
                 <canvas id="Impression"></canvas>
+<h6 class="text-center chart-labal">( <?php echo $period; ?> ) </h6>
               </div>
        </div>
          <div class="col-md-6">
          <div class=" home-box" style=" width:100%; height:100%;">
+<h6 class="chart-unit"><?php echo $chart_click_unit; ?></h6>
                 <canvas id="clicks"></canvas>
+ <h6 class="text-center chart-labal">( <?php echo $period; ?> ) </h6>
               </div>
        </div>
          <div class="col-md-6">
          <div class=" home-box" style=" width:100%; height:100%;">
+<h6 class="chart-unit"><?php echo $chart_click_unit; ?></h6>
                 <canvas id="CTR"></canvas>
+ <h6 class="text-center chart-labal">( <?php echo $period; ?> ) </h6>
               </div>
        </div>
        <div class="col-md-6">
          <div class=" home-box" style=" width:100%; height:100%;">
+ <h6 class="chart-unit">k</h6>
                 <canvas id="Revenue"></canvas>
+<h6 class="text-center chart-labal">( <?php echo $period; ?> ) </h6>
               </div>
        </div>
      </div>
@@ -120,53 +262,7 @@ if(isset($_GET['all_period'])){
 			</section>
 		</div>
 
-<?php 
-        // for impressions 
-                $new_arr = array();
-                $count = count($chart_data);
 
-              for($i=1; $i<=24; $i++){
-                    $impressions =0;  
-                for($j=0; $j<=$count-1; $j++){
-                  if($chart_data[$j]->hour == $i){
-                    $impressions = $chart_data[$j]->impressions;
-                    break;
-                  }else{
-                    $impressions = 0;
-                  } 
-                  
-                }
-                    $new_arr[$i] = $impressions; 
-                      
-               }
-                 
-                 $implode_new_array = implode(",", $new_arr);
-                 $array_val = array_values($new_arr);
-                
-        //  for clicks
-
-                $new_clicks = array();
-                $count = count($chart_data);
-
-              for($i=1; $i<=24; $i++){
-                    $clicks =0;  
-                for($j=0; $j<=$count-1; $j++){
-                  if($chart_data[$j]->hour == $i){
-                    $clicks = $chart_data[$j]->clicks;
-                    break;
-                  }else{
-                    $clicks = 0;
-                  } 
-                  
-                }
-                    $new_clicks[$i] = $clicks; 
-                      
-               }
-                 
-                 $implode_new_click = implode(",", $new_clicks);
-                 $array_click_val = array_values($new_clicks);
-                
-               ?>
 
 
 
@@ -196,7 +292,11 @@ if(isset($_GET['all_period'])){
              //var labels_val=['','1-3 days','4-6 days','7-9 days','10-12 days','13-15 days','16-18 days','19-21 days','22-24 days','25-27 days','28-30 days'];
              var labels_val = ['','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30' ];
           }
-          
+ else if(periodVal==='specific')
+          {
+             //var labels_val=['','1-3 days','4-6 days','7-9 days','10-12 days','13-15 days','16-18 days','19-21 days','22-24 days','25-27 days','28-30 days'];
+             var labels_val = ['','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30' ];
+          }
 
           var Impression = document.getElementById('Impression').getContext('2d');
           var chart = new Chart(Impression, {
@@ -366,12 +466,37 @@ function all_period(period_value) {
 
 };
 
+function select_currency(period_value=null,currency_value) {
+         
+         window.location = '<?php echo base_url(); ?>users/home?all_period=' + period_value +'&currency=' +currency_value;
 
+
+};
+
+function periodFormSubmit() {
+            var form = document.getElementById('period_preset').form;
+            if (checkDates(form)) {
+              form.submit();
+            }
+            return false;
+        }
 </script>
 
 
 		<?php $this->load->view('admin_includes/footer');?>
+<script type="text/javascript">
+			$('#period_start').datepicker({
+      
+      format: 'yyyy-mm-dd',
+      autoclose:true
 
+    });
+    $('#period_end').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose:true
+
+    });
+</script>
 		
 
 

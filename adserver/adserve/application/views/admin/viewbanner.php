@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
-
+<?php
+if(isset($_GET['pglmt'])){
+$limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 <div class="content-wrapper">
    
     <section class="content-header">
@@ -55,17 +57,17 @@
                             <table id="example" class="table table-striped">
                                 <thead>
                                     <tr class="header-row" class="center-align">
-                                        <th><input type="checkbox" class="advertiser" id="main_0" value="adchk"></th>
-                                        <th>Name</th>
-                                        <th class="center-align">Option</th>
-                                        <th>Details</th>
+                                        <th width="2%"><input type="checkbox" class="advertiser" id="main_0" value="adchk"></th>
+                                        <th width="60%">Name</th>
+                                        <th width="10%" class="center-align">Option</th>
+                                        <th width="25%">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach($banner as $key => $value){ ?>
                                     <tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-                                        <td ><input type="checkbox" class="advertiser" id="<?php echo $value->bannerid;?>"></td>
-                                        <td ><img src="<?php echo base_url();?>/assets/upimages/
+                                        <td width="2%" ><input type="checkbox" class="advertiser" id="<?php echo $value->bannerid;?>"></td>
+                                        <td width="60%" ><img src="<?php echo base_url();?>/assets/upimages/
 										<?php 
 										if($value->contenttype=='html'){
 											echo 'icon-banner-html.png';
@@ -101,7 +103,8 @@
 										</td>
 										
 
-										<td >
+										<td width="25%">
+											<style> .panel table td{padding-left: 5px;}.panel table th{padding-left: 32px;}</style>
                                             
                                             <div class="panel" style="font-size: 11px; background-color:#dddddd;">
                                                 <table cellpadding=0 cellspacing=0>
@@ -134,6 +137,17 @@
                                     <?php } ?>
                                 </tbody>
                             </table>
+<div class="pagination-container">
+							<?php echo $this->pagination->create_links(); ?>
+							<select id="page_limit" onChange="pageLimits(this.value);" class="page-limit">
+							<option value="10"<?php if($limt_value == '10'): ?> selected="selected"<?php endif; ?>>10</option>
+							<option value="20"<?php if($limt_value == '20'): ?> selected="selected"<?php endif; ?>>20</option>
+							<option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option>
+							</select>
+							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
+								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
+							-->
+						    </div>
                             <!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
 								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
 							-->
@@ -145,3 +159,11 @@
     </section>
 </div>
 <?php $this->load->view('admin_includes/footer');?>
+<script type="text/javascript">
+	
+		function pageLimits(limit_value) {
+		 window.location = '<?php echo base_url(); ?>users/viewbanner?pglmt=' + limit_value;
+
+
+};
+</script>
