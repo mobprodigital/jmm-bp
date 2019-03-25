@@ -62,7 +62,7 @@ class User extends CI_Controller {
 			/* Ends */
 			
 			//get id of logged in user
-$currency	= $this->Users_model->getloggedinusercurrency($user_name);
+               $currency	= $this->Users_model->getloggedinusercurrency($user_name);
 				$uid		= $this->Users_model->getloggedinuser($user_name);
 			//get role of logged in user
 				$role		= $this->Users_model->getroleuser($user_name);
