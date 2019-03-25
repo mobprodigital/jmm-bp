@@ -2213,7 +2213,7 @@ class User_Model extends CI_Model {
 		return $result;
 		
 	}
-	function getbanner($campaignid=null, $bannerid=null, $row=null){
+	function getbanner($campaignid=null, $bannerid=null, $row=null , $limit=null , $offset=null){
 		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
 		$this->db->from('banners');
 		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
@@ -2223,7 +2223,13 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
+$this->db->where('banners.delete_status =', 'active');
 		//$this->db->order_by("bannerid",'desc');
+	//echo $offset; die;
+		if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+
+        }
 		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
 		$query 			= $this->db->get();
 		if($row){
@@ -2233,7 +2239,29 @@ class User_Model extends CI_Model {
 		}
 		return $result;
 	}
-	
+	// added by sunil
+	function getbannercount($campaignid=null, $bannerid=null, $row=null , $limit=null , $offset=null){
+
+		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+		$this->db->from('banners');
+		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
+		if(!is_null($bannerid)){
+			$this->db->where('banners.bannerid =', $bannerid);
+		}
+		if(!is_null($campaignid)){
+			$this->db->where('campaigns.campaignid =', $campaignid);
+		}
+		$this->db->order_by("bannerid",'desc');
+
+		$query 			= $this->db->get();
+		if($row){
+			$result			= $query->row();
+		}else{
+			$result			= $query->num_rows();
+		}
+		return $result;
+	}
+	////end
 	function getlinkedZone($zoneId){
 	
 		$this->db->select("*");
@@ -2386,6 +2414,34 @@ class User_Model extends CI_Model {
 		$this->db->from('campaigns');
 		$this->db->join('clients', 'clients.clientid = campaigns.clientid');
 		
+//added by sunil
+if(!is_null($clientid)){
+			if($clientType == 'ALL'){
+				
+				$this->db->where_in('clients.clientid', $clientid);
+			}else{
+				$this->db->where('clients.clientid', $clientid);
+			}
+		}
+		
+		if(!is_null($campaignId)){
+			
+		  	$this->db->where('campaigns.campaignid', $campaignId);
+		}
+		$this->db->order_by("campaignid",'desc');
+		if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+
+        }
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		return $result;
+	}
+
+	function getcampaignscount($clientid = null, $campaignId = null, $clientType=null,$limit=null, $offset=null){
+		$this->db->select("*,campaigns.status as camp_stat");
+		$this->db->from('campaigns');
+		$this->db->join('clients', 'clients.clientid = campaigns.clientid');
 		
 		
 		
@@ -2404,7 +2460,7 @@ class User_Model extends CI_Model {
 		}
 		$this->db->order_by("campaignid",'desc');
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		$result			= $query->num_rows();
 		return $result;
 	}
 	
@@ -2634,13 +2690,18 @@ class User_Model extends CI_Model {
 		
 	}
   
-	function getadvertiser($userId=null, $id = null){
+	function getadvertiser($userId=null, $id=null, $limit = null, $offset = null){
 		$this->db->select("*");
 		$this->db->from('clients');
 		if(!is_null($userId)){
 		  	$this->db->where('clients.agencyid', $userId);
 		}
-		if(!is_null($id)){
+if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+
+
+        }
+		if(!is_null($id) && $id!=""){
 		  	$this->db->where('clients.clientid', $id);
 			//$this->db->where('users.status',	'1');
 
@@ -2650,6 +2711,27 @@ class User_Model extends CI_Model {
 		$result			= $query->result();
 		return $result;
 	}
+	////added by sunil
+	function getadvertisernumrows($userId=null,$id=null){
+		$this->db->select("*");
+		$this->db->from('clients');
+		if(!is_null($userId)){
+		  	$this->db->where('clients.agencyid', $userId);
+		  	
+		}
+		if(!is_null($id) && $id!=""){
+		  	$this->db->where('clients.clientid', $id);
+			//$this->db->where('users.status',	'1');
+
+		}
+		$this->db->order_by("clientid",'desc');
+		$query 			= $this->db->get();
+		$result			= $query->num_rows();
+		//print_r($result); die;
+		return $result;
+	}
+	//// end
+	
 	
 	function deletereportuserclients($userId, $clientId){
 		$this->db->select("*");
@@ -2804,7 +2886,13 @@ class User_Model extends CI_Model {
     $this->db->delete('users', array('id' => $itemid));
 	
   }
-
+function getcurrency(){
+	        $this->db->select("id, currency_name, currency_symbol");
+			$this->db->from('currency');
+			$query 					= $this->db->get();
+			$result					= $query->result_array();
+	        return $result;        
+	}
   /**********************Added By Riccha ********/
 //   function getActivebanner($banner_status){
 // 	$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");

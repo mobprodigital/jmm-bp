@@ -1413,6 +1413,7 @@ class Users extends CI_Controller{
 		$data['activeaction']	= 'webzonestats';
 		$zoneId 		= null;
 		$publisherId	= null;
+                $data['currency']   = $this->session->userdata['currency'];
 		
 		if(isset($_GET['affiliateid'])){
 			$publisherId					= $this->input->get('affiliateid');
@@ -1568,13 +1569,26 @@ class Users extends CI_Controller{
         if(empty($all_period)){
         	$all_period = "today";
         }
+         $data['currency']               = $this->session->userdata['currency'];
         // include and call library functions
         require_once APPPATH.'libraries/statistics/dateTimeFilter.php';
+         if($all_period!='specific'){ 
 		$data['date'] 		= _getSpanDates($all_period);
 		/*print_r($data);*/ 
          $date1 = $data['date']['start'];
          $date2 = $data['date']['end'];  
-
+        }else{
+         //$date1 = $data['date']['start'];  
+         //$date2 = $data['date']['end'];
+          $data = $this->input->get(); 
+          if(isset($data['period_start'])){ $s = $data['period_start']; }else{ $s = date('Y-m-d'); }
+          if(isset($data['period_start'])){ $e = $data['period_end']; }else{ $e = date('Y-m-d'); } 
+          $data['date']['start'] = $s;
+          $data['date']['end']   = $e;
+         // print_r($data); 
+          $date1 = $data['date']['start'];  
+          $date2 = $data['date']['end'];
+        }
          $from  = date_create($date1);
          $to    = date_create($date2);
 		 $diff  = date_diff($to,$from);
@@ -3914,6 +3928,7 @@ class Users extends CI_Controller{
 		$data['cat']			= 'statistics';
 		$data['activeaction']	= 'adcampstats';
 		$data['affiliateQueryString']   = '';
+                $data['currency']   = $this->session->userdata['currency'];
 		
 		if(isset($_GET['clientid'])){
 			$clientId							= $this->input->get('clientid');
@@ -5259,10 +5274,24 @@ class Users extends CI_Controller{
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
         }
+          if(isset($_GET['pglmt'])){
+          $sort_lit = $_GET['pglmt'];
+        }else{
+        	  $tt = $this->uri->segment(3);
+        	if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+        	//echo $sort_lit; die;
+        }
+        //echo $seg = $this->uri->segment(3); die;
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewbanner';
 		
 		$role							= $this->session->userdata('role');
+                $this->load->library('pagination');
+         $config = ['base_url'=>base_url('users/viewbanner'),
+         'per_page'=>$sort_lit,
+         'total_rows'=>$this->User_Model->getbannercount(),];
+         $this->pagination->initialize($config);
+         //print_r($config); die;
 		if($role == 'admin'){
 			$userId		= null;
 			
@@ -5310,7 +5339,8 @@ class Users extends CI_Controller{
 					
 				}
 			}else{
-				$data['banner']				= $this->User_Model->getbanner();	
+					
+                                 $data['banner']				= $this->User_Model->getbanner(null,null,null, $config['per_page'], $this->uri->segment(3));
 
 			}
 		}
@@ -5337,8 +5367,9 @@ class Users extends CI_Controller{
 		$data['contract']				= CAMPAIGN_CONTRACT;
 		$data['override']				= CAMPAIGN_OVERRIDE;
 		$campaign['clientid']			= $this->input	->get('clientid');
-
-			
+//$currency					    = $this->User_Model->getcurrency();
+        //$data['currency']             = $currency;
+        $data['currency']               = $this->session->userdata['currency'];
 		if ($this->input->post('submit')) {
 			// print_r($_POST);
 			// echo '<br>';
@@ -5365,6 +5396,7 @@ class Users extends CI_Controller{
 				$campaign['status'] 					= 1;               
 
 			}
+$campaign['currency'] 		        	= $this->input->post("currency_type");
 			
 			if($this->input->post("endSet")=='t'){
 				$expiraitonTime							= $this->input->post("expire_time");
@@ -5610,6 +5642,23 @@ class Users extends CI_Controller{
 		$data['advertiserlist']			= $this->User_Model->getadvertiser($userId);
 		$clientId						= $this->User_Model->getclients($userId);
 		
+		/////added by sunil 
+		
+	if(isset($_GET['pglmt'])){
+          $sort_lit = $_GET['pglmt'];
+        }else{
+        	$tt = $this->uri->segment(3);
+        	if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+        }
+		 $this->load->library('pagination');
+         $config = ['base_url'=>base_url('users/viewcompaign'),
+         'per_page'=>$sort_lit,
+         'total_rows'=>$this->User_Model->getcampaignscount($clientId, null, 'ALL'),];
+         $this->pagination->initialize($config);
+        // print_r($config); die;
+	
+	// end
+		
 		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
 			$campaignSortType		= $this->input->post('campaign_sort_type'); echo '<br>';
 			$AdvId					= $this->input->post('advertiserlist');
@@ -5619,6 +5668,7 @@ class Users extends CI_Controller{
 			$data['campaign']		= $this->User_Model->getSortedCampaign($AdvId,$campaignSortType);
 			
 		}
+		
 		elseif(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
 			$clientType					= 'Single';
@@ -5988,6 +6038,11 @@ class Users extends CI_Controller{
 		if(strpos($advertzId, 'main_0') === 0){
 			$advertzId		= substr($advertzId, 7);
 		}
+$advertzIdd = explode(",",$advertzId);
+		 foreach ($advertzIdd as $bann_value) {
+		 	 
+		 	 $this->db->query("update `banners` set delete_status = 'delete' where bannerid in ('$bann_value')");
+		 }
 		$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
 		
 	}
@@ -5998,7 +6053,12 @@ class Users extends CI_Controller{
 			
             redirect('admin');
         }
-
+if(isset($_GET['pglmt'])){
+          $sort_lit = $_GET['pglmt'];
+        }else{
+        	$tt = $this->uri->segment(3);
+        	if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+        }
 		$data['cat']						= 'inventory';
 		$data['activeaction']				= 'viewadvertiser';
 		$data['users']						= $this->User_Model->fetchreportusers();
@@ -6009,7 +6069,16 @@ class Users extends CI_Controller{
 			$userId	= $this->session->userdata('uid');;
 			
 		}
+		/////added by sunil
 		
+		$this->load->library('pagination');
+         $config = ['base_url'=>base_url('users/viewadvertiser'),
+         'per_page'=>$sort_lit,
+         'total_rows'=>$this->User_Model->getadvertisernumrows($userId,$id=""),];
+         $this->pagination->initialize($config);
+          //print_r($config); die;
+	  
+	  // end
 		if(isset($_GET['sortBy'])){
 			$sortBy					= $this->input->get('sortBy');
 			if(empty($sortBy)) { $sortBy = 'name';}
