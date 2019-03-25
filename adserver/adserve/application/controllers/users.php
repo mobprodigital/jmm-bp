@@ -5619,8 +5619,8 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			
 		}
 		$result			= $this->User_Model->changecampaignstatus($campaignId, $newStatus);
-		echo json_encode(array('newstatus' => $newStatus));
-		
+		//echo json_encode(array('newstatus' => $newStatus));
+		if($result) { echo json_encode(array('status' => 'true')); } else { echo json_encode(array('status' => 'false'));}
 
 		
 	}
@@ -6517,9 +6517,6 @@ if(isset($_GET['pglmt'])){
 			echo $result = $id;
 		}
 	}
-	public function hello()
-	{
-	echo "hii";
-	}
+	
 }
 ?>

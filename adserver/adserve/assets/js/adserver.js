@@ -100,39 +100,39 @@ $("document").ready(function(){
 	// 	});
 	// })
 	
-	$(".camstatus").click(function(){
-	var campaignid		= $(this).attr("id");
-	var choice = confirm('Do you really want to do this?');
-	if(choice === true) {
-		$.ajax({
-			type	:"POST",
-			url		:script+"users/changecampaignstatus",
-			data	:"campaignid="+campaignid,
-			success:function(response){
-				//console.log(response);
+	// $(".camstatus").click(function(){
+	// var campaignid		= $(this).attr("id");
+	// var choice = confirm('Do you really want to do this?');
+	// if(choice === true) {
+	// 	$.ajax({
+	// 		type	:"POST",
+	// 		url		:script+"users/changecampaignstatus",
+	// 		data	:"campaignid="+campaignid,
+	// 		success:function(response){
+	// 			//console.log(response);
 				
-				var parse=JSON.parse(response);
-				console.log(parse.newstatus);
-				if(parse.newstatus){
-					console.log('green');
-					$("#"+campaignid).css("color","green");
-					$("#"+campaignid).text("active");
+	// 			var parse=JSON.parse(response);
+	// 			console.log(parse.newstatus);
+	// 			if(parse.newstatus){
+	// 				console.log('green');
+	// 				$("#"+campaignid).css("color","green");
+	// 				$("#"+campaignid).text("active");
 					
-				}else{
-					console.log('yellow');
-					$("#"+campaignid).css("color","#eb7e23");
-					$("#"+campaignid).text("inactive");
-				}
+	// 			}else{
+	// 				console.log('yellow');
+	// 				$("#"+campaignid).css("color","#eb7e23");
+	// 				$("#"+campaignid).text("inactive");
+	// 			}
 				
-				$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
+	// 			$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
 				
-			}
-		});
-	}
-	return false;
+	// 		}
+	// 	});
+	// }
+	// return false;
 		
 		
-	});
+	// });
 
 	$("#savebanner").click(function(){
 		var vast		= $("#vastinput").val();
@@ -1060,7 +1060,11 @@ $(".bannerstatus").change(function(){
 	//alert(bannerid);
 	var banner_stat	= $(this).val();
 	//alert(banner_stat);
-	var choice = confirm('Do you really want to do this?');
+	if(banner_stat == 1){
+		var choice = confirm('Do you really want to activate this banner?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this banner?');
+	}
 	if(choice === true) {
 		$.ajax({
 			type	:"POST",
@@ -1074,7 +1078,7 @@ $(".bannerstatus").change(function(){
 				//alert(status);
 				if(status == 'true')
 				{
-					alert('Campaign is successfully updated');
+					alert('Banner is successfully updated');
 					$(".bannerstatus_"+bannerid).val(banner_stat);
 				}else
 				{
@@ -1100,6 +1104,45 @@ $("#sort_type").change(function(){
 	
 });
 
+// Change campaign status on dropdown change
+$(".camstatus").change(function(){
+	//alert('hii');
+	var campidString		= $(this).attr("id");
+	var campaignid = campidString.substring(9);
+	//alert(campaignid);
+	var camp_stat	= $(this).val();
+	//alert(camp_stat);
+	if(camp_stat == 1){
+		var choice = confirm('Do you really want to activate this campaign?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this campaign?');
+	}
+	if(choice === true) {
+		$.ajax({
+			type	:"POST",
+			url		:script+"users/changecampaignstatus",
+			data	:"campaignid="+campaignid,
+			success:function(response){
+				console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.status;
+				//alert(status);
+				if(status == 'true')
+				{
+					alert('Campaign is successfully updated');
+					$(".camstatus"+campaignid).val(camp_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+				}
+				}
+		});
+	}
+	return false;
+		
+		
+	});
 
 
 

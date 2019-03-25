@@ -83,12 +83,18 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 												<?php echo $value->campaignname;?>
 											</a>
 										</td>
+							
 										<td class="center-align">
-											<span class="camstatus" id="<?php echo $value->campaignid;?>" style="cursor: pointer;color:
-												<?php if($value->camp_stat==1){echo 'green';}else{echo '#eb7e23';}?>">
-												<?php if($value->camp_stat==1){echo 'active';}else{echo 'inactive';}?>
-											</span>
+											<select name="camstatus" id="campaign_<?php echo $value->campaignid;?>" class="camstatus view-banner-filter">
+												<option value="1"
+													<?php if(isset($value->camp_stat) && '1'==$value->camp_stat){echo 'selected';} ?>>
+													Activate</option>
+												<option value="0"
+													<?php if(isset($value->camp_stat) && '0'==$value->camp_stat){echo 'selected';} ?>>
+													Deactivate</option>
+											</select>
 										</td>
+
 										<td class="center-align">
 											<a href="<?php echo base_url();?>users/banner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><div  class="btn bg-blue btn-xs">Add new banner</div></a>
 											<a href="<?php echo base_url();?>users/viewbanner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"   style="padding: 0px 20px;"><div  class="btn bg-purple btn-xs">Banners</div></a>
