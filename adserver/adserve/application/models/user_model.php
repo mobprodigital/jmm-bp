@@ -2409,7 +2409,7 @@ $this->db->where('banners.delete_status =', 'active');
 		
 	}
   
-	function getcampaigns($clientid = null, $campaignId = null, $clientType=null){
+	function getcampaigns($clientid = null, $campaignId = null, $clientType=null,$limit=null, $offset=null){
 		$this->db->select("*,campaigns.status as camp_stat");
 		$this->db->from('campaigns');
 		$this->db->join('clients', 'clients.clientid = campaigns.clientid');
