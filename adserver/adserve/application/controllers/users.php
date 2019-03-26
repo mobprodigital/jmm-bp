@@ -5707,7 +5707,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				$data['campaign']			= array();
 
 			}else{
-				$data['campaign']			= $this->User_Model->getcampaigns($clientId, null, $clientType);
+				$data['campaign']			= $this->User_Model->getcampaigns($clientId, null, $clientType, $config['per_page'], $this->uri->segment(3));
 			}
 		}
 		
@@ -6089,7 +6089,8 @@ if(isset($_GET['pglmt'])){
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $clientid);
 		}else{
-			$data['advertiser']				= $this->User_Model->getadvertiser($userId);
+			
+			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $id="", $config['per_page'], $this->uri->segment(3));
 		}
 		
 		if(isset($_GET['key'])){
@@ -6517,9 +6518,6 @@ if(isset($_GET['pglmt'])){
 			echo $result = $id;
 		}
 	}
-	public function hello()
-	{
-	echo "hii";
-	}
+
 }
 ?>

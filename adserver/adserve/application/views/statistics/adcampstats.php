@@ -237,7 +237,7 @@ if($currency_value=='1'){
 									 ?>
 									 	
 
-									</td>								</tr>                 
+									</td></tr>                 
 								<?php } ?>
 							</tbody>
 						</table>
