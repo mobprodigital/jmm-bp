@@ -57,7 +57,7 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                             <table id="example" class="table table-striped">
                                 <thead>
                                     <tr class="header-row" class="center-align">
-                                        <th width="2%"><input type="checkbox" class="advertiser" id="main_0" value="adchk"></th>
+                                        <th width="2%"><input type="checkbox" class="banner" id="main_0" value="adchk"></th>
                                         <th width="60%">Name</th>
                                         <th width="10%" class="center-align">Option</th>
                                         <th width="25%">Details</th>
@@ -66,7 +66,7 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                 <tbody>
                                     <?php foreach($banner as $key => $value){ ?>
                                     <tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-                                        <td width="2%" ><input type="checkbox" class="advertiser" id="<?php echo $value->bannerid;?>"></td>
+                                        <td width="2%" ><input type="checkbox" class="banner" id="<?php echo $value->bannerid;?>"></td>
                                         <td width="60%" ><img src="<?php echo base_url();?>/assets/upimages/
 										<?php 
 										if($value->contenttype=='html'){

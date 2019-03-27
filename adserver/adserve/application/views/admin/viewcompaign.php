@@ -16,7 +16,11 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 				<div class="box">
 					<div class="box-header">
 						<img src="<?php echo base_url()?>assets/upimages/icon-campaign-large.png"/><span>Campaings <?php if(!(empty($campaign))){echo 'of '.$campaign[0]->clientname;}?></span>
-						<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
+						<form method="get" action="<?php echo base_url()?>users/deletecampaigncheckbox">
+						<a href="#" id="delete-campaign"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a> 
+					    <input type="hidden" name="campaign_ids" id="campaign_ids" value=""> 
+						 
+						</form>
 					</div>
 					<!-- <?php if(isset($advertiserlist)){?>
 
@@ -67,7 +71,8 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
 									<tr class="header-row center-align">
-										<th width="40%">Name</th>
+										<th width="2%"><input type="checkbox" class="campaign" id="main_00" value="adchk"></th>
+										<th width="38%">Name</th>
 										<th width="10%" class="center-align">Status</th>
 										<th width="20%" class="center-align">Action</th>
 										<th width="20%" class="center-align">Details</th>
@@ -77,13 +82,8 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 								<?php if(!empty($campaign)){ ?>
 									<?php foreach($campaign as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-										<td>
-											<img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;
-											<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>">
-												<?php echo $value->campaignname;?>
-											</a>
-										</td>
-							
+										<td width="2%"><input type="checkbox" class="campaign" id="<?php echo $value->campaignid;?>"></td>
+										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
 										<td class="center-align">
 											<select name="camstatus" id="campaign_<?php echo $value->campaignid;?>" class="camstatus view-banner-filter">
 												<option value="1"

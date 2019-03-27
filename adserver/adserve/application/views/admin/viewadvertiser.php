@@ -17,7 +17,9 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 				<div class="box">
 					<div class="box-header">
 					<img src="<?php echo base_url()?>assets/upimages/icon-advertisers-large.png"/><span>Advertiser</span>
+					<form method="get" action="<?php echo base_url()?>users/deleteadvertiser">
 					<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
+					</form>
 					</div>
 				
 
@@ -54,15 +56,16 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
 									<tr class="header-row">
-										<th width="30%">Name</th>
-										<th width="30%">Time</th>
-										<th width="40%" class="center-align">Action</th>
+										<th width="2%"><input type="checkbox" class="advertiser" id="main_0" value="adchk"></th>
+										<th width="60%">Name</th>
+										<th width="38%" class="center-align">Action</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php if(isset($advertiser[0])){ ?>
 									<?php foreach($advertiser as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
+										<td width="2%"><input type="checkbox" class="advertiser" id="<?php echo $value->clientid;?>"></td>
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-advertiser.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>users/advertisement?id=<?php echo $value->clientid;?>"><?php echo $value->clientname;?></a></td>
 										<td><?php echo $value->updated;?></td>
 										<td style="float:right;">
