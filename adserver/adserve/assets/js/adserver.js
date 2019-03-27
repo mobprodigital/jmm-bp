@@ -947,7 +947,7 @@ $("document").ready(function(){
 				});
 			}
 		});
-		alert(ids);
+		//alert(ids);
 		window.location = script+'users/deleteadvertiser?advertiser_ids=' + ids;
 		// $.ajax({
 		// 	url		: 'deleteadvertiser',
