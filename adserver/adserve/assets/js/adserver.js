@@ -935,12 +935,11 @@ $("document").ready(function(){
 	});
 	
 	
-	$("#delete-advertiser").click(function(){
+		$("#delete-advertiser").click(function(){
 		//console.log("hello india");return false;
 		var ids		= '';
 		if(confirm("Are you sure to delete")){
-		}
-		$(".advertiser").each(function(){
+			$(".advertiser").each(function(){
 			if($(this).is(':checked')){
 				ids		= ids + ","+$(this).attr("id");
 				$(this).parents('tr').fadeOut(function(){
@@ -948,19 +947,78 @@ $("document").ready(function(){
 				});
 			}
 		});
-		$.ajax({
-			url		: 'deleteadvertiser',
-			data	: 'id='+ids,
-			type	: 'post',
-			success	: function(response){
-				console.log(response);
-			}
-		});
+		alert(ids);
+		window.location = script+'users/deleteadvertiser?advertiser_ids=' + ids;
+		// $.ajax({
+		// 	url		: 'deleteadvertiser',
+		// 	data	: 'id='+ids,
+		// 	type	: 'post',
+		// 	success	: function(response){
+		// 		console.log(response);
+		// 	}
+		// });
+		}
+		return false;
+		
 	});
 	
+			$("#delete-banner").click(function(){
+		//console.log("hello india");return false;
+		var ids		= '';
+		if(confirm("Are you sure to delete")){
+			$(".banner").each(function(){
+			if($(this).is(':checked')){
+				ids		= ids + ","+$(this).attr("id");
+
+				$(this).parents('tr').fadeOut(function(){
+					$(this).remove(); //remove row when animation is finished
+				});
+			}
+		});
+		//alert(ids);
+		window.location = script+'users/deletebannercheckbox?banner_ids=' + ids;
+		// $.ajax({
+		// 	url		: 'deletebannercheckbox',
+		// 	data	: 'id='+ids,
+		// 	type	: 'post',
+		// 	success	: function(response){
+		// 		console.log(response);
+		// 	}
+		// });
+		}
+		return false;
+		
+	});
 	
-	
-	
+			$("#delete-campaign").click(function(){
+		//console.log("hello india");return false;
+		var ids		= '';
+		if(confirm("Are you sure to delete")){
+			$(".campaign").each(function(){
+			if($(this).is(':checked')){
+				ids		= ids + ","+$(this).attr("id");
+                $(this).parents('tr').fadeOut(function(){
+					$(this).remove(); //remove row when animation is finished
+				});
+			}
+		});
+		console.log(ids);
+        window.location = script+'users/deletecampaigncheckbox?campaign_ids=' + ids;
+
+        // alert(ids);
+		 //document.getElementById('campaign_ids').value=ids;
+		// $.ajax({
+		// 	url		: 'deletecampaigncheckbox',
+		// 	data	: 'id='+ids,
+		// 	type	: 'post',
+		// 	success	: function(response){
+		// 		console.log(response);
+		// 	}
+		// });
+		}
+		return false;
+		
+	});
 	
 	
 	
