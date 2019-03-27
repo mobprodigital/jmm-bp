@@ -100,39 +100,39 @@ $("document").ready(function(){
 	// 	});
 	// })
 	
-	$(".camstatus").click(function(){
-	var campaignid		= $(this).attr("id");
-	var choice = confirm('Do you really want to do this?');
-	if(choice === true) {
-		$.ajax({
-			type	:"POST",
-			url		:script+"users/changecampaignstatus",
-			data	:"campaignid="+campaignid,
-			success:function(response){
-				//console.log(response);
+	// $(".camstatus").click(function(){
+	// var campaignid		= $(this).attr("id");
+	// var choice = confirm('Do you really want to do this?');
+	// if(choice === true) {
+	// 	$.ajax({
+	// 		type	:"POST",
+	// 		url		:script+"users/changecampaignstatus",
+	// 		data	:"campaignid="+campaignid,
+	// 		success:function(response){
+	// 			//console.log(response);
 				
-				var parse=JSON.parse(response);
-				console.log(parse.newstatus);
-				if(parse.newstatus){
-					console.log('green');
-					$("#"+campaignid).css("color","green");
-					$("#"+campaignid).text("active");
+	// 			var parse=JSON.parse(response);
+	// 			console.log(parse.newstatus);
+	// 			if(parse.newstatus){
+	// 				console.log('green');
+	// 				$("#"+campaignid).css("color","green");
+	// 				$("#"+campaignid).text("active");
 					
-				}else{
-					console.log('yellow');
-					$("#"+campaignid).css("color","#eb7e23");
-					$("#"+campaignid).text("inactive");
-				}
+	// 			}else{
+	// 				console.log('yellow');
+	// 				$("#"+campaignid).css("color","#eb7e23");
+	// 				$("#"+campaignid).text("inactive");
+	// 			}
 				
-				$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
+	// 			$(".box-body").append('<p class="message_p"><b>Campaign is successfully updated</b></p>');
 				
-			}
-		});
-	}
-	return false;
+	// 		}
+	// 	});
+	// }
+	// return false;
 		
 		
-	});
+	// });
 
 	$("#savebanner").click(function(){
 		var vast		= $("#vastinput").val();
@@ -761,100 +761,102 @@ $("document").ready(function(){
 	});
 	
 	$("#addbanner").submit(function(){
-		var banner			= $("#description").val();
-	var type			= $("#type").val();
-		 if(type=='web'){
-           if(banner		== '') {
-			$("#span_description").text("Banner name is required");
-			$("#description").addClass("has-error");
-			var banner			= $("#upload").val();
-		    return false;
+		var banner	= $("#description").val();
+		var type	= $("#type").val();
+		if(type=='web'){
+		if(banner	== '') {
+		$("#span_description").text("Banner name is required");
+		$("#description").addClass("has-error");
+		var banner	= $("#upload").val();
+		return false;
 		}
-
-		 var b_image			= $("#upload").val();
-		if(b_image		== '') {
-			$("#span_description1").text("Banner Image is required");
-			$("#upload").addClass("has-error");
-			return false;
+		
+		var b_image	= $("#upload").val();
+		if(b_image	== '') {
+		$("#span_description1").text("Banner Image is required");
+		$("#upload").addClass("has-error");
+		return false;
 		}
-		var url			= $("#url").val();
-         if(url		== '') {
-			$("#url_span").text("Destination url is required");
-			$("#url").addClass("has-error");
-			return false;
+		var url	= $("#url").val();
+		if(url	== '') {
+		$("#url_span").text("Destination url is required");
+		$("#url").addClass("has-error");
+		return false;
 		}
-
-
-		 }
-		  
-		 if(type=='html'){
-            var vdo			= $("#videofilename").val();
-		    var radioValue = $("input[name='upload_video']:checked").val();
-		   if(banner		== '') {
-			$("#span_description").text("Banner name is required");
-			$("#description").addClass("has-error");
-			var banner			= $("#upload").val();
-		    return false;
+		
+		
+		}
+		///web
+		
+		if(type=='html'){
+		var vdo	= $("#videofilename").val();
+		var radioValue = $("input[name='upload_video']:checked").val();
+		if(banner	== '') {
+		$("#span_description").text("Banner name is required");
+		$("#description").addClass("has-error");
+		var banner	= $("#upload").val();
+		return false;
 		}
 		if(radioValue=='create_video'){
-
-		/*if(vdo		== '') {
-			$("#video_span").text("Video is required");
-			$("#videofilename").addClass("has-error");
-			return false;
+		
+		/*if(vdo	== '') {
+		$("#video_span").text("Video is required");
+		$("#videofilename").addClass("has-error");
+		return false;
 		}*/
-
-		 var vast_dest_url			= $("#vast_dest_url").val();
-		if(vast_dest_url		== '') {
-			$("#video_dest_url_span").text("Destination url is required");
-			$("#vast_dest_url").addClass("has-error");
-			return false;
+		
+		var vast_dest_url	= $("#vast_dest_url").val();
+		if(vast_dest_url	== '') {
+		$("#video_dest_url_span").text("Destination url is required");
+		$("#vast_dest_url").addClass("has-error");
+		return false;
 		} 
-
-       
-
-
-
-	}
-
-         
-		 }
-
-	 if(type=='html5'){
-	 	 var banner			= $("#description").val();
-          if(banner		== '') {
-			$("#span_description").text("Banner name is required");
-			$("#description").addClass("has-error");
-			var banner			= $("#upload").val();
-		    return false;
+		
+		
+		
+		
+		
 		}
-
-		var url			= $("#html_url").val();
-         if(url		== '') {
-			$("#html_url_span").text("Destination url is required");
-			$("#html_url").addClass("has-error");
-			return false;
+		
+		
 		}
- 
-      var hwidth			= $("#hwidth").val();
-         if(hwidth		== '') {
-			$("#width_span").text("Width required");
-			$("#hwidth").addClass("has-error");
-			return false;
+		//html
+		
+		if(type=='html5'){
+		var banner	= $("#description").val();
+		if(banner	== '') {
+		$("#span_description").text("Banner name is required");
+		$("#description").addClass("has-error");
+		var banner	= $("#upload").val();
+		return false;
 		}
-
-		 var hheight			= $("#hheight").val();
-         if(hheight		== '') {
-			$("#height_span").text("Height required");
-			$("#hheight").addClass("has-error");
-			return false;
+		
+		var url	= $("#html_url").val();
+		if(url	== '') {
+		$("#html_url_span").text("Destination url is required");
+		$("#html_url").addClass("has-error");
+		return false;
 		}
-
-		 
-    }
-
+		
+		var hwidth	= $("#hwidth").val();
+		if(hwidth	== '') {
+		$("#width_span").text("Width required");
+		$("#hwidth").addClass("has-error");
+		return false;
 		}
-	});
+		
+		var hheight	= $("#hheight").val();
+		if(hheight	== '') {
+		$("#height_span").text("Height required");
+		$("#hheight").addClass("has-error");
+		return false;
+		}
+		
+		
+		}
+		
+		
+		});
  
 
 
@@ -1060,7 +1062,11 @@ $(".bannerstatus").change(function(){
 	//alert(bannerid);
 	var banner_stat	= $(this).val();
 	//alert(banner_stat);
-	var choice = confirm('Do you really want to do this?');
+	if(banner_stat == 1){
+		var choice = confirm('Do you really want to activate this banner?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this banner?');
+	}
 	if(choice === true) {
 		$.ajax({
 			type	:"POST",
@@ -1074,7 +1080,7 @@ $(".bannerstatus").change(function(){
 				//alert(status);
 				if(status == 'true')
 				{
-					alert('Campaign is successfully updated');
+					alert('Banner is successfully updated');
 					$(".bannerstatus_"+bannerid).val(banner_stat);
 				}else
 				{
@@ -1100,6 +1106,45 @@ $("#sort_type").change(function(){
 	
 });
 
+// Change campaign status on dropdown change
+$(".camstatus").change(function(){
+	//alert('hii');
+	var campidString		= $(this).attr("id");
+	var campaignid = campidString.substring(9);
+	//alert(campaignid);
+	var camp_stat	= $(this).val();
+	//alert(camp_stat);
+	if(camp_stat == 1){
+		var choice = confirm('Do you really want to activate this campaign?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this campaign?');
+	}
+	if(choice === true) {
+		$.ajax({
+			type	:"POST",
+			url		:script+"users/changecampaignstatus",
+			data	:"campaignid="+campaignid,
+			success:function(response){
+				console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.status;
+				//alert(status);
+				if(status == 'true')
+				{
+					alert('Campaign is successfully updated');
+					$(".camstatus"+campaignid).val(camp_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+				}
+				}
+		});
+	}
+	return false;
+		
+		
+	});
 
 
 

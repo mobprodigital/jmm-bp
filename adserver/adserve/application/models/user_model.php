@@ -2106,8 +2106,10 @@ class User_Model extends CI_Model {
 		$this->db->from('campaigns');
 		$this->db->where('campaignid', $campId);
 		$query 			= $this->db->get();
+			
 		$result			= $query->row();
 		return $result->status;
+		//return true;
 		
 	}
 	

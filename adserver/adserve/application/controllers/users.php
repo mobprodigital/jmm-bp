@@ -5307,6 +5307,7 @@ class Users extends CI_Controller{
 			
 		}
 		//echo '<pre>';print_r($clientIds);print_r($campaignIds);die;
+
 		/********************* Added By Riccha ***********************/
 		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) ){
 			$banner_status		= $this->input->post('banner_status'); echo '<br>';
@@ -5619,8 +5620,8 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			
 		}
 		$result			= $this->User_Model->changecampaignstatus($campaignId, $newStatus);
-		echo json_encode(array('newstatus' => $newStatus));
-		
+		//echo json_encode(array('newstatus' => $newStatus));
+		if($result) { echo json_encode(array('status' => 'true')); } else { echo json_encode(array('status' => 'false'));}
 
 		
 	}
@@ -5852,7 +5853,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	public function deletebanner(){
 		$data['cat']			= 'inventory';
 		$advertzId				= $this->input->post('id');
-		$this->db->query("update `banner` set status	= '1' where id=$advertzId");
+		$this->db->query("update `banner` set status	= '0' where bannerid IN($advertzId)");
 	}
 	
 	/**------compaing section ---------------------------*/
