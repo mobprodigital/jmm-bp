@@ -5310,7 +5310,7 @@ class Users extends CI_Controller{
 
 		/********************* Added By Riccha ***********************/
 		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) ){
-			$banner_status		= $this->input->post('banner_status'); echo '<br>';
+			$banner_status		= $this->input->post('banner_status'); 
 			$sortBy					= $this->input->post('sort_type');
 			if(empty($banner_status)) { $banner_status = 0;}
 			if(empty($sortBy)) { $sortBy = 'name';}
@@ -5708,7 +5708,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				$data['campaign']			= array();
 
 			}else{
-				$data['campaign']			= $this->User_Model->getcampaigns($clientId, null, $clientType, $config['per_page'], $this->uri->segment(3));
+				$data['campaign']			= $this->User_Model->getcampaigns($clientId, null, $clientType);
 			}
 		}
 		
@@ -6033,20 +6033,122 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	}
 	
 	public function deleteadvertiser(){	
+		if ($_GET['advertiser_ids']) {
+			$advertzId= trim($_GET['advertiser_ids'],",");
+			$advertzId = explode(',', $advertzId);
+         }
+		
 	    $data['cat']		= 'inventory';
-		$advertzId			= $this->input->post('id');
-		$advertzId			= substr($advertzId, 1);
-		if(strpos($advertzId, 'main_0') === 0){
-			$advertzId		= substr($advertzId, 7);
+		//$advertzId			= $this->input->post('id');
+		 
+		if($advertzId[0]=='main_0'){
+			array_shift($advertzId);
 		}
-$advertzIdd = explode(",",$advertzId);
-		 foreach ($advertzIdd as $bann_value) {
-		 	 
-		 	 $this->db->query("update `banners` set delete_status = 'delete' where bannerid in ('$bann_value')");
+		  //print_r($advertzId); die;
+		 foreach ($advertzId as $bann_value) {
+			//  echo "SELECT campaignid FROM `campaigns`  WHERE clientid IN($bann_value)"; die;
+			$query_camp = $this->db->query("SELECT campaignid FROM `campaigns`  WHERE clientid = '$bann_value'");
+            $res_camp = $query_camp->result_array();
+			$res_camp11 = array_column($res_camp,'campaignid');
+			$res_camp12 = implode(',',$res_camp11);
+			// print_r($res_camp12); die;
+          if(!empty($res_camp)){
+				 
+			$query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid IN ($res_camp12)");
+			$res = $query->result_array();
+			$res11 = array_column($res,'bannerid');
+			$res12 = implode(',',$res11);
+			//print_r($res12); die;
+			}
+			if(!empty($res)){
+				//  echo "DELETE FROM `banners` WHERE bannerid IN ($res12)"; echo "<br>";
+				//  echo "DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)"; echo "<br>";
+				//  echo "DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)"; echo "<br>";
+				//  echo "DELETE FROM `campaigns` WHERE campaignid = '$res_camp12'";  echo "<br>";
+				//  echo "DELETE FROM `clients` WHERE clientid = '$bann_value'"; echo "<br>";
+				 
+				  $this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+				  $this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+				  $this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+			      $this->db->query("DELETE FROM `campaigns` WHERE campaignid IN ($res_camp12)");
+				}
+				 $this->db->query("DELETE FROM `clients` WHERE clientid = '$bann_value'");
 		 }
-		$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
+		    redirect('users/viewadvertiser');;
+		 
 		
 	}
+
+
+
+		public function deletecampaigncheckbox(){
+			
+			
+		if ($_GET['campaign_ids']) {
+			$campaignid = trim($_GET['campaign_ids'],",");
+			$ids = explode(',', $campaignid);
+          }
+		//print_r($ids); die;
+		  $data['cat']		= 'inventory';
+		  //$campIds			= $this->input->get('campaign_ids');
+		  $campIds			= $ids;
+	
+		 if($campIds[0]=='main_00'){
+			 array_shift($campIds);
+			 //print_r($campIds); die;
+		  }
+		  
+		 foreach ($campIds as $campId_value) {
+		 	  
+		 	 $query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid = '$campId_value'");
+			 $res = $query->result_array();
+			 $res11 = array_column($res,'bannerid');
+			 $res12 = implode(',',$res11);
+			 //print_r($res); die;
+			 if(!empty($res)){
+
+				  $this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+				  $this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+				  $this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+              }
+		          $this->db->query("DELETE FROM `campaigns` WHERE campaignid = '$campId_value'");
+			 
+		 }
+		    redirect('users/viewcompaign');
+		 
+		
+	}
+
+
+	public function deletebannercheckbox(){
+		if ($_GET['banner_ids']) {
+			$bannerId= trim($_GET['banner_ids'],",");
+			$bannerId = explode(',', $bannerId);
+		 }	
+	   $data['cat']		= 'inventory';
+	 
+	  if($bannerId[0]=='main_0'){
+			$bannerId		= array_shift($bannerId);
+		}
+	   //print_r($bannerId); die;
+	 foreach ($bannerId as $bann_value) {
+		 if(!empty($bann_value)){
+				
+			  $this->db->query("DELETE FROM `banners` WHERE bannerid = '$bann_value'");
+			  $this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id = '$bann_value'");
+			  $this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id = '$bann_value'");
+		   //die;
+
+  }
+		  
+	 }
+	 
+	redirect('users/viewbanner');
+	
+}
+
+
+
 	
 	public function viewadvertiser(){
 		
@@ -6067,32 +6169,26 @@ if(isset($_GET['pglmt'])){
 		if($role == 'admin'){
 			$userId	= null;
 		}else{
-			$userId	= $this->session->userdata('uid');;
+			$userId	= $this->session->userdata('uid');
 			
 		}
-		/////added by sunil
-		
-		$this->load->library('pagination');
+		 //echo $this->uri->segment(3); die;
+         $this->load->library('pagination');
          $config = ['base_url'=>base_url('users/viewadvertiser'),
          'per_page'=>$sort_lit,
          'total_rows'=>$this->User_Model->getadvertisernumrows($userId,$id=""),];
          $this->pagination->initialize($config);
           //print_r($config); die;
-	  
-	  // end
-		if(isset($_GET['sortBy'])){
-			$sortBy					= $this->input->get('sortBy');
-			if(empty($sortBy)) { $sortBy = 'name';}
-			$data['advertiser']				= $this->User_Model->getSortedAdvertiser($sortBy);
-			$data['new']		= array("sortBy"=>$sortBy);	
-		}
-		elseif(isset($_GET['clientid'])){
+
+		if(isset($_GET['clientid'])){
+			  
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $clientid);
 		}else{
 			
 			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $id="", $config['per_page'], $this->uri->segment(3));
 		}
+
 		
 		if(isset($_GET['key'])){
 			$data['searchInput']		= $this->input->get('key');
@@ -6519,6 +6615,6 @@ if(isset($_GET['pglmt'])){
 			echo $result = $id;
 		}
 	}
-
+	
 }
 ?>
