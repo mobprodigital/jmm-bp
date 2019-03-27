@@ -3018,6 +3018,10 @@ public function deleteBannerByIds($advertzId)
 
 function anothertest(){
 	echo 'hello';
+function abc(){
+ echo 'hellos';
 }
+
+
 /**************************** Ends ******************/
 }
