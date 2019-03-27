@@ -3015,5 +3015,9 @@ public function deleteBannerByIds($advertzId)
 		return false;
 	}
 }
+
+function anothertest(){
+	echo 'hello';
+}
 /**************************** Ends ******************/
 }
