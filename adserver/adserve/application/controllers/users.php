@@ -6156,7 +6156,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			
             redirect('admin');
         }
-if(isset($_GET['pglmt'])){
+		if(isset($_GET['pglmt'])){
           $sort_lit = $_GET['pglmt'];
         }else{
         	$tt = $this->uri->segment(3);
@@ -6180,7 +6180,13 @@ if(isset($_GET['pglmt'])){
          $this->pagination->initialize($config);
           //print_r($config); die;
 
-		if(isset($_GET['clientid'])){
+		if(isset($_GET['sortBy'])){
+			$sortBy					= $this->input->get('sortBy');
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['advertiser']				= $this->User_Model->getSortedAdvertiser($sortBy);
+			$data['new']		= array("sortBy"=>$sortBy);	
+		}
+		elseif(isset($_GET['clientid'])){
 			  
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->User_Model->getadvertiser($userId, $clientid);
