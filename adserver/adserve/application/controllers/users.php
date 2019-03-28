@@ -1612,7 +1612,8 @@ class Users extends CI_Controller{
          $data['chart_data']         =  $this->Home_Model->getchartres($date1,$date2,$cond);
          $data['home_chart']         =  $this->Home_Model->getres($date1,$date2);
  
-        $data['cat']				 ='home';
+		$data['cat']				 ='home';
+		$data['activeaction']		 = 'home';
 		$this->load->view('admin_includes/header', $data);
 		$this->load->view('admin_includes/left_sidebar', $data);
 		$this->load->view('admin/home', $data);

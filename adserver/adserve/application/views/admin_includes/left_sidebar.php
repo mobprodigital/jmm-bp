@@ -85,7 +85,60 @@
 			
 			<?php } ?>
 			</ul>
+			 
+			 
+
+
+
+
+
+			<ul class="sidebar-menu" id="inventoryyy_sidebar" style="display:<?php if(isset($cat)){ if($cat	== 'home'){ echo 'block'; }else{echo 'none';} }else{
+				echo 'none';
+			} ?>">
+			<?php if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){  ?>
+			<?php	if(isset($activeaction)){if($cat=='home'){ ?>
+				<li class="treeview <?php if(isset($activeaction)){if($activeaction=='advertisement' || $activeaction == 'viewadvertiser') {echo 'active';}}?>"><a href="#"><i class="fa fa-buysellads"></i><span>Advertisers</span><i class="fa fa-angle-left pull-right"></i></a>
+				<ul class="treeview-menu">
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'advertisement'){ echo 'active';}}?>><a href="<?php echo base_url();?>users/advertisement" class="active-submenu">Add Advertiser</a></li>
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'viewadvertiser'){echo 'active';}}?>><a href="<?php echo base_url();?>users/viewadvertiser" class="active-submenu">View Advertiser</a></li>
+				</ul>
+			</li>
+			<?php } } ?>
 			
+			<?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
+            <li class="treeview <?php if(isset($activeaction)){if($activeaction=='compaign' ||  $activeaction == 'targeting'||$activeaction == 'viewcompaign'|| $activeaction == 'linked_zone'|| $activeaction == 'linked_trackers') {echo 'active';}}?>"><a href="#"><i class="fa fa-gamepad"></i><span>Campaigns</span><i class="fa fa-angle-left pull-right"></i></a>
+				<ul class="treeview-menu">
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'compaign'){echo 'active';}}?>><?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;}?> <a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $client;?>" class="active-submenu">Add campaign</a></li>
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'viewcompaign'){echo 'active';}}?>><a href="<?php echo base_url();?>users/viewcompaign" class="active-submenu">View campaign</a></li>
+				</ul>
+            </li>
+			
+			<?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
+            <li class="treeview <?php if(isset($activeaction)){if($activeaction=='banner' || $activeaction == 'viewbanner'|| $activeaction == 'banner_acl' || $activeaction == 'invocation' || $activeaction == 'generatevasttags') {echo 'active';}}?>"><a href="#"><i class="fa fa-book"></i><span>Banners</span><i class="fa fa-angle-left pull-right"></i></a>
+				<ul class="treeview-menu">
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'banner'){ echo 'active';}}?>><?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;$campaignid=1;} if(isset($_GET['campaignid'])){$campaignid=$_GET['campaignid'];}else{$campaignid=1;}echo anchor('users/banner?clientid='.$client."&campaignid=".$campaignid, 'Add banner');?></a></li>
+					<li class =<?php if(isset($activeaction)){if($activeaction == 'viewbanner'){echo 'active';}}?>><?php echo anchor('users/viewbanner', 'View banner');?></li>
+				</ul>
+            </li>
+			
+			<?php } ?>
+			</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			<!-- /.sidebar-menu -->
 			<!-- home section left sidebar -->
 			<!-- Statistics section left sidebar -->
