@@ -6622,6 +6622,45 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			echo $result = $id;
 		}
 	}
+
+/********************* Added By Riccha ***********************/
+public function deletewebsite(){	
+	if ($_GET['website_ids']) {
+		$websiteId= trim($_GET['website_ids'],",");
+		$websiteId = explode(',', $websiteId);
+	 }
+	
+	$data['cat']		= 'inventory';
+	
+	 
+	if($websiteId[0]=='main_0'){
+		array_shift($websiteId);
+	}
+	//print_r($websiteId); die;
+	$web_ids = implode(',',$websiteId);
+	$result = $this->User_Model->deleteWebsite($web_ids);
+	redirect('users/viewwebsite');
+}
+
+public function deletezone(){	
+	if ($_GET['zone_ids']) {
+		$zoneId= trim($_GET['zone_ids'],",");
+		$zoneId = explode(',', $zoneId);
+	}
+	
+	$data['cat']		= 'inventory';
+	
+	if($zoneId[0]=='main_0'){
+		array_shift($zoneId);
+	}
+	//print_r($zoneId); die;
+	$res_zone = implode(',',$zoneId);
+
+	$result = $this->User_Model->deleteZone($res_zone);
+    redirect('users/viewzone');
+	
+}
+/********************** Ends **********************************/
 	
 }
 ?>

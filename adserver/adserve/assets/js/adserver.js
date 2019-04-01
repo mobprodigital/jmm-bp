@@ -1204,7 +1204,47 @@ $(".camstatus").change(function(){
 		
 	});
 
+// Delete Website List on users/viewwebsite page
+$("#website-delete").click(function(){
+//alert('In website');
+//console.log("hello india");return false;
+var ids		= '';
+if(confirm("Are you sure to delete")){
+	$(".advertiser").each(function(){
+	if($(this).is(':checked')){
+		ids		= ids + ","+$(this).attr("id");
+		$(this).parents('tr').fadeOut(function(){
+			$(this).remove(); //remove row when animation is finished
+		});
+	}
+});
+//alert(ids);
+window.location = script+'users/deletewebsite?website_ids=' + ids;
+}
+return false;
 
+});
+
+// Delete Zones List on users/viewzone page
+$("#zone-delete").click(function(){
+	//alert('In zones');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".advertiser").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'users/deletezone?zone_ids=' + ids;
+	}
+	return false;
+	
+	});
 
 /******************************* Ends ************************************/
 
