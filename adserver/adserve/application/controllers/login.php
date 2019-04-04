@@ -55,7 +55,7 @@ class Login extends CI_Controller{
 					redirect("advertiser/");
 
 				}else if($role == 3){
-					redirect('publisher/');
+					redirect('publisher/home');
 				}
 			}else {
 				$data['msg'] = 'not valid credential';
