@@ -32,7 +32,17 @@ class Login extends CI_Controller{
 		if(isset($_POST['submit'])){
 			$userName 		= $this->input->post('email');
 			$password 		= $this->input->post('password');
-			$result 		= $this->Login_Model->validate($userName, $password);
+				if($loginType == 'publisher'){
+				$loginID		= 3;
+			
+			}else if($loginType == 'advertiser'){
+				$loginID		= 2;
+				
+			}else{
+				$loginID		= 1;
+			}
+			
+			$result 		= $this->Login_Model->validate($userName, $password, $loginID);
 			
 			//echo '<pre>';print_r($result);die;
 			
