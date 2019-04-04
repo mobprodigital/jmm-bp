@@ -6,13 +6,16 @@ class Login_Model extends CI_Model {
 		
 	}
 	
-	function validate($userName, $password){
+	function validate($userName, $password, $loginID){
 		$this->db->select("*");
 		$this->db->from('users');
 		$this->db->where('username', $userName);
 		$this->db->where('password', $password);
-		$query 						= $this->db->get();
+		$this->db->where('role', 	$loginID);
+		$query 					= $this->db->get();
 		$result					= $query->row();
+		//echo '<pre>';print_r($result);
+		//echo $this->db->last_query();die;
 		
 		if(!empty($result)){
 			return array("validate"=>true, "data"=>$result);
