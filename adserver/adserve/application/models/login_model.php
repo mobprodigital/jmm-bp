@@ -17,7 +17,7 @@ class Login_Model extends CI_Model {
 		if(!empty($result)){
 			return array("validate"=>true, "data"=>$result);
 		}else{
-			return array("validate"=>'lll');
+			return array("validate"=>false);
 		}
 	}
 	
