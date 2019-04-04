@@ -2790,7 +2790,7 @@ if(!is_null($limit)){
 	}
 	
 	function fetchreportusers(){
-		$this->db->select("id, username, password, firstname, lastname, role, date, status");
+		$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
 		$this->db->from('users');
 		$this->db->where('role', 'view report');
 		
@@ -2800,7 +2800,7 @@ if(!is_null($limit)){
 	}
   
 	function fetchusers($id = null,$role = null){
-		$this->db->select("id, username, password, firstname, lastname, role, date, status");
+		$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
 		$this->db->from('users');
 		if(!is_null($id)){
 		  	  $this->db->where('id =', $id);
@@ -2858,7 +2858,7 @@ if(!is_null($limit)){
 		
 			
 						
-			$this->db->select("id, username, password, firstname, lastname, role, date, status");
+			$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
 			$this->db->from('users');
 			$this->db->where('id =', $userId);
 			$query 					= $this->db->get();
