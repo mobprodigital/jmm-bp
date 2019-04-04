@@ -40,23 +40,41 @@
 */
 $route['default_controller'] = 'user';
 $route['404_override'] = '';
-
-/**---------------admin-------------*/
-
-
-/**-------------home-------------*/
 $route['users/dashboard/home']		= 'users/home';
-
-/**-------------Start Statistics ---------*/
 $route['users/statistics/adcampstats'] 				= 'users/adcampstats';
-/**-------------End  Statistics ---------*/
 
-/**-------------Start Preferences ---------*/
-$route['users/preferences/setting'] 				= 'users/setting';
-/**-------------End  Preferences ---------*/
-$route['crossdomain.xml']			= 'users/crossdomain';
+$route['users/preferences/setting'] 		= 'users/setting';
+$route['crossdomain.xml']					= 'users/crossdomain';
 
-$route['admin/users/advertisement'] = 'users/advertisement';
+$route['admin/users/advertisement'] 	= 'users/advertisement';
+$route['advertiser/logout'] 			= 'login/advertiserLogout';
+$route['advertiser/login'] 				= 'login/advertiserLogin';
+$route['advertiser/signup']					= 'login/advertiserSignup';
+
+
+
+
+$route['publisher/validate_credentials']	= 'login/validateUser';
+$route['publisher/logout']					= 'login/publisherLogout';
+$route['publisher/login']					= 'login/publisherLogin';
+$route['publisher/signup']					= 'login/publisherSignup';
+
+
+
+$route['advertiser/validate_credentials']	= 'login/validateUser';
+$route['advertiser/(\d+)']					= 'advertiser/index';
+$route['advertiser/(\d+)/viewadvertiser']	= 'advertiser/viewadvertiser';
+
+
+$route['publisher/']					= 'publisher/index';
+$route['publisher/viewwebsite']		= 'publisher/viewwebsites';
+$route['publisher/website']			= 'publisher/website';
+
+$route['registration']				= 'login/registration';
+
+
+$route['signup'] 				    = 'user/signupCommon';
+
 $route['admin'] 				    = 'user/index';
 $route['admin/login'] 				= 'user/index';
 $route['admin/logout'] 				= 'user/logout';
