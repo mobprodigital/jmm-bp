@@ -27,12 +27,15 @@ class Login extends CI_Controller{
     */
 	function validateUser(){
 		//echo '<pre>';print_r($_POST);die;
+		$data			= array();
+		$loginType      = $this->uri->segment(1);
 		if(isset($_POST['submit'])){
 			$userName 		= $this->input->post('email');
 			$password 		= $this->input->post('password');
 			$result 		= $this->Login_Model->validate($userName, $password);
-			$data			= array();
+			
 			//echo '<pre>';print_r($result);die;
+			
 			if($result['validate']){
 				$role	= $result['data']->role;
 				$uid	= $result['data']->user_id;
@@ -54,15 +57,22 @@ class Login extends CI_Controller{
 				}else if($role == 3){
 					redirect('publisher/');
 				}
-				
-				
 			}else {
 				$data['msg'] = 'not valid credential';
 				
-				//echo '<pre>';print_r($data);die;
 			}
 		}
-		$this->load->view('publisher/login', $data);
+		
+		if($loginType == 'publisher'){
+			$this->load->view('publisher/login', $data);
+			
+		}else if($loginType == 'advertiser'){
+			$this->load->view('advertiser/login', $data);
+			
+		}else{
+			$this->load->view('adserver/admin', $data);
+		}
+		
 	}
 	
 	
