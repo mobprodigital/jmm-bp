@@ -138,8 +138,20 @@ class Login extends CI_Controller{
 			redirect('publisher/index');	
 
 		}else{
+			$data['country'] = $this->Login_Model->getCountryCode();
 			$this->load->view('publisher/signup', $data);
 		}
+	}
+
+	function getFlag(){
+		$isd_code = (trim($_GET["isocode"]) <> "" ) ? trim($_GET["isocode"]) : "";
+		$data['cat']			= 'inventory';
+		$data['activeaction']	= 'viewuser';
+		$data['country'] = $this->Login_Model->getFlagVal($isd_code);
+		echo json_encode($data['country']);
+		//echo "<pre>";print_r($data); die;
+			 
+		 
 	}
 	
 	function publisherLogin(){

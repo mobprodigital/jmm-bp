@@ -5,6 +5,35 @@ class Login_Model extends CI_Model {
 		$this->load->database();
 		
 	}
+/********************start of County iso code ******************** */
+	function getCountryCode(){
+		$this->db->select("`countries_id`,`countries_name`,`countries_iso_code`,`countries_isd_code`");
+		$this->db->from('countries');
+		$query 					= $this->db->get();
+		$result					= $query->result_array();
+		return $result;
+		//echo '<pre>';print_r($result); 
+		 //echo $this->db->last_query();die;
+
+	}
+	function getFlagVal($isd_code){
+		$this->db->select("`countries_id`, `countries_name`, `countries_iso_code`, `countries_isd_code`");
+		$this->db->from('countries');
+		$this->db->where('countries_iso_code', $isd_code);
+		$query 					= $this->db->get();
+		$results					= $query->result_array();
+		
+		if (count($results) > 0 ) {
+			$arr = array(
+				"c_id" => $results[0]["countries_id"],
+				"c_name" => $results[0]["countries_name"],
+				"c_iso" => strtolower($results[0]["countries_iso_code"]),
+				"c_isd" => $results[0]["countries_isd_code"],
+			);
+		}
+
+		/********************end of County iso code ******************** */
+
 	
 	function validate($userName, $password, $loginID){
 		$this->db->select("*");
