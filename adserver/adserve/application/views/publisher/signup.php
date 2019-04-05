@@ -105,7 +105,7 @@ $this->load->view('login/header');?>
                             onchange="displayRecords(this.value);">
 
                             <?php foreach ($country as $rs) { ?>
-                            <option value="<?php echo trim($rs["countries_iso_code"]); ?>">
+                            <option value="<?php echo trim($rs["countries_isd_code"]); ?>">
                                 <?php echo trim($rs["countries_name"]); ?></option>
                             <?php } ?>
 
