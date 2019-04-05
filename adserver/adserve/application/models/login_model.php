@@ -31,6 +31,7 @@ class Login_Model extends CI_Model {
 				"c_isd" => $results[0]["countries_isd_code"],
 			);
 		}
+	}
 
 		/********************end of County iso code ******************** */
 
