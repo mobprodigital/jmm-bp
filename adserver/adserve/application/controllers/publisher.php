@@ -400,7 +400,24 @@ class Publisher extends Auth_Controller{
 		redirect('publisher/viewwebsite');
 	}
 
-
+	public function deletezone(){	
+		if ($_GET['zone_ids']) {
+			$zoneId= trim($_GET['zone_ids'],",");
+			$zoneId = explode(',', $zoneId);
+		}
+		
+		$data['cat']		= 'inventory';
+		
+		if($zoneId[0]=='main_0'){
+			array_shift($zoneId);
+		}
+		//print_r($zoneId); die;
+		$res_zone = implode(',',$zoneId);
+	
+		$result = $this->Publisher_Model->deleteZone($res_zone);
+		redirect('publisher/viewzone');
+		
+	}
 
 	/*********************** Ends ***********************/
 	

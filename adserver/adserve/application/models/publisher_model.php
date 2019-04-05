@@ -270,6 +270,20 @@ public function deleteWebsite($web_ids)
 	
 }
 
+public function deleteZone($res_zone)
+{
+	// delete from zones
+	$this->db->query("DELETE FROM `zones` WHERE zoneid IN ($res_zone)");
+	//ends
 
+	// delete from rv_data_summary_ad_hourly
+	$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE zone_id IN ($res_zone)");
+	//ends
+
+	// delete from rv_ad_zone_assoc
+	$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE zone_id IN ($res_zone)");
+	//ends
+
+}
 /*********************** Ends ********************/
 }

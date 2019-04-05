@@ -7,7 +7,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header"><img src="<?php echo base_url()?>assets/upimages/icon-zones-large.png"/><span>Zones</span>
-						<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
+					<a href="#" id="publishe-zone-delete"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
 					<div class="box-body">
 						<div>
@@ -24,7 +24,7 @@
 								<tbody>
 									<?php foreach($zones as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-										<td><input type="checkbox" class="advertiser" id="<?php echo $value->affiliateid;?>"></td>
+										<td><input type="checkbox" class="advertiser" id="<?php echo $value->zoneid;?>"></td>
 										<td>
 										<img src="<?php echo base_url();?>/assets/upimages/
 										<?php 
@@ -58,7 +58,7 @@
 	</section>
 </div>
 <?php $this->load->view('admin_includes/footer');?>
-<script src="<?php echo base_url();?>assets/js/adserver.js"></script>
+
 
 
 

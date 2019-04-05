@@ -1268,7 +1268,26 @@ $("#publisher-website-delete").click(function(){
 	
 	});
 
-
+// Delete Zones List on publisher/viewzone page
+$("#publishe-zone-delete").click(function(){
+		//alert('In publisher zones');
+		//console.log("hello india");return false;
+		var ids		= '';
+		if(confirm("Are you sure to delete")){
+			$(".advertiser").each(function(){
+			if($(this).is(':checked')){
+				ids		= ids + ","+$(this).attr("id");
+				$(this).parents('tr').fadeOut(function(){
+					$(this).remove(); //remove row when animation is finished
+				});
+			}
+		});
+		alert(ids);
+		window.location = script+'publisher/deletezone?zone_ids=' + ids;
+		}
+		return false;
+		
+});
 
 /******************************* Ends ************************************/
 
