@@ -15,7 +15,7 @@
 				<div class="box">
 					<div class="box-header">
 						<img src="http://localhost/adserver/adserve/assets/upimages/icon-websites-large.png" style="float:left"><span>Websites</span>
-						<a href="#" id="delete-advertiser"><img src="http://localhost/adserver/adserve/assets/img/1011.png" style="margin-left:54px;margin-right:10px;">Delete</a>
+						<a href="#" id="publisher-website-delete"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right:10px;"/>Delete</a>
 					</div>
 					<div class="box-body">
 						<div>

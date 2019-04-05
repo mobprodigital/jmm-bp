@@ -378,6 +378,31 @@ class Publisher extends Auth_Controller{
 		$this->load->view("publisher/webzonevideostats", $data);
 		
 	}
+
+
+	/*************************** Added By Riccha *********/
+	public function deletewebsite(){	
+		if ($_GET['website_ids']) {
+			$websiteId= trim($_GET['website_ids'],",");
+			$websiteId = explode(',', $websiteId);
+		 }
+		
+		$data['cat']		= 'inventory';
+		
+		 
+		if($websiteId[0]=='main_0'){
+			array_shift($websiteId);
+		}
+		//print_r($websiteId); die;
+		$web_ids = implode(',',$websiteId);
+		
+		$result = $this->Publisher_Model->deleteWebsite($web_ids);
+		redirect('publisher/viewwebsite');
+	}
+
+
+
+	/*********************** Ends ***********************/
 	
 	
 	

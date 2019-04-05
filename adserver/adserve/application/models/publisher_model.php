@@ -231,5 +231,45 @@ class Publisher_Model extends CI_Model {
         }
 		//echo $where;die;
         return $where;
-    }
+	}
+	
+
+/********************* Added By Riccha *************/
+public function deleteWebsite($web_ids)
+{
+	$uid		= $this->session->userdata('uid');
+	
+	// delete affiliate ids from affiliate
+	$this->db->query("DELETE FROM `affiliates` WHERE affiliateid IN ($web_ids) and userid = $uid");
+	$count = $this->db->affected_rows();
+	if($count > 0)
+	{
+		// get zone ids from zone table
+		$query_camp = $this->db->query("SELECT zoneid FROM `zones`  WHERE affiliateid IN ($web_ids)");
+		$res_zone = $query_camp->result_array();
+		$res_zone1 = array_column($res_zone,'zoneid');
+		$res_zone2 = implode(',',$res_zone1);
+		if(!empty($res_zone))
+		{
+			// delete from zones
+			$this->db->query("DELETE FROM `zones` WHERE zoneid IN ($res_zone2)");
+			//ends
+
+			// delete from rv_data_summary_ad_hourly
+			$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE zone_id IN ($res_zone2)");
+			//ends
+
+			// delete from rv_ad_zone_assoc
+			$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE zone_id IN ($res_zone2)");
+			//ends
+		}
+		// ends
+	}
+	// ends
+
+	
+}
+
+
+/*********************** Ends ********************/
 }

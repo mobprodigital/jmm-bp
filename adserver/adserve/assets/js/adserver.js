@@ -1246,6 +1246,30 @@ $("#zone-delete").click(function(){
 	
 	});
 
+// Delete website List on publisher/viewwebsite page
+
+$("#publisher-website-delete").click(function(){
+	//alert('In publisher website');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".advertiser").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'publisher/deletewebsite?website_ids=' + ids;
+	}
+	return false;
+	
+	});
+
+
+
 /******************************* Ends ************************************/
 
 });
