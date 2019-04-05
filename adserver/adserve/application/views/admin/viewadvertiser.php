@@ -57,7 +57,8 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 								<thead>
 									<tr class="header-row">
 										<th width="2%"><input type="checkbox" class="advertiser" id="main_0" value="adchk"></th>
-										<th width="60%">Name</th>
+										<th width="30%">Name</th>
+										<th width="30%">Time</th>
 										<th width="38%" class="center-align">Action</th>
 									</tr>
 								</thead>
