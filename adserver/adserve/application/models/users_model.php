@@ -40,21 +40,17 @@ class Users_model extends CI_Model {
 		}		
 	}
 	
-	function getloggedinuser($user_name)
-	{
-		
-		
-		$this->db->select("id ");
+	function getloggedinuser($user_name){
+		$this->db->select("user_id ");
 		$this->db->from('users');
 		$this->db->where('username =', $user_name );
 		
 		$query 				= $this->db->get();
 		$complete			= $query->result();
-		return $complete[0]->id;
+		return $complete[0]->user_id;
 		//echo $this->db->last_query();die;
 		/* echo 'sdfaa';
-				echo $this->db->last_query();
-
+		echo $this->db->last_query();
 		echo '<pre>';print_r($complete);die; */
 
 	}
@@ -64,25 +60,13 @@ class Users_model extends CI_Model {
 		
 		$this->db->select("role");
 		$this->db->from('users');
-		$this->db->where('username =', $user_name );
+		$this->db->where('username', $user_name );
 		
 		$query 				= $this->db->get();
 		$complete			= $query->result();
 		return $complete[0]->role;//echo '<pre>';print_r($complete);die;
 	}
-///added bys sunil
-	function getloggedinusercurrency($user_name)
-	{
-		
-		$this->db->select("currency");
-		$this->db->from('users');
-		$this->db->where('username =', $user_name );
-		
-		$query 				= $this->db->get();
-		$complete			= $query->result();
-		return $complete[0]->currency;//echo '<pre>';print_r($complete);die;
-	}
-	////end 
+
     /**
     * Serialize the session data stored in the database, 
     * store it in a new array and return it to the controller 
@@ -107,7 +91,7 @@ class Users_model extends CI_Model {
 	  return $query;        
 	}
 	 public function updateuser($data) {
-    $this->db->where('id', 1);
+    $this->db->where('user_id', 1);
     $this->db->update('users', $data);
 }
    

@@ -239,8 +239,8 @@ ol, ul {
 
             document.getElementById('period_start_button').readOnly = !specific;
             document.getElementById('period_end_button').readOnly = !specific;
-            document.getElementById('period_start_button').src = specific ? 'http://localhost/revive/www/admin/assets/images/icon-calendar.gif' : 'http://localhost/revive/www/admin/assets/images/icon-calendar-d.gif';
-            document.getElementById('period_end_button').src = specific ? 'http://localhost/revive/www/admin/assets/images/icon-calendar.gif' : 'http://localhost/revive/www/admin/assets/images/icon-calendar-d.gif';
+            document.getElementById('period_start_button').src = specific ? 'http://localhost/adserver/adserve/assets/upimages/icon-calendar-d.gif' : 'http://localhost/adserver/adserve/assets/upimages/icon-calendar-d.gif';
+            document.getElementById('period_end_button').src = specific ? 'http://localhost/adserver/adserve/assets/upimages/icon-calendar-d.gif' : 'http://localhost/adserver/adserve/assets/upimages/icon-calendar-d.gif';
             document.getElementById('period_start_button').style.cursor = specific ? 'auto' : 'default';
             document.getElementById('period_end_button').style.cursor = specific ? 'auto' : 'default';
 
