@@ -45,7 +45,7 @@ $this->load->view('login/header');?>
                     <div class="form-group has-feedback">
                         <label>Last Name</label>
                         <font style="color:#900;">*</font>
-                        <input type="text" name="lastname" class="form-control" type="text" id="email" name="email"
+                        <input type="text" name="lastname" class="form-control" type="text"  name="email"
                             data-validate data-required="Please enter your Last name"
                             data-type="alphabets;Only alphabets are allowed" data-err-id="last-fname" />
                         <div id="last-fname" style="color:red"></div>

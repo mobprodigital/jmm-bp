@@ -43,7 +43,7 @@ function validationSetup(form) {
             form.dispatchEvent(formValidationFailed);
         }
         else {
-            event.preventDefault();
+            // event.preventDefault();
             form.dispatchEvent(formValidationSuccess);
         }
     });
@@ -627,9 +627,11 @@ function validateField(field) {
     if (dataSet.hasOwnProperty("compare")) {
         var compareObj = getCustomErrMsg(dataSet.compare);
         var dataVal1 = field.value;
-        var dataVal2 = document.getElementById(compareObj.key).value;
+        var compField = document.getElementById(compareObj.key);
+        var dataVal2 = compField.value;
         if (compareData(dataVal1, dataVal2)) {
             removeError(field);
+            removeError(compField);
             return;
         }
         else {
