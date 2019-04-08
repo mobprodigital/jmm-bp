@@ -15,6 +15,7 @@ class Publisher extends Auth_Controller{
 		$this->load->helper('form','url');
 		$this->load->model('Publisher_Model');
 		$this->load->model('User_Model');
+		$this->load->model('Login_Model');
 		$this->load->model('Statistics_Model');
 
 
@@ -95,6 +96,7 @@ class Publisher extends Auth_Controller{
 		}
 		
 		$data['profile']	= $this->Publisher_Model->getAccountInfo();
+		$data['country']  = $this->Login_Model->getCountryCode();
 		$this->load->view('publisher/profile', $data);	
 	}
 	
