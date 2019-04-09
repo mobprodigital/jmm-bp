@@ -447,12 +447,39 @@ function validateField(field) {
                         addError(field, errMsg);
                     }
                     break;
-                case "tel":
+                    case "tel":
                     errMsg = errMsg == "" ? "Invalid telephone number" : errMsg;
+
+
+                    var uIntMax = dataSet.hasOwnProperty("maxLength") ? (parseInt(dataSet.maxLength, 10) !== NaN ? parseInt(dataSet.maxLength, 10) : null) : null;
+                    var uIntMin = dataSet.hasOwnProperty("minLength") ? (parseInt(dataSet.minLength, 10) !== NaN ? parseInt(dataSet.minLength, 10) : null) : null;
+                    var ufloatCurrent = parseInt(field.value.length, 10) != null ? parseInt(field.value.length, 10) : null;
+
+                    if (uIntMin !== null) {
+                        if (ufloatCurrent < uIntMin) {
+                            errMsg = "Value should be greater then " + uIntMin.toString();
+                            if (dataSet.minLength.indexOf(';') > -1) {
+                                errMsg = dataSet.minLength.split(';')[1];
+                            }
+                            addError(field, errMsg);
+                            return;
+                        }
+                    }
+
+                    if (uIntMax !== null) {
+                        if (ufloatCurrent > uIntMax) {
+                            errMsg = "Value should be less then " + uIntMax.toString();
+                            if (dataSet.maxLength.indexOf(';') > -1) {
+                                errMsg = dataSet.maxLength.split(';')[1];
+                            }
+                            addError(field, errMsg);
+                            return;
+                        }
+                    }
+
                     if (isTel(field.value)) {
                         removeError(field);
-                    }
-                    else {
+                    } else {
                         addError(field, errMsg);
                     }
                     break;
@@ -738,7 +765,8 @@ function isUfloat(inputValue) {
 *@return {boolean}  
 */
 function isTel(inputValue) {
-    var rgx = /^[+]?\d+(\-\d+)*$/g.test(inputValue);
+    // var rgx = /^[+]?\d+(\-\d+)*$/g.test(inputValue);
+    var rgx = /^(?=.*[0-9])[- +()0-9]+$/g.test(inputValue);
     return rgx;
 }
 /**
