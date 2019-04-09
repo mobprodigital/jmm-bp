@@ -96,8 +96,16 @@ class Publisher extends Auth_Controller{
 		}
 		
 		$data['profile']	= $this->Publisher_Model->getAccountInfo();
+		//echo "<pre>"; print_r($data['profile']->phone);
+		$exp_data         = explode(" ",$data['profile']->phone);
+		$exp_data_plus    = explode("+",$exp_data[0]);
+		$exp_country_code = $exp_data_plus[1];  
+		
 		$data['country']  = $this->Login_Model->getCountryCode();
-		$this->load->view('publisher/profile', $data);	
+	 	 
+	  $search_res = array_search($exp_country_code, array_column($data['country'], 'countries_isd_code'));
+		$data['country_code'] = $data['country'][$search_res];
+    $this->load->view('publisher/profile', $data);	
 	}
 	
 	public function website(){
