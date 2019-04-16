@@ -49,7 +49,25 @@ $route['crossdomain.xml']					= 'users/crossdomain';
 $route['admin/users/advertisement'] 	= 'users/advertisement';
 $route['advertiser/logout'] 			= 'login/advertiserLogout';
 $route['advertiser/login'] 				= 'login/advertiserLogin';
+
+
 $route['advertiser/signup']					= 'login/advertiserSignup';
+$route['advertiser/validate_credentials']	= 'login/validateUser';
+$route['advertiser/(\d+)']					= 'advertiser/index';
+$route['advertiser/(\d+)/viewadvertiser']	= 'advertiser/viewadvertiser';
+
+$route['executive/login'] 					= 'login/executiveLogin';
+$route['executive/logout'] 					= 'login/executiveLogout';
+$route['executive/validate_credentials']	= 'login/validateUser';
+$route['advertiser/advertiser-campaigns']	= 'executive/advertiserCampaigns';
+$route['executive/campaign-banners']		= 'executive/campaignBanners';
+
+
+
+
+
+
+
 
 
 
@@ -61,9 +79,7 @@ $route['publisher/signup']					= 'login/publisherSignup';
 
 
 
-$route['advertiser/validate_credentials']	= 'login/validateUser';
-$route['advertiser/(\d+)']					= 'advertiser/index';
-$route['advertiser/(\d+)/viewadvertiser']	= 'advertiser/viewadvertiser';
+
 
 
 $route['publisher/']					= 'publisher/index';
@@ -74,6 +90,7 @@ $route['registration']				= 'login/registration';
 
 
 $route['signup'] 				    = 'user/signupCommon';
+$route['users/client-access']		= 'users/clientAccess';
 
 $route['admin'] 				    = 'user/index';
 $route['admin/login'] 				= 'user/index';
