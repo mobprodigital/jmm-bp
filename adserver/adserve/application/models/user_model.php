@@ -2800,16 +2800,16 @@ if(!is_null($limit)){
 	}
   
 	function fetchusers($id = null,$role = null){
-		$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
+		$this->db->select("user_id, username, password, firstname, lastname, role, date_created, status");
 		$this->db->from('users');
 		if(!is_null($id)){
-		  	  $this->db->where('id =', $id);
+		  	  $this->db->where('user_id =', $id);
 		}
 		if(!is_null($role)){
 		  	  $this->db->where('role =', $role);
 		}
 		$this->db->where('username !=', 'admin');
-		$this->db->order_by('id','desc');
+		$this->db->order_by('user_id','desc');
 		$query 					= $this->db->get();
 		$result					= $query->result();
 		return $result;
