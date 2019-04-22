@@ -66,6 +66,20 @@ class Users_model extends CI_Model {
 		$complete			= $query->result();
 		return $complete[0]->role;//echo '<pre>';print_r($complete);die;
 	}
+	
+	///added bys sunil
+	function getloggedinusercurrency($user_name)
+	{
+		
+		$this->db->select("currency");
+		$this->db->from('users');
+		$this->db->where('username =', $user_name );
+		
+		$query 				= $this->db->get();
+		$complete			= $query->result();
+		return $complete[0]->currency;//echo '<pre>';print_r($complete);die;
+	}
+	////end 
 
     /**
     * Serialize the session data stored in the database, 
