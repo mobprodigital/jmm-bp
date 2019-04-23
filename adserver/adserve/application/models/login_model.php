@@ -57,8 +57,8 @@ class Login_Model extends CI_Model {
 	
 	function saveAdvertiser($input){
 		$this->db->insert('users', $input);
-		$data['msg']	= 'advertiser added successfully';
-		return $data;
+		$msg	= 'advertiser added successfully';
+		return $msg;
 	}
 	
 	function savePublisher($input){
