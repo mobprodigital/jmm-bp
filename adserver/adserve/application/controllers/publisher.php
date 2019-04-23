@@ -79,6 +79,11 @@ class Publisher extends Auth_Controller{
 	
 	function profile(){
 		$data		 = array();
+		$pubId       = null;
+	 if(isset($_GET['uid'])){
+			    $pubId  = $this->input->post('uid');   
+		 
+	 	}
 		if(isset($_POST['submit'])){
 			//echo '<pre>';print_r($_POST);die;
 			$input['username']	= $this->input->post('email');
@@ -92,7 +97,7 @@ class Publisher extends Auth_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-			$result 			= $this->Publisher_Model->savePublisher($input);
+			$result 			= $this->Publisher_Model->save($input, $pubId);
 		}
 		
 		$data['profile']	= $this->Publisher_Model->getAccountInfo();

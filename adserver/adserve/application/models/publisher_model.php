@@ -16,19 +16,17 @@ class Publisher_Model extends CI_Model {
 		//echo '<pre>';print_r($result);die;
 	}
 	
-	function save($input, $pubId = null){
+	function save($input, $pubId){
 		if(!is_null($pubId)){
 			$this->db->where('user_id', $pubId);
 			$this->db->update('users', $input);
-			$data['msg']	= 'publisher updated successfully';
-			
-
+			$msg	= 'publisher updated successfully';
+			return $msg;
 		}else{
-			$this->db->insert('users', $input);
-			$data['msg']	= 'publisher added successfully';
+			return '';
 		}
 		
-		return $data;
+		
 	}
 	
 	function getwebsites($affiliateid = null){
