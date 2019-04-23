@@ -32,7 +32,11 @@ class Login extends CI_Controller{
 		if(isset($_POST['submit'])){
 			$userName 		= $this->input->post('email');
 			$password 		= $this->input->post('password');
-				if($loginType == 'publisher'){
+			
+			if($loginType == 'executive'){
+				$loginID		= 4;
+			
+			}elseif($loginType == 'publisher'){
 				$loginID		= 3;
 			
 			}else if($loginType == 'advertiser'){
@@ -66,6 +70,12 @@ class Login extends CI_Controller{
 
 				}else if($role == 3){
 					redirect('publisher/home');
+				
+				}else if($role == 4){
+					
+					$clientId = $this->Login_Model->getClientID($uid);
+					
+					redirect('advertiser/advertiser-campaigns?clientid='.$clientId);
 				}
 			}else {
 				$data['msg'] = 'not valid credential';
@@ -79,6 +89,9 @@ class Login extends CI_Controller{
 		}else if($loginType == 'advertiser'){
 			$this->load->view('advertiser/login', $data);
 			
+		}else if($loginType == 'executive'){
+			$this->load->view('executive/login', $data);
+			
 		}else{
 			$this->load->view('adserver/admin', $data);
 		}
@@ -87,6 +100,7 @@ class Login extends CI_Controller{
 	
 	
 	function advertiserSignup(){
+		$data			=  array();
 		if(isset($_POST['submit'])){
 			//echo '<pre>';print_r($_POST);die;
 			$input['username']	= $this->input->post('email');
@@ -99,16 +113,26 @@ class Login extends CI_Controller{
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
 	
-			$result 			= $this->Advertiser_Model->saveAdvertiser($input);
-			$data['msg']		= $result;
-			redirect('publisher/index');	
+			$data['successMsg'] 	 			= $this->Login_Model->saveAdvertiser($input);
+			//redirect('advertiser/index');
+			$this->load->view('advertiser/login', $data);	
+			
+		}else{
+			$this->load->view('advertiser/signup', $data);	
+
 		}
 		//echo '<pre>';print_r($data);die;
 
-		$this->load->view('advertiser/signup', $data);	
 	}
 		
-		
+	function executiveLogin(){
+		$this->load->view('executive/login');	
+	}
+	
+	function executiveLogout(){
+		$this->session->sess_destroy();
+		redirect('executive/login');
+	}
 	
 	
 	function advertiserLogin(){
@@ -134,24 +158,14 @@ class Login extends CI_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-			$result 			= $this->Login_Model->savePublisher($input);
-			redirect('publisher/index');	
+			$data['successMsg'] 			= $this->Login_Model->savePublisher($input);
+			//redirect('publisher/index');
+			$this->load->view('publisher/login', $data);
+			
 
 		}else{
-			$data['country'] = $this->Login_Model->getCountryCode();
 			$this->load->view('publisher/signup', $data);
 		}
-	}
-
-	function getFlag(){
-		$isd_code = (trim($_GET["isocode"]) <> "" ) ? trim($_GET["isocode"]) : "";
-		$data['cat']			= 'inventory';
-		$data['activeaction']	= 'viewuser';
-		$data['country'] = $this->Login_Model->getFlagVal($isd_code);
-		echo json_encode($data['country']);
-		//echo "<pre>";print_r($data); die;
-			 
-		 
 	}
 	
 	function publisherLogin(){
