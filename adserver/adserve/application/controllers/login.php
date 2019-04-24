@@ -159,7 +159,7 @@ class Login extends CI_Controller{
 	
 	function publisherSignup(){
 		$data['cat']			= 'inventory';
-		$data['activeaction']	= 'viewuser';
+		$data['activeaction']	= 'viewuser'; 
 		if(isset($_POST['submit'])){
 			//echo '<pre>';print_r($_POST);die;
 			$input['username']	= $this->input->post('email');
