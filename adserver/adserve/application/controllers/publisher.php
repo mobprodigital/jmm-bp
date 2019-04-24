@@ -79,15 +79,17 @@ class Publisher extends Auth_Controller{
 	
 	function profile(){
 		$data		 = array();
-		$pubId       = null;
+	 	$pubId       = null;
 	 if(isset($_GET['uid'])){
 			    $pubId  = $this->input->post('uid');   
 		 
 	 	}
 		if(isset($_POST['submit'])){
-			//echo '<pre>';print_r($_POST);die;
+			 
+			  
+			$pubId              = $this->input->post('uid');  
 			$input['username']	= $this->input->post('email');
-			$input['password']	= $this->input->post('password');
+			//$input['password']	= $this->input->post('password');
 			$input['firstname']	= $this->input->post('firstname');
 			$input['lastname']	= $this->input->post('lastname');
 			$input['skype']		= $this->input->post('skype');
@@ -97,7 +99,9 @@ class Publisher extends Auth_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
+		   //print_r($input); die;
 			$result 			= $this->Publisher_Model->save($input, $pubId);
+			//print_r($result); die;
 		}
 		
 		$data['profile']	= $this->Publisher_Model->getAccountInfo();
@@ -105,7 +109,6 @@ class Publisher extends Auth_Controller{
 		$exp_data         = explode(" ",$data['profile']->phone);
 		$exp_data_plus    = explode("+",$exp_data[0]);
 		$exp_country_code = $exp_data_plus[1];  
-		
 		$data['country']  = $this->Login_Model->getCountryCode();
 	 	 
 	  $search_res = array_search($exp_country_code, array_column($data['country'], 'countries_isd_code'));

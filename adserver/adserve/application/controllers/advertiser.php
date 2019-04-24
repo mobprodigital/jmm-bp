@@ -17,6 +17,7 @@ class Advertiser extends Auth_Controller{
 		$this->load->helper('form','url');
 		$this->load->model('Advertiser_Model');
 		$this->load->model('User_Model');
+		$this->load->model('Login_Model');
 		$this->load->model('Statistics_Model');
 		$this->load->model('Update_Cache_Model');
 	
@@ -55,7 +56,7 @@ class Advertiser extends Auth_Controller{
 		if(isset($_POST['submit'])){
 			//echo '<pre>';print_r($_POST);die;
 			$input['username']		= $this->input->post('email');
-			$input['password']		= $this->input->post('password');
+			//$input['password']		= $this->input->post('password');
 			$input['firstname']		= $this->input->post('firstname');
 			$input['lastname']		= $this->input->post('lastname');
 			$input['skype']			= $this->input->post('skype');
@@ -70,8 +71,14 @@ class Advertiser extends Auth_Controller{
 		
 		$data['profile']	= $this->Advertiser_Model->getAccountInfo($advtId);
 		//echo '<pre>';print_r($data);die;
+		$exp_data         = explode(" ",$data['profile']->phone);
+		$exp_data_plus    = explode("+",$exp_data[0]);
+		$exp_country_code = $exp_data_plus[1];  
+		$data['country']  = $this->Login_Model->getCountryCode();
+	 	 
+	    $search_res = array_search($exp_country_code, array_column($data['country'], 'countries_isd_code'));
+		$data['country_code'] = $data['country'][$search_res];
 
-		
 		$this->load->view('advertiser/profile', $data);	
 	}
 			
