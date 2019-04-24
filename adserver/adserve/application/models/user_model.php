@@ -2663,6 +2663,58 @@ if(!is_null($clientid)){
 		JOIN banners on banners.campaignid = campaigns.campaignid
 		where banners.width=300 and  banners.height=250 */
 	}
+	function getUniqueCampaignsByZones($clientId, $zoneType, $width, $height){
+		$this->db->distinct();
+		$this->db->select("campaigns.campaignid,campaigns.campaignname");
+		$this->db->from('campaigns');
+		$this->db->join('banners', 'banners.campaignid=campaigns.campaignid');
+		$this->db->where('campaigns.clientid', $clientId);
+		$this->db->where('banners.storagetype', $zoneType);
+		if($zoneType != 'html'){
+			$this->db->where('banners.width', $width);
+			$this->db->where('banners.height',$height);
+		}
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo $this->db->last_query();
+		//echo '<pre>';print_r($result);die;
+		return $result;
+	}
+	function getAssocOrderDetails($bannerId){
+		$query = "
+            SELECT
+				c.clientid,c.clientname,m.campaignid,m.campaignname,
+				b.bannerid,
+				b.storagetype,
+				b.width,
+				b.height,
+				b.description,
+				b.status as banner_status,
+				m.status as campaign_status,
+				activate_time,expire_time,
+				contenttype,b.weight as banner_weight,
+				m.priority as campaign_priority,
+				m.weight as campaign_weight
+			FROM
+                clients AS c,
+                campaigns AS m,
+                banners AS b
+            WHERE
+				c.clientid = m.clientid
+                AND
+                m.campaignid = b.campaignid
+                AND
+                b.bannerid = ".$bannerId."
+           
+        ";
+		//echo $query;die;
+		$resut 						= $this->db->query($query);
+		$orderData				= $resut->row();
+		//echo $this->db->last_query();die;
+		//echo '<pre>';print_r($orderData);
+		//echo $query;die;
+		return $orderData;
+	}
 	function getadvertiserByZones($zoneType, $width, $height){
 		$this->db->distinct();
 		$this->db->select("clients.clientid,clients.clientname");
