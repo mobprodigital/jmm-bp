@@ -2663,6 +2663,42 @@ if(!is_null($clientid)){
 		JOIN banners on banners.campaignid = campaigns.campaignid
 		where banners.width=300 and  banners.height=250 */
 	}
+	
+	function getAssocOrderDetails($bannerId){
+		$query = "
+            SELECT
+				c.clientid,c.clientname,m.campaignid,m.campaignname,
+				b.bannerid,
+				b.storagetype,
+				b.width,
+				b.height,
+				b.description,
+				b.status as banner_status,
+				m.status as campaign_status,
+				activate_time,expire_time,
+				contenttype,b.weight as banner_weight,
+				m.priority as campaign_priority,
+				m.weight as campaign_weight
+			FROM
+                clients AS c,
+                campaigns AS m,
+                banners AS b
+            WHERE
+				c.clientid = m.clientid
+                AND
+                m.campaignid = b.campaignid
+                AND
+                b.bannerid = ".$bannerId."
+           
+        ";
+		//echo $query;die;
+		$resut 						= $this->db->query($query);
+		$orderData				= $resut->row();
+		//echo $this->db->last_query();die;
+		//echo '<pre>';print_r($orderData);
+		//echo $query;die;
+		return $orderData;
+	}
 	function getadvertiserByZones($zoneType, $width, $height){
 		$this->db->distinct();
 		$this->db->select("clients.clientid,clients.clientname");

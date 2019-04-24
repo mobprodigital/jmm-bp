@@ -4730,9 +4730,6 @@ class Users extends CI_Controller{
 	
 	
 	public function zone_include(){
-		if(!$this->session->userdata('is_logged_in')){
-            redirect('admin');
-        }
 		$data['cat']						= 'inventory';
 		$data['activeaction']				= 'zone_include';
 		$zoneType 							= '';
@@ -4756,7 +4753,7 @@ class Users extends CI_Controller{
 		
 		if(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
-			$data['campaign']			= $this->User_Model->getcampaignsByZones($clientid,$zoneType,$width,$height);
+			$data['campaign']			= $this->User_Model->getUniqueCampaignsByZones($clientid,$zoneType,$width,$height);
 			//echo '<pre>';print_r($data['campaign']);die;
 			if(isset($_GET['campaignid'])){
 				$campaginid				= $this->input->get('campaignid');
@@ -4773,19 +4770,23 @@ class Users extends CI_Controller{
 			if(isset($_GET['bannerid'])){
 				$bannerid 				= $this->input->get('bannerid');
 				$msg			        = $this->User_Model->updateAdZoneAssoc($bannerid,$zoneid);
+				$bannerData             = $this->User_Model->getAssocOrderDetails($bannerid);
 				//echo $clientid.'<br>'.$campaginid.'<br>'.$bannerid.'<br>'.$affiliateid.'<br>'.$zoneid;die;
 				$this->session->set_userdata(array(
 					'zonedata'=>array("msg"=>$msg)
 				));
-				
+				//echo '<pre>';print_r($data['banner']);die;
 				$assocData		= array(
-					'ad_id' => $data['banner'][0]->bannerid,
-					'status' => $data['campagin'][0]->status,
+					'ad_id' => $bannerData->bannerid,
+					"banner_status"=>$bannerData->banner_status,
+					"campaign_status"=>$bannerData->campaign_status,
+					"activate_time"=>$bannerData->activate_time,
+					"expire_time"=>$bannerData->expire_time,
 					'width' => $zoneData[0]->width,
 					'height' =>  $zoneData[0]->height,
 					'type' => $zoneData[0]->delivery,
-					'contenttype' => $data['banner'][0]->contenttype,
-					'weight' => $data['banner'][0]->weight,
+					'contenttype' => $bannerData->contenttype,
+					'weight' => $bannerData->banner_weight,
 					'block_ad' => '0',
 					'cap_ad' => '0',
 					'session_cap_ad' => '0',
@@ -4795,16 +4796,15 @@ class Users extends CI_Controller{
 					'priority' => '0',
 					'priority_factor' => '1',
 					'to_be_delivered' => '1',
-					'campaign_id' => $data['campagin'][0]->campaginid,
-					'campaign_priority' => $data['campagin'][0]->priority,
-					'campaign_weight' => $data['campagin'][0]->weight,
+					'campaign_id' => $bannerData->campaginid,
+					'campaign_priority' => $bannerData->campaign_priority,
+					'campaign_weight' => $bannerData->campaign_weight,
 					'campaign_companion' => '0',
 					'block_campaign' => '0',
 					'cap_campaign' => '0',
 					'session_cap_campaign' => '0',
 					'show_capped_no_cookie' => '0',
-					'client_id' => $data['advertiser'][0]->clientid,
-					'expire_time' => NULL,
+					'client_id' => $bannerData->clientid,
 
 				);
 				//echo '<pre>';print_r($assocData);print_r($data);die;
