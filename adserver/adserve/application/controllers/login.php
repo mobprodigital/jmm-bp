@@ -114,10 +114,12 @@ class Login extends CI_Controller{
 			$input['date_updated']	= date('Y-m-d');
 	
 			$data['successMsg'] 	 			= $this->Login_Model->saveAdvertiser($input);
+
 			//redirect('advertiser/index');
 			$this->load->view('advertiser/login', $data);	
 			
 		}else{
+			$data['country'] = $this->Login_Model->getCountryCode();
 			$this->load->view('advertiser/signup', $data);	
 
 		}
@@ -127,6 +129,17 @@ class Login extends CI_Controller{
 		
 	function executiveLogin(){
 		$this->load->view('executive/login');	
+	}
+
+	function getFlag(){
+		$isd_code = (trim($_GET["isocode"]) <> "" ) ? trim($_GET["isocode"]) : "";
+		$data['cat']			= 'inventory';
+		$data['activeaction']	= 'viewuser';
+		$data['country'] = $this->Login_Model->getFlagVal($isd_code);
+		echo json_encode($data['country']);
+		//echo "<pre>";print_r($data); die;
+			 
+		 
 	}
 	
 	function executiveLogout(){
@@ -164,6 +177,7 @@ class Login extends CI_Controller{
 			
 
 		}else{
+			$data['country'] = $this->Login_Model->getCountryCode();
 			$this->load->view('publisher/signup', $data);
 		}
 	}
@@ -172,18 +186,6 @@ class Login extends CI_Controller{
 		$this->load->view('publisher/login');	
 	}
 	
-	function getFlag(){
-		$isd_code = (trim($_GET["isocode"]) <> "" ) ? trim($_GET["isocode"]) : "";
-		$data['cat']			= 'inventory';
-		$data['activeaction']	= 'viewuser';
-		$data['country'] = $this->Login_Model->getFlagVal($isd_code);
-		echo json_encode($data['country']);
-		//echo "<pre>";print_r($data); die;
-			 
-		 
-	}
-
-
 	function publisherLogout(){
 		$this->session->sess_destroy();
 		redirect('publisher/login');
