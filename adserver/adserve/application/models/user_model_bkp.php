@@ -2032,7 +2032,9 @@ class User_Model extends CI_Model {
 			$this->db->where_in('campaigns.campaignid', $campaignid);
 		}
 		$this->db->order_by("bannerid", 'desc');
+		
 		$query 			= $this->db->get();
+		
 		$result			= $query->result();
 
 		return $result;
@@ -2225,15 +2227,17 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-$this->db->where('banners.delete_status =', 'active');
+		$this->db->where('banners.delete_status =', 'active');
 		//$this->db->order_by("bannerid",'desc');
-	//echo $offset; die;
+	    //echo $offset; die;
 		if(!is_null($limit)){
         	$this->db->limit($limit,$offset);
 
         }
-		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		//$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		$this->db->order_by("bannerid",'desc');
 		$query 			= $this->db->get();
+		//echo $this->db->last_query();die;
 		if($row){
 			$result			= $query->row();
 		}else{
@@ -2366,7 +2370,7 @@ $this->db->where('banners.delete_status =', 'active');
 	public function addadvertiser($user, $advertiser, $advertiserId = null, $userId = null){
 		//echo '<pre>';print_r($user);die;
 	   if(!is_null($advertiserId)){
-			$this->db->where('user_id =', $userId);
+			$this->db->where('id =', $userId);
 		   	$this->db->update('users', $user);
 			
 			$this->db->where('clientid =', $advertiserId);
@@ -2374,7 +2378,7 @@ $this->db->where('banners.delete_status =', 'active');
 			
 			$this->db->select("*");
 			$this->db->from('clients');
-			$this->db->join('users', 'users.user_id = clients.account_id');
+			$this->db->join('users', 'users.id = clients.account_id');
 			$this->db->where('clients.clientid =', $advertiserId);
 			$query 			= $this->db->get();
 			$result			= $query->result();
@@ -2817,7 +2821,7 @@ if(!is_null($limit)){
   
 	function fetchteachers(){
 		if($this->session->userdata('role')=='teacher')
-		$this->db->where('user_id', $this->session->userdata('uid'));
+		$this->db->where('id', $this->session->userdata('uid'));
 	 
 		$this->db->where('role', 'teacher');
 		$query = $this->db->get('users');
@@ -2852,15 +2856,15 @@ if(!is_null($limit)){
 	public function AddUser($data, $userId = null){
 	   if(!is_null($userId)){
 			$this->db->where('username !=', 'admin');
-			$this->db->where('user_id =', $userId);
+			$this->db->where('id =', $userId);
 		   	$this->db->update('users', $data);
 			
 		
 			
 						
-			$this->db->select("user_id, username, password, firstname, lastname, role, date_created, status");
+			$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
 			$this->db->from('users');
-			$this->db->where('user_id =', $userId);
+			$this->db->where('id =', $userId);
 			$query 					= $this->db->get();
 			$result					= $query->result();
 			return $result;
@@ -2878,14 +2882,14 @@ if(!is_null($limit)){
 	 }
 	 
 	public function updateuser($id, $data) {
-		$this->db->where('user_id', $id);
+		$this->db->where('id', $id);
 		$this->db->update('users', $data);
 	}
 	
 	function remove_item($itemid)
   {
 	//Delete Parent record
-    $this->db->delete('users', array('user_id' => $itemid));
+    $this->db->delete('users', array('id' => $itemid));
 	
   }
 function getcurrency(){
@@ -2989,7 +2993,7 @@ public function getSortedCampaign($AdvId,$campaignSortType)
 	}
 	
 	$query 			= $this->db->get();
-	//echo $this->db->last_query();
+	//echo $this->db->last_query(); die;
 	$result			= $query->result();
 	return $result;
 
