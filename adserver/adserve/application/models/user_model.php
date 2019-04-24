@@ -2032,7 +2032,9 @@ class User_Model extends CI_Model {
 			$this->db->where_in('campaigns.campaignid', $campaignid);
 		}
 		$this->db->order_by("bannerid", 'desc');
+		
 		$query 			= $this->db->get();
+		
 		$result			= $query->result();
 
 		return $result;
@@ -2225,15 +2227,17 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-$this->db->where('banners.delete_status =', 'active');
+		$this->db->where('banners.delete_status =', 'active');
 		//$this->db->order_by("bannerid",'desc');
-	//echo $offset; die;
+	    //echo $offset; die;
 		if(!is_null($limit)){
         	$this->db->limit($limit,$offset);
 
         }
-		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		//$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		$this->db->order_by("bannerid",'desc');
 		$query 			= $this->db->get();
+		//echo $this->db->last_query();die;
 		if($row){
 			$result			= $query->row();
 		}else{
@@ -2790,7 +2794,7 @@ if(!is_null($limit)){
 	}
 	
 	function fetchreportusers(){
-		$this->db->select("id, username, password, firstname, lastname, role, date_created, status");
+		$this->db->select("user_id, username, password, firstname, lastname, role, date_created, status");
 		$this->db->from('users');
 		$this->db->where('role', 'view report');
 		
@@ -2989,7 +2993,7 @@ public function getSortedCampaign($AdvId,$campaignSortType)
 	}
 	
 	$query 			= $this->db->get();
-	//echo $this->db->last_query();
+	//echo $this->db->last_query(); die;
 	$result			= $query->result();
 	return $result;
 

@@ -72,18 +72,20 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 								<thead>
 									<tr class="header-row center-align">
 										<th width="2%"><input type="checkbox" class="campaign" id="main_00" value="adchk"></th>
-										<th width="38%">Name</th>
+										<th width="20%">Name</th>
+										<th width="20%">Date</th>
 										<th width="10%" class="center-align">Status</th>
 										<th width="20%" class="center-align">Action</th>
 										<th width="20%" class="center-align">Details</th>
 									</tr>
 								</thead>
 								<tbody>
-								<?php if(!empty($campaign)){ ?>
+								<?php if(!empty($campaign)){  ?>
 									<?php foreach($campaign as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
 										<td width="2%"><input type="checkbox" class="campaign" id="<?php echo $value->campaignid;?>"></td>
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
+										<td><?php echo $value->activate_time;?></td>
 										<td class="center-align">
 											<select name="camstatus" id="campaign_<?php echo $value->campaignid;?>" class="camstatus view-banner-filter">
 												<option value="1"
