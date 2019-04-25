@@ -186,4 +186,4 @@
 	<?php } ?>
 </div>
 
-<?php $this->load->view('admin_includes/footer');?>
+<?php $this->load->view('advertiser/footer');?>
