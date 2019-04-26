@@ -2375,7 +2375,7 @@ class User_Model extends CI_Model {
 			
 			$this->db->select("*");
 			$this->db->from('clients');
-			$this->db->join('users', 'users.user_id = clients.account_id');
+			$this->db->join('users', 'users.user_id = clients.userid');
 			$this->db->where('clients.clientid =', $advertiserId);
 			$query 			= $this->db->get();
 			$result			= $query->result();
@@ -2384,7 +2384,7 @@ class User_Model extends CI_Model {
 			//add user
 			$this->db->insert('users', $user);
 			$insertId 						= $this->db->insert_id();
-			$advertiser['account_id']		= $insertId;
+			$advertiser['userid']		= $insertId;
 			
 			//add advertiser
 			$this->db->insert('clients', $advertiser);
