@@ -765,17 +765,19 @@ $("document").ready(function(){
 		var type	= $("#type").val();
 		if(type=='web'){
 		if(banner	== '') {
-		$("#span_description").text("Banner name is required");
-		$("#description").addClass("has-error");
-		var banner	= $("#upload").val();
-		return false;
+			$("#span_description").text("Banner name is required");
+			$("#description").addClass("has-error");
+			var banner	= $("#upload").val();
+			return false;
 		}
 		
 		var b_image	= $("#upload").val();
+
 		if(b_image	== '') {
-		$("#span_description1").text("Banner Image is required");
-		$("#upload").addClass("has-error");
-		return false;
+		
+			$("#span_description1").text("Banner Image is required");
+			$("#upload").addClass("has-error");
+			return false;
 		}
 		var url	= $("#url").val();
 		if(url	== '') {
