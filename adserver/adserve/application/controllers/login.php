@@ -168,6 +168,7 @@ class Login extends CI_Controller{
 			$input['lastname']	= $this->input->post('lastname');
 			$input['skype']		= $this->input->post('skype');
 			$input['phone']		= $this->input->post('phone');
+			$input['company']		= $this->input->post('company');
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
