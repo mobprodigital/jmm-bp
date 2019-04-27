@@ -75,7 +75,21 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-				
+					<?php if(isset($msg)){ ?>
+						<div id="messagePlaceholder" class="messagePlaceholder">
+							<div class="message localMessage">
+								<div class="panel confirm">
+									<div class="icon"></div>
+									<p><?php echo $msg;?></p>
+									<div class="topleft"></div>
+									<div class="topright"></div>
+									<div class="bottomleft"></div>
+									<div class="bottomright"></div>
+									<div class="close">x</div>
+								</div>
+							</div>
+						</div>
+					<?php } ?>
 					</div>
 					<div class="box-body">
 					<div class="">
