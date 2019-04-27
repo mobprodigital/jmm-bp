@@ -82,7 +82,7 @@ class Publisher extends Auth_Controller{
 		$data		 = array();
 	 	$pubId       = null;
 		if(isset($_GET['uid'])){
-			$pubId  = $this->input->post('uid');   
+			$pubId  = $this->input->get('uid');   
 		 
 	 	}
 		if(isset($_POST['submit'])){
@@ -99,8 +99,12 @@ class Publisher extends Auth_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-		   //print_r($input); die;
+			// print_r($input); 
+			// echo $pubId; die;
+			 
+
 			$result 			= $this->Publisher_Model->save($input, $pubId);
+			$data['msg'] = $result;
 			//print_r($result); die;
 		}
 		
