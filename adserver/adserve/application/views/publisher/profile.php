@@ -93,7 +93,6 @@
 					</div>
 					<div class="box-body">
 					<div class="">
-					<p>name</p>
 			<div class="register-box-body">
 			<?php if(isset($profile) && !empty($profile)){ ?>
 			
