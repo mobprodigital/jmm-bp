@@ -238,8 +238,7 @@ $("document").ready(function(){
 		var	campaignRevenue	= $("#revenue").val();
 		var	avtivateTime	= $("#activate_time").val();
 		var	expireTime		= $("#expire_time").val();
-		//alert(avtivateTime);
-		//alert(expireTime);
+		
 
 		if(campaign == 'new'){
 			
@@ -761,96 +760,104 @@ $("document").ready(function(){
 	});
 	
 	$("#addbanner").submit(function(){
+	
 		var banner	= $("#description").val();
 		var type	= $("#type").val();
-		if(type=='web'){
-		if(banner	== '') {
-		$("#span_description").text("Banner name is required");
-		$("#description").addClass("has-error");
-		var banner	= $("#upload").val();
-		return false;
-		}
 		
-		var b_image	= $("#upload").val();
-		if(b_image	== '') {
-		$("#span_description1").text("Banner Image is required");
-		$("#upload").addClass("has-error");
-		return false;
-		}
-		var url	= $("#url").val();
-		if(url	== '') {
-		$("#url_span").text("Destination url is required");
-		$("#url").addClass("has-error");
-		return false;
-		}
+		if(type=='web')
+		{
+			
+			if(banner	== '') 
+			{
+			//alert('banner is blank');
+			$("#span_description").text("Banner name is required");
+			$("#description").addClass("has-error");
+			var banner	= $("#upload").val();
+			return false;
+			}
+			
+			 var b_image	= $("#imagefilename").val();
 		
+			if(b_image	== '') {
 		
+			$("#span_description1").text("Banner Image is required");
+		  $("#upload").addClass("has-error");
+			return false;
+			}
+			var url	= $("#url").val();
+			if(url	== '') {
+			//alert('url is blank');
+			$("#url_span").text("Destination url is required");
+			$("#url").addClass("has-error");
+			return false;
+			}
 		}
 		///web
 		
-		if(type=='html'){
-		var vdo	= $("#videofilename").val();
-		var radioValue = $("input[name='upload_video']:checked").val();
-		if(banner	== '') {
-		$("#span_description").text("Banner name is required");
-		$("#description").addClass("has-error");
-		var banner	= $("#upload").val();
-		return false;
-		}
-		if(radioValue=='create_video'){
-		
-		/*if(vdo	== '') {
-		$("#video_span").text("Video is required");
-		$("#videofilename").addClass("has-error");
-		return false;
-		}*/
-		
-		var vast_dest_url	= $("#vast_dest_url").val();
-		if(vast_dest_url	== '') {
-		$("#video_dest_url_span").text("Destination url is required");
-		$("#vast_dest_url").addClass("has-error");
-		return false;
-		} 
-		
-		
-		
-		
-		
-		}
-		
-		
+		if(type=='html')
+		{
+			var vdo	= $("#videofilename").val();
+			var radioValue = $("input[name='upload_video']:checked").val();
+			if(banner	== '') 
+			{
+				$("#span_description").text("Banner name is required");
+				$("#description").addClass("has-error");
+				var banner	= $("#upload").val();
+				return false;
+			}
+			if(radioValue=='create_video')
+			{
+				/*if(vdo	== '') {
+				$("#video_span").text("Video is required");
+				$("#videofilename").addClass("has-error");
+				return false;
+				}*/
+				
+				var vast_dest_url	= $("#vast_dest_url").val();
+				if(vast_dest_url	== '')
+				{
+					$("#video_dest_url_span").text("Destination url is required");
+					$("#vast_dest_url").addClass("has-error");
+					return false;
+				} 
+			}
 		}
 		//html
 		
-		if(type=='html5'){
-		var banner	= $("#description").val();
-		if(banner	== '') {
-		$("#span_description").text("Banner name is required");
-		$("#description").addClass("has-error");
-		var banner	= $("#upload").val();
-		return false;
-		}
+		if(type=='html5')
+		{
+			var banner	= $("#description").val();
+			if(banner	== '') 
+			{
+				$("#span_description").text("Banner name is required");
+				$("#description").addClass("has-error");
+				var banner	= $("#upload").val();
+				return false;
+			}
 		
-		var url	= $("#html_url").val();
-		if(url	== '') {
-		$("#html_url_span").text("Destination url is required");
-		$("#html_url").addClass("has-error");
-		return false;
-		}
+			var url	= $("#html_url").val();
+			if(url	== '') 
+			{
+				$("#html_url_span").text("Destination url is required");
+				$("#html_url").addClass("has-error");
+				return false;
+			}
 		
-		var hwidth	= $("#hwidth").val();
-		if(hwidth	== '') {
-		$("#width_span").text("Width required");
-		$("#hwidth").addClass("has-error");
-		return false;
-		}
+			var hwidth	= $("#hwidth").val();
+			if(hwidth	== '')
+			{
+				$("#width_span").text("Width required");
+				$("#hwidth").addClass("has-error");
+				return false;
+			}
 		
-		var hheight	= $("#hheight").val();
-		if(hheight	== '') {
-		$("#height_span").text("Height required");
-		$("#hheight").addClass("has-error");
-		return false;
-		}
+			var hheight	= $("#hheight").val();
+			if(hheight	== '') 
+			{
+				$("#height_span").text("Height required");
+				$("#hheight").addClass("has-error");
+				return false;
+			}
 		
 		
 		}
