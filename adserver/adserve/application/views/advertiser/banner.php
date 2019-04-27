@@ -72,7 +72,7 @@
 								<img width="100%" style="height:1px;margin-bottom:20px;" src="<?php echo base_url()?>/assets/upimages/break.gif">
 								<div class="form-group">
 									<label for = "name" class="fieldlabel">Name<font color="red">*</font></label>
-									<input type = "text" class="formfield" name="description" id="description" value="<?php if(isset($banner[0]->description)){echo $banner[0]->description;}?>"/>
+									<input type = "text" class="formfield" required name="description" id="description" value="<?php if(isset($banner[0]->description)){echo $banner[0]->description;}?>"/>
 									<span style="color:red" id="span_description" class="errorspan"></span>
 								</div>
 							</div>
@@ -186,4 +186,4 @@
 	<?php } ?>
 </div>
 
-<?php $this->load->view('admin_includes/footer');?>
+<?php $this->load->view('advertiser/footer');?>

@@ -2225,14 +2225,15 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-$this->db->where('banners.delete_status =', 'active');
-		//$this->db->order_by("bannerid",'desc');
-	//echo $offset; die;
+		$this->db->where('banners.delete_status =', 'active');
+		
+		//echo $offset; die;
 		if(!is_null($limit)){
         	$this->db->limit($limit,$offset);
 
         }
-		$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		//$this->db->order_by("banners.description,campaigns.campaignname",'desc');
+		$this->db->order_by("bannerid",'desc');
 		$query 			= $this->db->get();
 		if($row){
 			$result			= $query->row();
@@ -2374,7 +2375,7 @@ $this->db->where('banners.delete_status =', 'active');
 			
 			$this->db->select("*");
 			$this->db->from('clients');
-			$this->db->join('users', 'users.user_id = clients.account_id');
+			$this->db->join('users', 'users.user_id = clients.userid');
 			$this->db->where('clients.clientid =', $advertiserId);
 			$query 			= $this->db->get();
 			$result			= $query->result();
@@ -2383,7 +2384,7 @@ $this->db->where('banners.delete_status =', 'active');
 			//add user
 			$this->db->insert('users', $user);
 			$insertId 						= $this->db->insert_id();
-			$advertiser['account_id']		= $insertId;
+			$advertiser['userid']		= $insertId;
 			
 			//add advertiser
 			$this->db->insert('clients', $advertiser);

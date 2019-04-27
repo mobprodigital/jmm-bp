@@ -8,6 +8,7 @@
 			$campaignStatus  = $bannerData['campaign_status'];
 			$bannerStatus    = $bannerData['banner_status'];
 			$deliveredImpr	 = 1000;//$bannerData['deliveredImpr'];
+			$todayDeliveredImpr = 1000;
 			$campaignTotalLimit             = $bannerData['views'];
 			$activationTimestamp			= strtotime($activationTime.' 00:00:00');
 			$expirationTimestamp			= strtotime($expirationTime.' 23:59:59');
@@ -18,14 +19,14 @@
 				
 				if($currDateTimestamp >  $activationTimestamp){
 					//echo 'activationTimestamp true'.'<br>';
-
-					if($currDateTimestamp <  $expirationTimestamp){
+					if((!$expirationTimestamp) ||  ($currDateTimestamp <  $expirationTimestamp)){
 						//echo 'expirationTimestamp true'.'<br>';
 
 						if(checkCampaignImpressionLimit($campaignTotalLimit, $deliveredImpr)){
-						//	echo 'checkCampaignImpressionLimit true'.'<br>';
+							//echo 'checkCampaignImpressionLimit true'.'<br>';
+							
 							if(checkCampaignCappign($bannerData)){
-								//echo 'checkCampaignCappign true';die;
+							//echo 'checkCampaignCappign true';die;
 								if($bannerStatus == 0){
 									$result	= true;
 								}else{
@@ -56,7 +57,7 @@
 	}
 	
 	function checkCampaignImpressionLimit($campaignTotalLimit, $totalDelivered){
-		//echo $campaignTotalLimit.'<br>'.$totalDelivered;die;
+		/* //echo $campaignTotalLimit.'<br>'.$totalDelivered;die;
 		if($campaignTotalLimit != -1){
 			if($campaignTotalLimit > $totalDelivered){
 				return true;
@@ -65,9 +66,14 @@
 			}
 		}else{
 			return true;
-		}
+		} */
+		
+		return true;
 		
 			
+	}
+	
+	function checkCampaignDailyLimit($campaignDailyLimit, $todayDelivered){
 	}
 	
 	function checkCampaignCappign($bannerData){
@@ -132,8 +138,7 @@
 	
 	
 	
-	function checkCampaignDailyLimit($campaignDailyLimit, $todayDelivered){
-	}
+	
 	
 	
 	

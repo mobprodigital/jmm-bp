@@ -18,6 +18,8 @@ class Users extends CI_Controller{
 		$this->load->model('User_Model');
 		$this->load->model('Statistics_Model');
 		$this->load->model('Admin_Model');
+		$this->load->model('Update_Cache_Model');
+
 		$this->load->model('Home_Model');
 
 
@@ -5272,10 +5274,11 @@ class Users extends CI_Controller{
 	
 	
 	public function viewbanner(){
+		
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
         }
-          if(isset($_GET['pglmt'])){
+        if(isset($_GET['pglmt'])){
           $sort_lit = $_GET['pglmt'];
         }else{
         	  $tt = $this->uri->segment(3);
@@ -5389,7 +5392,7 @@ class Users extends CI_Controller{
 					$campaign['status'] 					= 1; 
 					
 				}else{
-					$campaign['status'] 					= 0; 
+					$campaign['status'] 					= 1; 
 					
 				}
 			}else{

@@ -6,7 +6,7 @@
 		if(isset($_GET['zoneid'])){
 			$now 					= time();
 			$zoneid					= $_GET['zoneid'];
-			$ip						= $_GET['domain'];
+			//$ip						= $_GET['domain'];
 			$dfpClickUrl			= '';
 			$protocol				= '';
 			$protocol 				= $_SERVER['SERVER_PROTOCOL'];

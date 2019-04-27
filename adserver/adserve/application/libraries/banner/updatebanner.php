@@ -18,7 +18,7 @@
 			$status		= '';
 		}
 		
-		if($banner['ext_bannertype']=='upload_video'){
+		if($banner['ext_bannertype'] == 'upload_video'){
 			$videodata['banner_id']			= $bannerid;
 			$data['videos']					= $this->User_Model->addvideoad($bannerid, $videodata, $status);
 		}else{
@@ -46,13 +46,18 @@
 			}	
 			
 			$data['videoclickurl']			= $clickurl;
-			$cacheArr		= array($banner, $videodata);
+			$bannerCacheData     			= $this->Update_Cache_Model->getBannerCacheData($bannerid);
+			//echo '<pre>';print_r($bannerCacheData);die;
+
+			$cacheArr		= array($bannerCacheData, $videodata);
+			//\\echo $GLOBALS['cacheDir'].'delivery_ad_'.$bannerid.'.php';die;
 			$my_file 		= $GLOBALS['cacheDir'].'delivery_ad_'.$bannerid.'.php';
 			file_put_contents($my_file, json_encode($cacheArr));
 	}else{
-		$banner['bannerid']	= $bannerid;
-		$cacheArr		= array($banner);
-		$my_file 		= $GLOBALS['cacheDir'].'delivery_ad_'.$bannerid.'.php';
+		$banner['bannerid']		= $bannerid;
+		$bannerCacheData     	= $this->Update_Cache_Model->getBannerCacheData($bannerid);
+		$cacheArr				= array($bannerCacheData);
+		$my_file 				= $GLOBALS['cacheDir'].'delivery_ad_'.$bannerid.'.php';
 		file_put_contents($my_file, json_encode($cacheArr));
 	}
 	$data['msg']						= 'Banner is successfully updated';
