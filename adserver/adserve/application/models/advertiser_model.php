@@ -106,9 +106,9 @@ class Advertiser_Model extends CI_Model {
 	}
 	
 	public function addadvertiser($user, $advertiser, $advertiserId = null, $userId = null){
-		//echo '<pre>';print_r($user);die;
+		
 	   if(!is_null($advertiserId)){
-			$this->db->where('id =', $userId);
+			$this->db->where('user_id =', $userId);
 		   	$this->db->update('users', $user);
 			
 			$this->db->where('clientid =', $advertiserId);
@@ -116,9 +116,10 @@ class Advertiser_Model extends CI_Model {
 			
 			$this->db->select("*");
 			$this->db->from('clients');
-			$this->db->join('users', 'users.id = clients.account_id');
+			$this->db->join('users', 'users.user_id = clients.userid');
 			$this->db->where('clients.clientid =', $advertiserId);
 			$query 			= $this->db->get();
+		//	echo $this->db->last_query(); die;
 			$result			= $query->result();
 			return $result;
 		}else{
@@ -127,6 +128,7 @@ class Advertiser_Model extends CI_Model {
 			
 			//add advertiser
 			$this->db->insert('clients', $advertiser);
+			
 			$insertId 				= $this->db->insert_id();
 		}
 		
