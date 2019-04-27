@@ -78,6 +78,7 @@ class Publisher extends Auth_Controller{
 	}
 	
 	function profile(){
+		echo 'hi';
 		$data		 = array();
 	 	$pubId       = null;
 	 if(isset($_GET['uid'])){
