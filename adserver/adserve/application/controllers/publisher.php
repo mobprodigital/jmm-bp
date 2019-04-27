@@ -78,17 +78,16 @@ class Publisher extends Auth_Controller{
 	}
 	
 	function profile(){
-		echo 'hi';
+		
 		$data		 = array();
 	 	$pubId       = null;
-	 if(isset($_GET['uid'])){
-			    $pubId  = $this->input->post('uid');   
+		if(isset($_GET['uid'])){
+			$pubId  = $this->input->post('uid');   
 		 
 	 	}
 		if(isset($_POST['submit'])){
 			 
 			  
-			$pubId              = $this->input->post('uid');  
 			$input['username']	= $this->input->post('email');
 			//$input['password']	= $this->input->post('password');
 			$input['firstname']	= $this->input->post('firstname');
