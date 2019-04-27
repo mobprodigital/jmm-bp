@@ -86,7 +86,7 @@
 				<div class="col-md-6">
                     <div class="form-group has-feedback">
                         <label>Skype Id</label>
-                        <input type="text" name="company" value="" class="form-control">
+                        <input type="text" name="skype" value="" class="form-control">
                     </div>
                 </div>
 				<div class="row">
