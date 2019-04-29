@@ -12,7 +12,7 @@
 				<div class="box">
 					<div class="box-header">
 						<img src="<?php echo base_url()?>assets/upimages/icon-campaign-large.png"/><span>Campaings <?php if(!(empty($campaign))){echo 'of '.$campaign[0]->clientname;}?></span>
-						<a href="#" id="delete-advertiser"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
+						<a href="#" id="delete-camp"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
 					<?php if(isset($advertiserlist)){ ?>
 					<!--<select  name="advertiserlist" id="advertiserlist"  class="right-corner-select"/>
@@ -31,6 +31,7 @@
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
 									<tr class="header-row center-align">
+										<th width="2%"><input type="checkbox" class="campaign" id="main_00" value="adchk"></th>
 										<th width="40%">Name</th>
 										<th width="10%" class="center-align">Status</th>
 										<th width="20%" class="center-align">Action</th>
@@ -41,6 +42,7 @@
 								
 									<?php foreach($campaign as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
+										<td width="2%"><input type="checkbox" class="campaign" id="<?php echo $value->campaignid;?>"></td>
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>advertiser/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
 										<td class="center-align">
 											<span class="camstatus" id="<?php echo $value->campaignid;?>" style="cursor: pointer;color:

@@ -1211,6 +1211,44 @@ public function deleteadvertiser(){
 	}
 	redirect('advertiser/viewadvertiser');;
 }
+
+public function deletecampaigncheckbox()
+{
+	if ($_GET['campaign_ids']) 
+	{
+		$campaignid = trim($_GET['campaign_ids'],",");
+		$ids = explode(',', $campaignid);
+	}
+	//print_r($ids); die;
+	$data['cat']		= 'inventory';
+	//$campIds			= $this->input->get('campaign_ids');
+	$campIds			= $ids;
+
+	if($campIds[0]=='main_00')
+	{
+		array_shift($campIds);
+		//print_r($campIds); die;
+	}
+	  
+	foreach ($campIds as $campId_value) 
+	{
+		$query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid = '$campId_value'");
+		$res = $query->result_array();
+		$res11 = array_column($res,'bannerid');
+		$res12 = implode(',',$res11);
+		//print_r($res); die;
+		if(!empty($res))
+		{
+
+			$this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+			$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+			$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+		}
+			$this->db->query("DELETE FROM `campaigns` WHERE campaignid = '$campId_value'");
+		 
+	}
+	redirect('advertiser/viewcompaign');
+}
 /************************************ Ends ******************************************************/
 	
 	

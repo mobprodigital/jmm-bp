@@ -1317,6 +1317,30 @@ $("#delete-adv").click(function(){
 	
 });
 
+// Advertiser signup - Delete campaign from campaign list
+$("#delete-camp").click(function(){
+	//alert('delete-camp');
+	//console.log("hello india");return false;
+
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".campaign").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+							$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//	console.log(ids);
+	//alert(ids);
+	window.location = script+'advertiser/deletecampaigncheckbox?campaign_ids=' + ids;
+	
+	}
+	return false;
+	
+});
+
 /******************************* Ends ************************************/
 
 });
