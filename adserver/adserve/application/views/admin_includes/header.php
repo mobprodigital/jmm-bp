@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<body class="skin-blue sidebar-mini">
 		<div class="wrapper">
 			<header class="main-header">
-				<a href="#" class="logo">
+				<a href="<?= base_url(); ?>users/dashboard/home" class="logo">
 					<span class="logo-mini"><b>M</b>Ads</span>
 					<span class="logo-lg"><b>Media </b> Adserver</span>
 				</a>
