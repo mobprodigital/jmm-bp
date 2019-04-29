@@ -7,7 +7,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header"><img src="<?php echo base_url()?>assets/upimages/icon-banner-large.png"/><span>Banners</span>
-						<a href="#" id="delete-advertiser"><img class="delete-text" src="<?php echo base_url()?>assets/img/1011.png"/>Delete</a>
+						<a href="#" id="delete-ban"><img class="delete-text" src="<?php echo base_url()?>assets/img/1011.png"/>Delete</a>
 					</div>
 					<!--<select  name="revenue_type" id="revenue_type"  class="search-box">
 						<option>All banners</option>		
@@ -29,7 +29,7 @@
 								<tbody>
 									<?php foreach($banner as $key => $value){ ?>
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-										<td width="2%"><input type="checkbox" class="advertiser" id="<?php echo $value->bannerid;?>"></td>
+										<td width="2%"><input type="checkbox" class="banner" id="<?php echo $value->bannerid;?>"></td>
 										<td width="60%"><img src="<?php echo base_url();?>/assets/upimages/
 										<?php 
 										if($value->contenttype=='html'){

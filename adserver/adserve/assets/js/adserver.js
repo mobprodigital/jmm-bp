@@ -1341,6 +1341,29 @@ $("#delete-camp").click(function(){
 	
 });
 
+// Advertiser Signup - Delete Banners from View Banner Page
+
+$("#delete-ban").click(function(){
+	//alert('delete banner');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".banner").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'advertiser/deletebannercheckbox?banner_ids=' + ids;
+	
+	}
+	return false;
+	
+});
 /******************************* Ends ************************************/
 
 });

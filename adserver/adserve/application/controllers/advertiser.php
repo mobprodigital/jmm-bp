@@ -1249,6 +1249,36 @@ public function deletecampaigncheckbox()
 	}
 	redirect('advertiser/viewcompaign');
 }
+
+public function deletebannercheckbox()
+{
+	if ($_GET['banner_ids']) 
+	{
+		$bannerId= trim($_GET['banner_ids'],",");
+		$bannerId = explode(',', $bannerId);
+	}	
+   	$data['cat']		= 'inventory';
+ 
+	if($bannerId[0]=='main_0')
+	{
+		$bannerId		= array_shift($bannerId);
+	}
+    //print_r($bannerId); die;
+	foreach ($bannerId as $bann_value) 
+	{
+		if(!empty($bann_value))
+		{
+			
+		  $this->db->query("DELETE FROM `banners` WHERE bannerid = '$bann_value'");
+		  $this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id = '$bann_value'");
+		  $this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id = '$bann_value'");
+		}
+	  
+ 	}
+ 
+	redirect('advertiser/viewbanner');
+
+}
 /************************************ Ends ******************************************************/
 	
 	
