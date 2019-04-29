@@ -161,16 +161,16 @@ class Advertiser extends Auth_Controller{
 
 	}
 	
-	public function deleteadvertiser(){	
-	    $data['cat']		= 'inventory';
-		$advertzId			= $this->input->post('id');
-		$advertzId			= substr($advertzId, 1);
-		if(strpos($advertzId, 'main_0') === 0){
-			$advertzId		= substr($advertzId, 7);
-		}
-		$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
+	// public function deleteadvertiser(){	
+	//     $data['cat']		= 'inventory';
+	// 	$advertzId			= $this->input->post('id');
+	// 	$advertzId			= substr($advertzId, 1);
+	// 	if(strpos($advertzId, 'main_0') === 0){
+	// 		$advertzId		= substr($advertzId, 7);
+	// 	}
+	// 	$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
 		
-	}
+	// }
 	
 	
 	
@@ -1174,7 +1174,44 @@ class Advertiser extends Auth_Controller{
 	}
 	/**********End of Statistics Section*********************************************************/
 
-
+/******************************* Added By Riccha ************************************************/
+public function deleteadvertiser(){	
+	if ($_GET['advertiser_ids']) {
+		$advertzId= trim($_GET['advertiser_ids'],",");
+		$advertzId = explode(',', $advertzId);
+	 }
+	
+	$data['cat']		= 'inventory';
+	if($advertzId[0]=='main_0'){
+		array_shift($advertzId);
+	}
+	//print_r($advertzId); die;
+	foreach ($advertzId as $adv_value) 
+	{
+		$query_camp = $this->db->query("SELECT campaignid FROM `campaigns`  WHERE clientid = '$adv_value'");
+		$res_camp = $query_camp->result_array();
+		$res_camp11 = array_column($res_camp,'campaignid');
+		$res_camp12 = implode(',',$res_camp11);
+		// print_r($res_camp12); die;
+	  	if(!empty($res_camp)){
+			 
+		$query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid IN ($res_camp12)");
+		$res = $query->result_array();
+		$res11 = array_column($res,'bannerid');
+		$res12 = implode(',',$res11);
+		//print_r($res12); die;
+		}
+		if(!empty($res)){
+			$this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+			$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+			$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+			$this->db->query("DELETE FROM `campaigns` WHERE campaignid IN ($res_camp12)");
+			}
+			 $this->db->query("DELETE FROM `clients` WHERE clientid = '$adv_value'");
+	}
+	redirect('advertiser/viewadvertiser');;
+}
+/************************************ Ends ******************************************************/
 	
 	
 

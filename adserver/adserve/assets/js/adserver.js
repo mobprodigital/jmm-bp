@@ -1296,6 +1296,27 @@ $("#publishe-zone-delete").click(function(){
 		
 });
 
+// Advertiser Signup - Delete advertiser
+$("#delete-adv").click(function(){
+	//alert('delete-adv');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".advertiser").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'advertiser/deleteadvertiser?advertiser_ids=' + ids;
+	}
+	return false;
+	
+});
+
 /******************************* Ends ************************************/
 
 });
