@@ -1364,6 +1364,16 @@ $("#delete-ban").click(function(){
 	return false;
 	
 });
+//advertiser Signup - Sort Name And Date Wise On View Advertiser Page
+$("#adv_sort_type").change(function(){
+	//alert("hiiiiii advertiser Signup");
+	var sort	= $(this).val();
+	//alert(sort);
+	if(sort != '') { window.location.href='viewadvertiser?sortBy='+sort; }
+	else{ window.location.href='viewadvertiser'; }
+
+	
+});
 /******************************* Ends ************************************/
 
 });

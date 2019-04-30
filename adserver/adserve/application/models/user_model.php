@@ -2227,7 +2227,7 @@ class User_Model extends CI_Model {
 		}
 		$this->db->where('banners.delete_status =', 'active');
 		
-		//echo $offset; die;
+	//echo $offset; die;
 		if(!is_null($limit)){
         	$this->db->limit($limit,$offset);
 

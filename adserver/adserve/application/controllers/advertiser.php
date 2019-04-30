@@ -178,8 +178,14 @@ class Advertiser extends Auth_Controller{
 		
 		$data['cat']						= 'inventory';
 		$data['activeaction']				= 'viewadvertiser';
-		
-		if(isset($_GET['clientid'])){
+		$uid    = $this->session->userdata('uid');
+		if(isset($_GET['sortBy'])){
+			$sortBy					= $this->input->get('sortBy');
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['advertiser']				= $this->Advertiser_Model->getSortedAdvertiser($sortBy,$uid);
+			$data['new']		= array("sortBy"=>$sortBy);	
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->Advertiser_Model->getadvertiser($clientid);
 		}else{
@@ -560,12 +566,11 @@ class Advertiser extends Auth_Controller{
 			}else{
 				include APPPATH.'/libraries/banner/newupdatebanner.php';
 			}
-			//echo '<pre>';print_r($data);die;
+			//echo '<pre>';print_r($banner);die;
 			$this->load->view('advertiser/header', $data);
 			$this->load->view('advertiser/leftsidebar', $data);
 			$this->load->view("advertiser/banner",	$data);
 		/************end of form submission handling *****/
-		
 		
 		}else{
 				/****add banner to default campaign and advertiser****/

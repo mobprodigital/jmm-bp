@@ -18,6 +18,36 @@
 					<a href="#" id="delete-adv"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
 					<div class="box-body">
+
+					<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+					<?php if(isset($new)) 
+										{ 	$sortBy = $new['sortBy']; } 
+										?>
+										<div class="row ">
+												<div class="col-md-2 form-group" style="margin-left: 914px;">
+														<select class="view-banner-filter" name="sort_type" id="adv_sort_type">
+																<option value="">
+																			- - - - Filter - - - -
+																</option>
+																<option value="name"
+																		<?php if(isset($sortBy) && $sortBy=='name'){echo 'selected';} ?>>Name
+																</option>
+																<option value="date"
+																		<?php if(isset($sortBy) && $sortBy== 'date'){echo 'selected';} ?>>Date
+																</option>
+														</select>
+												</div>
+										</div>
+
+
+
+                        
+          <!---------------------------- Filter Section Ends ---------------------------------------------------------------->
+
+
+
+
+
 						<div>
 							<?php if(isset($advertiser[0])){ ?>
 

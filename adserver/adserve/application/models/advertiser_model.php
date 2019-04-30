@@ -471,6 +471,21 @@ class Advertiser_Model extends CI_Model {
 	
 	/*************** End of Statistics ***********/
 	
-	
+	public function getSortedAdvertiser($sortBy,$uid)
+	{
+		$this->db->select("*");
+		$this->db->from('clients');
+		$this->db->where('userid', $uid);
+		if($sortBy == 'name')
+		{ $this->db->order_by("clientname",'asc'); }
+		elseif($sortBy == 'date')
+		{ $this->db->order_by("updated",'desc'); }
+		else
+		{ $this->db->order_by("clientid",'desc'); }
+		
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		return $result;
+	}
 	
 }
