@@ -43,7 +43,7 @@ class Advertiser_Model extends CI_Model {
 		$this->db->order_by("clientid",'desc');
 		$query 			= $this->db->get();
 		$result			= $query->result();
-		//echo $this->db->last_query();die;
+		//echo $this->db->last_query();
 		return $result;
 	}
 	
@@ -487,5 +487,43 @@ class Advertiser_Model extends CI_Model {
 		$result			= $query->result();
 		return $result;
 	}
+
+	public function getSortedCampaign($AdvId,$campaignSortType,$userId)
+{
+	$this->db->select("*,campaigns.status as camp_stat");
+	$this->db->from('campaigns');
+	$this->db->join('clients', 'clients.clientid = campaigns.clientid');
+	
+	//$this->db->where('clients.clientid', $clientid);
+	
+	if(!is_null($AdvId) && !empty($AdvId))
+	{
+		$this->db->where('clients.clientid', $AdvId);
+	}
+	else
+	{
+		$this->db->where('clients.userid', $userId);
+	}
+
+	if(!is_null($campaignSortType) && $campaignSortType == 'name')
+	{
+		$this->db->order_by("campaigns.campaignname",'asc');
+	}
+	elseif(!is_null($campaignSortType) && $campaignSortType == 'date')
+	{
+		$this->db->order_by("campaigns.activate_time",'desc');
+	}
+	else
+	{
+		$this->db->order_by("campaignid",'desc');
+	}
+	
+	$query 			= $this->db->get();
+	//echo $this->db->last_query();
+	$result			= $query->result();
+	//print_r($result);
+	return $result;
+
+}
 	
 }

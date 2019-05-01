@@ -26,13 +26,54 @@
 					</select>-->
 					<?php } ?>
 					<div class="box-body">
+					<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+					<?php if(isset($new)) 
+					{ 	$sortBy = $new['sortBy']; $AdvId = $new['AdvId']; } 
+					?>
+					<form action="<?php echo base_url()?>advertiser/viewcompaign" method="post" name="filter_form" id="filter_form" autocomplete="off">
+                        <div class="row ">
+							<div class="col-md-2 form-group">
+								<select class="view-banner-filter" name="campaign_sort_type" id="campaign_sort_type" style="margin-left: 625px;">
+									<option value="name"
+										<?php if(isset($sortBy) && $sortBy=='name'){echo 'selected';} ?>>Name
+									</option>
+									<option value="date"
+										<?php if(isset($sortBy) && $sortBy== 'date'){echo 'selected';} ?>>Date
+									</option>
+								</select>
+							</div>
+							<div class="col-md-2 form-group">
+								<?php if(isset($advertiserlist))
+								{ ?>
+									<select  name="advertiserlist" id="advertiserlist"  class="view-banner-filter" style="width:190px;margin-left: 612px;"/>
+										<option value="">- - - - - - FILTER - - - - - -</option>
+										<?php foreach($advertiserlist as $key => $value){?>
+										<option value="<?php echo $value->clientid;?>" <?php if(isset($AdvId) && $AdvId==$value->clientid){echo 'selected';} ?>><?php echo $value->clientname;?></option>
+										<?php } ?>
+									</select>
+								<?php } ?>
+							</div>
+							<div class="col-md-2 form-group">
+								<input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit" id="submit" style="margin-left: 637px;">
+							</div>
+                        </div>
+					</form>
+                <!---------------------------- Filter Section Ends ---------------------------------------------------------------->	
+
+
+
+
+
+
+
 						<div>
 						<?php if(!empty($campaign)){ ?>
 							<table id="example" class="table table-bordered table-striped" >
 								<thead>
 									<tr class="header-row center-align">
 										<th width="2%"><input type="checkbox" class="campaign" id="main_00" value="adchk"></th>
-										<th width="40%">Name</th>
+										<th width="20%">Name</th>
+										<th width="20%">Date</th>
 										<th width="10%" class="center-align">Status</th>
 										<th width="20%" class="center-align">Action</th>
 										<th width="20%" class="center-align">Details</th>
@@ -44,6 +85,7 @@
 									<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
 										<td width="2%"><input type="checkbox" class="campaign" id="<?php echo $value->campaignid;?>"></td>
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>advertiser/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
+										<td><?php echo $value->activate_time;?></td>
 										<td class="center-align">
 											<span class="camstatus" id="<?php echo $value->campaignid;?>" style="cursor: pointer;color:
 												<?php if($value->camp_stat==1){echo 'green';}else{echo '#eb7e23';}?>">

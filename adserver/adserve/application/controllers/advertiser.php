@@ -484,8 +484,22 @@ class Advertiser extends Auth_Controller{
 	public function viewcompaign(){
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewcompaign';
-		
-		if(isset($_GET['clientid'])){
+		$userId	= $this->session->userdata('uid');
+		//echo $_POST['campaign_sort_type']; echo '<br>'; echo $_POST['advertiserlist'];
+
+		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
+			$campaignSortType		= $this->input->post('campaign_sort_type'); 
+			$AdvId					= $this->input->post('advertiserlist');
+			if(empty($AdvId)) { $AdvId = 0;}
+			
+			$data['new']		= array("sortBy"=>$campaignSortType,"AdvId"=>$AdvId);
+			//print_r($data['new']);
+			$data['campaign']		= $this->Advertiser_Model->getSortedCampaign($AdvId,$campaignSortType,$userId);
+			$data['advertiserlist']	= $this->Advertiser_Model->getadvertiser();
+			//print_r($data['campaign']);
+			
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
 			$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientid);
 		}elseif(isset($_GET['campaignid'])){
@@ -493,6 +507,7 @@ class Advertiser extends Auth_Controller{
 			$data['campaign']			= $this->Advertiser_Model->getcampaigns($campaignid);
 		}else{
 			$data['advertiserlist']			= $this->Advertiser_Model->getadvertiser();
+			//print_r($data['advertiserlist']);
 			$clientId						= $this->Advertiser_Model->getclients($data['advertiserlist']);
 	
 			if(!(empty($clientId))){
@@ -511,7 +526,7 @@ class Advertiser extends Auth_Controller{
 		$data['activeaction']			= 'viewcompaign';
 		$this->load->view('advertiser/header',$data);
 		$this->load->view('advertiser/leftsidebar', $data);
-		$this->load->view("advertiser/viewcompaign");
+		$this->load->view("advertiser/viewcompaign",$data);
 	}
 	/**********End of Campaign Section*********************************************************/
 	
