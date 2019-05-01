@@ -676,7 +676,21 @@ class Advertiser extends Auth_Controller{
 	public function viewbanner(){
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewbanner';
-		if(isset($_GET['campaignid'])){
+		$uid = $this->session->userdata('uid');
+
+		/********************* Added By Riccha ***********************/
+		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) )
+		{
+			$banner_status		= $this->input->post('banner_status');
+			$sortBy					= $this->input->post('sort_type');
+			if(empty($banner_status)) { $banner_status = 0;}
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['new']		= array("sortBy"=>$sortBy,"banner_status"=>$banner_status);
+			//print_r($data['new']);
+			$data['banner']		= $this->Advertiser_Model->getSortedBanner($banner_status,$sortBy,$uid);
+		}
+		/****************************** End **************************/
+		elseif(isset($_GET['campaignid'])){
 			$campaignid					= $this->input->get('campaignid');
 			$data['banner']				= $this->Advertiser_Model->getbanner($campaignid, null, null);
 			
