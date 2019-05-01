@@ -1374,6 +1374,44 @@ $("#adv_sort_type").change(function(){
 
 	
 });
+
+
+// advertiser Signup - Change campaign status on dropdown change
+$(".adv-camstatus").change(function(){
+	//alert('hii adv-camstatus');
+	var campidString		= $(this).attr("id");
+	var campaignid = campidString.substring(9);
+	//alert(campaignid);
+	var camp_stat	= $(this).val();
+	//alert(camp_stat);
+	if(camp_stat == 1){
+		var choice = confirm('Do you really want to activate this campaign?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this campaign?');
+	}
+	if(choice === true) {
+		//alert('in ajax');
+		$.ajax({
+		
+			type	:"POST",
+			url		:script+"advertiser/changecampaignstatus",
+			data	:"campaignid="+campaignid,
+			success:function(response){
+				//console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.newstatus;
+				//alert(status);
+				alert('Campaign is successfully updated');
+				$(".camstatus"+campaignid).val(camp_stat);
+				
+				}
+		});
+	}
+	return false;
+		
+		
+	});
 /******************************* Ends ************************************/
 
 });

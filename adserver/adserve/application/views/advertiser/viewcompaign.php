@@ -86,11 +86,21 @@
 										<td width="2%"><input type="checkbox" class="campaign" id="<?php echo $value->campaignid;?>"></td>
 										<td><img src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a href="<?php echo base_url();?>advertiser/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a></td>
 										<td><?php echo $value->activate_time;?></td>
-										<td class="center-align">
+										<!-- <td class="center-align">
 											<span class="camstatus" id="<?php echo $value->campaignid;?>" style="cursor: pointer;color:
 												<?php if($value->camp_stat==1){echo 'green';}else{echo '#eb7e23';}?>">
 												<?php if($value->camp_stat==1){echo 'active';}else{echo 'inactive';}?>
 											</span>
+										</td> -->
+										<td class="center-align">
+											<select name="camstatus" id="campaign_<?php echo $value->campaignid;?>" class="adv-camstatus view-banner-filter">
+												<option value="1"
+													<?php if(isset($value->camp_stat) && '1'==$value->camp_stat){echo 'selected';} ?>>
+													Activate</option>
+												<option value="0"
+													<?php if(isset($value->camp_stat) && '0'==$value->camp_stat){echo 'selected';} ?>>
+													Deactivate</option>
+											</select>
 										</td>
 										<td class="center-align">
 											<a href="<?php echo base_url();?>advertiser/banner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><div  class="btn bg-blue btn-xs">Add new banner</div></a>

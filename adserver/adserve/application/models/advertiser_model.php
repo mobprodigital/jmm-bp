@@ -525,5 +525,25 @@ class Advertiser_Model extends CI_Model {
 	return $result;
 
 }
+
+	function getcampaignstatus($campId){
+	$this->db->select("status");
+	$this->db->from('campaigns');
+	$this->db->where('campaignid', $campId);
+	$query 			= $this->db->get();
+		
+	$result			= $query->row();
+	return $result->status;
+	//return true;
+	
+	}
+
+	function changecampaignstatus($campId, $status){
+	$this->db->where('campaignid =', $campId);
+	$this->db->update('campaigns', array("status" => $status));
+	//echo $this->db->last_query(); die;
+	return true;
+	
+	}
 	
 }

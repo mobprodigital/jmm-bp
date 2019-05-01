@@ -464,16 +464,17 @@ class Advertiser extends Auth_Controller{
 	function changecampaignstatus(){
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
-        }
-		$campaignId		= $this->input->post('campaignid');
-		$status			= $this->User_Model->getcampaignstatus($campaignId);
+		}
+		$uid    = $this->session->userdata('uid'); 
+		$campaignId		= $this->input->post('campaignid'); 
+		$status			= $this->Advertiser_Model->getcampaignstatus($campaignId);
 		if($status == 0){
 			$newStatus	= 1;
 		}else{
 			$newStatus	= 0;
 			
 		}
-		$result			= $this->User_Model->changecampaignstatus($campaignId, $newStatus);
+		$result			= $this->Advertiser_Model->changecampaignstatus($campaignId, $newStatus);
 		echo json_encode(array('newstatus' => $newStatus));
 		
 
@@ -1299,6 +1300,9 @@ public function deletebannercheckbox()
 	redirect('advertiser/viewbanner');
 
 }
+
+
+
 /************************************ Ends ******************************************************/
 	
 	
