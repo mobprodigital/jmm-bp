@@ -588,10 +588,11 @@ class Advertiser extends Auth_Controller{
 			$this->load->view("advertiser/banner",	$data);
 		/************end of form submission handling *****/
 		
-		}else{
+		}else{ 
 				/****add banner to default campaign and advertiser****/
-				if(!isset($_GET['campaignid'])){
+				if(!isset($_GET['campaignid'])){ 
 					$defaultAdvertiser          		= $this->Advertiser_Model->getadvertiser();
+					//print_r($defaultAdvertiser); 
 					if(!empty($defaultAdvertiser)){
 						$data['advertExist']		= true;
 						$clientId					= $defaultAdvertiser[0]->clientid;
@@ -615,11 +616,12 @@ class Advertiser extends Auth_Controller{
 				
 				
 			if(!isset($_GET['type'])){
-				if(isset($_GET['clientid']) && isset($_GET['campaignid']) && isset($_GET['bannerid'])){
+				if(isset($_GET['clientid']) && isset($_GET['campaignid']) && isset($_GET['bannerid'])){ 
 					$clientid					= $this->input->get('clientid');
 					$campaignid					= $this->input->get('campaignid');
 					$bannerid					= $this->input->get('bannerid');
 					$data['banner']				= $this->User_Model->getbanner($campaignid, $bannerid);
+					//print_r($data['banner']);
 					if(isset($data['banner'][0]->url)){
 						$lp				= $data['banner'][0]->url;
 						if(strpos($lp, '&')){
@@ -666,7 +668,7 @@ class Advertiser extends Auth_Controller{
 			//echo '<pre>';print_r($data);	
 			$this->load->view('advertiser/header',$data);
 			$this->load->view('advertiser/leftsidebar', $data);
-			$this->load->view("advertiser/banner");
+			$this->load->view("advertiser/banner", $data);
 		}
 	}
 	

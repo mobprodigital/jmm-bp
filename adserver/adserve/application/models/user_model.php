@@ -2216,7 +2216,7 @@ class User_Model extends CI_Model {
 		
 	}
 	function getbanner($campaignid=null, $bannerid=null, $row=null , $limit=null , $offset=null){
-		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status, banners.comments as comments");
 		$this->db->from('banners');
 		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
 		if(!is_null($bannerid)){
@@ -2225,7 +2225,7 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-		$this->db->where('banners.delete_status =', 'active');
+$this->db->where('banners.delete_status =', 'active');
 		
 	//echo $offset; die;
 		if(!is_null($limit)){

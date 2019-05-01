@@ -13,6 +13,8 @@
 	}
 	$banner['url']					= $this->input->post('url');          
 	$banner['alt']        			= $this->input->post('alt');
+	$banner['statustext'] 			= $this->input->post('statustext');
+
 	$banner['bannertext'] 			= $this->input->post('bannertext');
 	$banner['target']				= $this->input->post('target');
 	$banner['tracking_pixel']		= $this->input->post('tracking_pixel');
