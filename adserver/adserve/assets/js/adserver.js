@@ -1069,7 +1069,8 @@ $("document").ready(function(){
 		// Ends
 
 		//Validation For Email
-		var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
+		//var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
+		var emailReg = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
 		if(!email.match(emailReg))
 		{
 			$("#span_email").text("Please Enter Valid Email Address");
