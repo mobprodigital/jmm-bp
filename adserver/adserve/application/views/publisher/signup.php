@@ -11,6 +11,9 @@
 $this->load->view('login/header');?>
 <div class="">
     <div class="register-box-body">
+    <?php if(isset($msg)){ ?>
+		<p id="msg" style="color:red;"><?php echo $msg;?></p>
+	<?php } ?>
         <div class="head-title">
             <h2>Sign Up for Publisher Account</h2>
         </div>
