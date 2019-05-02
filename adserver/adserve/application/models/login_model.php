@@ -91,4 +91,28 @@ class Login_Model extends CI_Model {
 		}
 
 	}
+
+	function checkAdvertiser($input)
+	{
+		$email = $input['username'];
+		$mobile = $input['phone'];
+		$role = $input['role'];
+
+		$this->db->select("*");
+		$this->db->from('users');
+		$this->db->where('username', $email);
+		$this->db->where('phone', $mobile);
+		$this->db->where('role', 	$role);
+		$query 					= $this->db->get();
+		$result					= $query->row();
+		//echo '<pre>';print_r($result);
+		//echo $this->db->last_query();die;
+		
+		if(!empty($result)){
+			return array("duplicate"=>'1');
+		}else{
+			return array("duplicate"=>'0');
+		}
+
+	}
 }
