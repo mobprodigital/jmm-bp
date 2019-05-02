@@ -173,9 +173,25 @@ class Login extends CI_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-			$data['successMsg'] 			= $this->Login_Model->savePublisher($input);
+
+			// Check Duplicate Entry //
+			$checkMsg 	= $this->Login_Model->checkPublisher($input);
+			//print_r($checkMsg);
+			if(isset($checkMsg) && $checkMsg['duplicate'] == '1')
+			{
+				$data['msg'] = 'Already Registerd With This Email And Number';
+				$this->load->view('publisher/signup', $data);
+			}
+			else
+			{   //echo "duplicate 0";
+				$data['successMsg'] 			= $this->Login_Model->savePublisher($input);
+				$this->load->view('publisher/login', $data);
+			}
+			
+			// Ends //
+			
 			//redirect('publisher/index');
-			$this->load->view('publisher/login', $data);
+			
 			
 
 		}else{
