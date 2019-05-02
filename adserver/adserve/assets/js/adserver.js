@@ -1402,16 +1402,63 @@ $(".adv-camstatus").change(function(){
 				var parse=JSON.parse(response);
 				var status = parse.newstatus;
 				//alert(status);
-				alert('Campaign is successfully updated');
-				$(".camstatus"+campaignid).val(camp_stat);
-				
+				if(status == '0' || status == '1')
+				{
+					alert('Campaign is successfully updated');
+					$(".camstatus"+campaignid).val(camp_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+					//$(".bannerstatus_"+bannerid).val(banner_stat);
 				}
+			}
 		});
 	}
 	return false;
 		
 		
 	});
+
+	// Advertiser Signup - Set Banner Status In Dropdown On View Banner Page
+$(".adv-bannerstatus").change(function(){
+	alert('in function');
+	var banneridString		= $(this).attr("id");
+	var bannerid = banneridString.substring(7);
+	alert(bannerid);
+	var banner_stat	= $(this).val();
+	alert(banner_stat);
+	if(banner_stat == 1){
+		var choice = confirm('Do you really want to activate this banner?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this banner?');
+	}
+	if(choice === true) {
+		$.ajax({
+			type	:"POST",
+			url		:script+"advertiser/changebannerstatus",
+			data	:"bannerid="+bannerid+"&banner_stat="+banner_stat,
+			success :function(response){
+				console.log(response);
+				alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.newstatus;
+				alert(status);
+				if(status == '0' || status == '1')
+				{
+					alert('Banner is successfully updated');
+					$(".bannerstatus_"+bannerid).val(banner_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+					//$(".bannerstatus_"+bannerid).val(banner_stat);
+				}
+				//alert(parse.newstatus);
+				//console.log(parse.newstatus);//return false;
+			}
+		});
+	}
+	return false;
+});
 /******************************* Ends ************************************/
 
 });

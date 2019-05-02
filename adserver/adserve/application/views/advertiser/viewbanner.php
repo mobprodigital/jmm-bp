@@ -82,7 +82,7 @@
 											?>icon-banner.png<?php } 
 										?>">&nbsp;&nbsp;<a href="<?php echo base_url();?>advertiser/banner?bannerid=<?php echo $value->bannerid;?>&campaignid=<?php echo $value->campaignid;?>&clientid=<?php echo $value->clientid;?>"><?php echo $value->description;?></td>
 										<td width="20%"><?php echo $value->updated; ?> </td>
-										<td width="10%"><ul class="rowActions" style="list-style-type:none;">
+										<!-- <td width="10%"><ul class="rowActions" style="list-style-type:none;">
                                               <li><a  href="<?php echo base_url();?>advertiser/banner_acl?bannerid=<?php echo $value->bannerid;?>&campaignid=<?php echo $value->campaignid;?>&clientid=<?php echo $value->clientid;?>">Delivery Option</a></li>
                                               <li style="padding-top: 10px;">
 											  <span class="bannerstatus" id="banner_<?php echo $value->bannerid;?>" style="cursor: pointer;color:
@@ -90,7 +90,30 @@
 												<?php if($value->banner_status == 0){echo 'deactivate';}else{echo 'activate';}?></span>
 											  </li>
                                             </ul>
+										</td> -->
+
+										<td >
+                                            <ul class="rowActions" style="list-style-type:none;">
+                                                <li style="width: 118px;">
+												<a  href="<?php echo base_url();?>advertiser/banner_acl?bannerid=<?php echo $value->bannerid;?>&campaignid=<?php echo $value->campaignid;?>&clientid=<?php echo $value->clientid;?>">Delivery Option</a>
+                                                </li>
+                                               
+                                                <li style="margin-top: 19px;">
+                                                    <select name="bannerstatus "
+                                                        id="banner_<?php echo $value->bannerid;?>" class="adv-bannerstatus view-banner-filter">
+                                                        <option value="1"
+                                                            <?php if(isset($value->banner_status) && '1'==$value->banner_status){echo 'selected';} ?>>
+                                                            Activate</option>
+                                                        <option value="0"
+                                                            <?php if(isset($value->banner_status) && '0'==$value->banner_status){echo 'selected';} ?>>
+                                                            Deactivate</option>
+                                                    </select>
+												</li>
+                                                
+											</ul>
+
 										</td>
+
 										<td width="25%">
 											<style> .panel table td{padding-left: 5px;}.panel table th{padding-left: 32px;}</style>
 											<div class="panel" style="font-size: 11px; background-color:#dddddd;">
