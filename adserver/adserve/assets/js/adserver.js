@@ -1421,12 +1421,12 @@ $(".adv-camstatus").change(function(){
 
 	// Advertiser Signup - Set Banner Status In Dropdown On View Banner Page
 $(".adv-bannerstatus").change(function(){
-	alert('in function');
+	//alert('in function');
 	var banneridString		= $(this).attr("id");
 	var bannerid = banneridString.substring(7);
-	alert(bannerid);
+	//alert(bannerid);
 	var banner_stat	= $(this).val();
-	alert(banner_stat);
+	//alert(banner_stat);
 	if(banner_stat == 1){
 		var choice = confirm('Do you really want to activate this banner?');
 	}else{
@@ -1439,10 +1439,10 @@ $(".adv-bannerstatus").change(function(){
 			data	:"bannerid="+bannerid+"&banner_stat="+banner_stat,
 			success :function(response){
 				console.log(response);
-				alert(response);
+				//alert(response);
 				var parse=JSON.parse(response);
 				var status = parse.newstatus;
-				alert(status);
+				//alert(status);
 				if(status == '0' || status == '1')
 				{
 					alert('Banner is successfully updated');
