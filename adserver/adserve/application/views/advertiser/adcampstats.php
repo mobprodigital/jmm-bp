@@ -335,7 +335,7 @@
 	
     </script>
 
-<?php $this->load->view('advertiser/footer');?>
+ 
 <?php if(isset($period_preset) && ($period_preset=='specific')){ ?>
 	<script>
 		$('#period_start').datepicker({
