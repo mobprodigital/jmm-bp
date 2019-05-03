@@ -441,6 +441,20 @@ class Publisher extends Auth_Controller{
 		
 	}
 
+	public function websiteFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['website_name'] != '')
+		{ $web = trim($_POST['website_name']); }
+		$data['affiliates'] 	= $this->Publisher_Model->getWebsiteFilterByName($web,$uid);
+		$data['webnew'] = $web;
+		//print_r($data['affiliates']); die;
+		$this->load->view("publisher/viewwebsite", $data);
+
+	}
+
 	/*********************** Ends ***********************/
 	
 	
