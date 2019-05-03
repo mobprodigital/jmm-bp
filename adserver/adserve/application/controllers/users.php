@@ -5782,7 +5782,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 		if($role == 'admin'){
 			$userId	= null;
 		}else{
-			$userId	= $this->session->userdata('uid');;
+			$userId	= $this->session->userdata('uid');
 			
 		}
 		
@@ -5807,7 +5807,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	// end
 		
 		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
-			$campaignSortType		= $this->input->post('campaign_sort_type'); echo '<br>';
+			$campaignSortType		= $this->input->post('campaign_sort_type'); 
 			$AdvId					= $this->input->post('advertiserlist');
 			if(empty($AdvId)) { $AdvId = 0;}
 			
@@ -6805,6 +6805,38 @@ public function deletezone(){
     redirect('users/viewzone');
 	
 }
+
+	public function websiteFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['website_name'] != '')
+		{ $web = trim($_POST['website_name']);  $data['webnew'] = $web; } else { $web='';}
+		$data['affiliates'] 	= $this->User_Model->getWebsiteFilterByName($web);
+		
+		//print_r($data['affiliates']); die;
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view("admin/viewwebsite", $data);
+
+	}
+
+	public function zoneFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$data['activeaction']			= 'viewzones';
+		//$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['zone_name'] != '')
+		{ $zone = trim($_POST['zone_name']); $data['zonenew'] = $zone; } else { $zone='';}
+		$data['zones'] 	= $this->User_Model->getZoneFilterByName($zone);
+		
+		//print_r($data['zones']); die;
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view("admin/viewzones", $data);
+
+	}
 /********************** Ends **********************************/
 	
 }

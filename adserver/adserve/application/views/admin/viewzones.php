@@ -10,6 +10,25 @@
 						<a href="#" id="zone-delete"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right: 10px;"/>Delete</a>
 					</div>
 					<div class="box-body">
+					<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+					<?php if(isset($zonenew))
+					{  $zoneName = $zonenew; } else { $zoneName = '';}?>
+						<form action="<?php echo base_url()?>users/zoneFilterByName" method="post" name="filter_form" id="filter_form" autocomplete="off">
+							<div class="row ">
+								<div class="col-md-2 form-group">
+									Zone Name :<input type="text" name="zone_name" id="zone_name" value="<?php echo $zoneName;?> ">
+								</div>
+								
+								<div class="col-md-2 form-group">
+									<input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit" id="submit" style="margin-left: 637px;">
+								</div>
+							</div>
+						</form>
+					<!---------------------------- Filter Section Ends ---------------------------------------------------------------->
+
+
+
+
 						<div>
 						<table id="example" class="table table-bordered table-striped">
 								<thead>

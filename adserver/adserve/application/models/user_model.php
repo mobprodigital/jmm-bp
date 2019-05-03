@@ -3113,6 +3113,34 @@ public function deleteWebsite($web_ids)
 	// ends
 }
 
+public function getWebsiteFilterByName($web)
+{
+	//echo $web; echo '<br>'; echo $uid;
+	$this->db->select("*");
+	$this->db->from('affiliates');
+	$this->db->like('name', $web, 'both');
+	$this->db->order_by("affiliateid",'desc');
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	//echo $this->db->last_query();die;
+	//echo '<pre>';print_r($result);die;
+	return $result;
+}
+
+public function getZoneFilterByName($zone)
+{
+	//echo $zone; echo '<br>'; echo $uid; die;
+	$this->db->select("*,affiliates.affiliateid as affiliateid");
+	$this->db->from('zones');
+	$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
+	$this->db->like('zonename', $zone, 'both');
+	$this->db->order_by("zoneid",'desc');
+
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	//echo $this->db->last_query();die;	
+	return $result;
+}
 
 
 
