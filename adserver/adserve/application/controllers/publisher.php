@@ -455,6 +455,23 @@ class Publisher extends Auth_Controller{
 
 	}
 
+	public function zoneFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$data['activeaction']			= 'viewzones';
+		$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['zone_name'] != '')
+		{ $zone = trim($_POST['zone_name']); }
+		$data['zones'] 	= $this->Publisher_Model->getZoneFilterByName($zone,$uid);
+		$data['zonenew'] = $zone;
+		//print_r($data['zones']); die;
+		$this->load->view('publisher/header', $data);
+		$this->load->view('publisher/leftsidebar', $data);
+		$this->load->view("publisher/viewzones", $data);
+
+	}
+
 	/*********************** Ends ***********************/
 	
 	

@@ -298,5 +298,22 @@ public function getWebsiteFilterByName($web,$uid)
 	//echo '<pre>';print_r($result);die;
 	return $result;
 }
+
+public function getZoneFilterByName($zone,$uid)
+{
+	//echo $zone; echo '<br>'; echo $uid; die;
+	$this->db->select("*,affiliates.affiliateid as affiliateid");
+	$this->db->from('zones');
+	$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
+
+	$this->db->where('affiliates.userid', $uid);
+	$this->db->like('zonename', $zone, 'both');
+	$this->db->order_by("zoneid",'desc');
+
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	//echo $this->db->last_query();die;	
+	return $result;
+}
 /*********************** Ends ********************/
 }
