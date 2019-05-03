@@ -16,7 +16,7 @@
 						<form action="<?php echo base_url()?>publisher/zoneFilterByName" method="post" name="filter_form" id="filter_form" autocomplete="off">
 							<div class="row ">
 								<div class="col-md-2 form-group">
-									Website Name :<input type="text" name="zone_name" id="zone_name" value="<?php echo $zoneName;?> ">
+									Zone Name :<input type="text" name="zone_name" id="zone_name" value="<?php echo $zoneName;?> ">
 								</div>
 								
 								<div class="col-md-2 form-group">
