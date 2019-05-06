@@ -2216,7 +2216,7 @@ class User_Model extends CI_Model {
 		
 	}
 	function getbanner($campaignid=null, $bannerid=null, $row=null , $limit=null , $offset=null){
-		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status, banners.comments as comments");
 		$this->db->from('banners');
 		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
 		if(!is_null($bannerid)){
@@ -2225,9 +2225,9 @@ class User_Model extends CI_Model {
 		if(!is_null($campaignid)){
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
-		$this->db->where('banners.delete_status =', 'active');
+$this->db->where('banners.delete_status =', 'active');
 		
-		//echo $offset; die;
+	//echo $offset; die;
 		if(!is_null($limit)){
         	$this->db->limit($limit,$offset);
 
@@ -3113,6 +3113,34 @@ public function deleteWebsite($web_ids)
 	// ends
 }
 
+public function getWebsiteFilterByName($web)
+{
+	//echo $web; echo '<br>'; echo $uid;
+	$this->db->select("*");
+	$this->db->from('affiliates');
+	$this->db->like('name', $web, 'both');
+	$this->db->order_by("affiliateid",'desc');
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	//echo $this->db->last_query();die;
+	//echo '<pre>';print_r($result);die;
+	return $result;
+}
+
+public function getZoneFilterByName($zone)
+{
+	//echo $zone; echo '<br>'; echo $uid; die;
+	$this->db->select("*,affiliates.affiliateid as affiliateid");
+	$this->db->from('zones');
+	$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
+	$this->db->like('zonename', $zone, 'both');
+	$this->db->order_by("zoneid",'desc');
+
+	$query 			= $this->db->get();
+	$result			= $query->result();
+	//echo $this->db->last_query();die;	
+	return $result;
+}
 
 
 

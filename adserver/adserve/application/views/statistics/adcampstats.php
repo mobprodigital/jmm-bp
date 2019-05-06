@@ -148,7 +148,7 @@ if($currency_value=='1'){
 								<img border="0" tabindex="6" src="<?php echo base_url();?>assets/upimages/ltr/go_blue.gif"></a>
 							
 							</form></br></br>
-							<a accesskey="e"  style="float:right;" href="stats.php?statsBreakdown=day&amp;period_preset=today&amp;period_start=2016-04-18&amp;period_end=2016-04-18&amp;listorder=name&amp;orderdirection=up&amp;day=&amp;setPerPage=15&amp;entity=global&amp;breakdown=history&amp;plugin=advertiser:statshistory">
+							<a accesskey="e"  style="float:right;" href="<?php echo base_url();?>users/excelExpo">
 							<img border="0" alt="" src="<?php echo base_url();?>assets/upimages/excel.gif"> <u>E</u>xport Statistics to Excel                </a>
 							<img width="100%" style="height:1px;" src="<?php echo 'base_url';?>assets/upimages/break.gif">
 							

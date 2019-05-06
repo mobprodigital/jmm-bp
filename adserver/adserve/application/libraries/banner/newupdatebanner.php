@@ -25,4 +25,5 @@
 						$my_file 		= $GLOBALS['cacheDir'].'delivery_ad_'.$newbannerId.'.php';
 						file_put_contents($my_file, json_encode($cacheArr));
 				}
+				$data['msg']						= 'Banner is successfully added';
 ?>

@@ -1069,7 +1069,8 @@ $("document").ready(function(){
 		// Ends
 
 		//Validation For Email
-		var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
+		//var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
+		var emailReg = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
 		if(!email.match(emailReg))
 		{
 			$("#span_email").text("Please Enter Valid Email Address");
@@ -1296,6 +1297,169 @@ $("#publishe-zone-delete").click(function(){
 		
 });
 
+// Advertiser Signup - Delete advertiser
+$("#delete-adv").click(function(){
+	//alert('delete-adv');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".advertiser").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'advertiser/deleteadvertiser?advertiser_ids=' + ids;
+	}
+	return false;
+	
+});
+
+// Advertiser signup - Delete campaign from campaign list
+$("#delete-camp").click(function(){
+	//alert('delete-camp');
+	//console.log("hello india");return false;
+
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".campaign").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+							$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//	console.log(ids);
+	//alert(ids);
+	window.location = script+'advertiser/deletecampaigncheckbox?campaign_ids=' + ids;
+	
+	}
+	return false;
+	
+});
+
+// Advertiser Signup - Delete Banners from View Banner Page
+
+$("#delete-ban").click(function(){
+	//alert('delete banner');
+	//console.log("hello india");return false;
+	var ids		= '';
+	if(confirm("Are you sure to delete")){
+		$(".banner").each(function(){
+		if($(this).is(':checked')){
+			ids		= ids + ","+$(this).attr("id");
+
+			$(this).parents('tr').fadeOut(function(){
+				$(this).remove(); //remove row when animation is finished
+			});
+		}
+	});
+	//alert(ids);
+	window.location = script+'advertiser/deletebannercheckbox?banner_ids=' + ids;
+	
+	}
+	return false;
+	
+});
+//advertiser Signup - Sort Name And Date Wise On View Advertiser Page
+$("#adv_sort_type").change(function(){
+	//alert("hiiiiii advertiser Signup");
+	var sort	= $(this).val();
+	//alert(sort);
+	if(sort != '') { window.location.href='viewadvertiser?sortBy='+sort; }
+	else{ window.location.href='viewadvertiser'; }
+
+	
+});
+
+
+// advertiser Signup - Change campaign status on dropdown change
+$(".adv-camstatus").change(function(){
+	//alert('hii adv-camstatus');
+	var campidString		= $(this).attr("id");
+	var campaignid = campidString.substring(9);
+	//alert(campaignid);
+	var camp_stat	= $(this).val();
+	//alert(camp_stat);
+	if(camp_stat == 1){
+		var choice = confirm('Do you really want to activate this campaign?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this campaign?');
+	}
+	if(choice === true) {
+		//alert('in ajax');
+		$.ajax({
+		
+			type	:"POST",
+			url		:script+"advertiser/changecampaignstatus",
+			data	:"campaignid="+campaignid,
+			success:function(response){
+				//console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.newstatus;
+				//alert(status);
+				if(status == '0' || status == '1')
+				{
+					alert('Campaign is successfully updated');
+					$(".camstatus"+campaignid).val(camp_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+					//$(".bannerstatus_"+bannerid).val(banner_stat);
+				}
+			}
+		});
+	}
+	return false;
+		
+		
+	});
+
+	// Advertiser Signup - Set Banner Status In Dropdown On View Banner Page
+$(".adv-bannerstatus").change(function(){
+	//alert('in function');
+	var banneridString		= $(this).attr("id");
+	var bannerid = banneridString.substring(7);
+	//alert(bannerid);
+	var banner_stat	= $(this).val();
+	//alert(banner_stat);
+	if(banner_stat == 1){
+		var choice = confirm('Do you really want to activate this banner?');
+	}else{
+		var choice = confirm('Do you really want to deactivate this banner?');
+	}
+	if(choice === true) {
+		$.ajax({
+			type	:"POST",
+			url		:script+"advertiser/changebannerstatus",
+			data	:"bannerid="+bannerid+"&banner_stat="+banner_stat,
+			success :function(response){
+				console.log(response);
+				//alert(response);
+				var parse=JSON.parse(response);
+				var status = parse.newstatus;
+				//alert(status);
+				if(status == '0' || status == '1')
+				{
+					alert('Banner is successfully updated');
+					$(".bannerstatus_"+bannerid).val(banner_stat);
+				}else
+				{
+					alert('Something Goes Wrong.');
+					//$(".bannerstatus_"+bannerid).val(banner_stat);
+				}
+				//alert(parse.newstatus);
+				//console.log(parse.newstatus);//return false;
+			}
+		});
+	}
+	return false;
+});
 /******************************* Ends ************************************/
 
 });

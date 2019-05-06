@@ -51,7 +51,10 @@
 							<?php if(isset($users)){?>
 							<?php foreach($users as $key => $value){ ?>
 								<tr style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
-									<td><img align="absmiddle" width="16" height="16" src="<?php echo base_url();?>assets/upimages/icon-date.gif"><a href=""><?php echo $value->date;?></a></td>
+									<td>
+										<img align="absmiddle" width="16" height="16" src="<?php echo base_url();?>assets/upimages/icon-date.gif"><a href="">
+										<?php if($value->date_created == '') { echo '0000-00-00 00:00:00'; } else { echo $value->date_created; }?></a>
+									</td>
 									<td>36000<?php //echo $value->firstname.' '.$value->lastname;?></td>
 									<td>1990<?php //echo $value->username;?></td>
 									<td>12.29</td>

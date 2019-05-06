@@ -82,7 +82,7 @@ class Publisher extends Auth_Controller{
 		$data		 = array();
 	 	$pubId       = null;
 		if(isset($_GET['uid'])){
-			$pubId  = $this->input->post('uid');   
+			$pubId  = $this->input->get('uid');   
 		 
 	 	}
 		if(isset($_POST['submit'])){
@@ -99,8 +99,12 @@ class Publisher extends Auth_Controller{
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-		   //print_r($input); die;
+			// print_r($input); 
+			// echo $pubId; die;
+			 
+
 			$result 			= $this->Publisher_Model->save($input, $pubId);
+			$data['msg'] = $result;
 			//print_r($result); die;
 		}
 		
@@ -435,6 +439,37 @@ class Publisher extends Auth_Controller{
 		$result = $this->Publisher_Model->deleteZone($res_zone);
 		redirect('publisher/viewzone');
 		
+	}
+
+	public function websiteFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['website_name'] != '')
+		{ $web = trim($_POST['website_name']); }
+		$data['affiliates'] 	= $this->Publisher_Model->getWebsiteFilterByName($web,$uid);
+		$data['webnew'] = $web;
+		//print_r($data['affiliates']); die;
+		$this->load->view("publisher/viewwebsite", $data);
+
+	}
+
+	public function zoneFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$data['activeaction']			= 'viewzones';
+		$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['zone_name'] != '')
+		{ $zone = trim($_POST['zone_name']); }
+		$data['zones'] 	= $this->Publisher_Model->getZoneFilterByName($zone,$uid);
+		$data['zonenew'] = $zone;
+		//print_r($data['zones']); die;
+		$this->load->view('publisher/header', $data);
+		$this->load->view('publisher/leftsidebar', $data);
+		$this->load->view("publisher/viewzones", $data);
+
 	}
 
 	/*********************** Ends ***********************/

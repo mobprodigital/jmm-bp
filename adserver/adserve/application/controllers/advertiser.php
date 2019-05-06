@@ -161,16 +161,16 @@ class Advertiser extends Auth_Controller{
 
 	}
 	
-	public function deleteadvertiser(){	
-	    $data['cat']		= 'inventory';
-		$advertzId			= $this->input->post('id');
-		$advertzId			= substr($advertzId, 1);
-		if(strpos($advertzId, 'main_0') === 0){
-			$advertzId		= substr($advertzId, 7);
-		}
-		$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
+	// public function deleteadvertiser(){	
+	//     $data['cat']		= 'inventory';
+	// 	$advertzId			= $this->input->post('id');
+	// 	$advertzId			= substr($advertzId, 1);
+	// 	if(strpos($advertzId, 'main_0') === 0){
+	// 		$advertzId		= substr($advertzId, 7);
+	// 	}
+	// 	$this->db->query("update `clients` set status = '0' where clientid in ('$advertzId')");
 		
-	}
+	// }
 	
 	
 	
@@ -178,8 +178,14 @@ class Advertiser extends Auth_Controller{
 		
 		$data['cat']						= 'inventory';
 		$data['activeaction']				= 'viewadvertiser';
-		
-		if(isset($_GET['clientid'])){
+		$uid    = $this->session->userdata('uid');
+		if(isset($_GET['sortBy'])){
+			$sortBy					= $this->input->get('sortBy');
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['advertiser']				= $this->Advertiser_Model->getSortedAdvertiser($sortBy,$uid);
+			$data['new']		= array("sortBy"=>$sortBy);	
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid						= $this->input->get('clientid');
 			$data['advertiser']				= $this->Advertiser_Model->getadvertiser($clientid);
 		}else{
@@ -458,16 +464,17 @@ class Advertiser extends Auth_Controller{
 	function changecampaignstatus(){
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
-        }
-		$campaignId		= $this->input->post('campaignid');
-		$status			= $this->User_Model->getcampaignstatus($campaignId);
+		}
+		$uid    = $this->session->userdata('uid'); 
+		$campaignId		= $this->input->post('campaignid'); 
+		$status			= $this->Advertiser_Model->getcampaignstatus($campaignId);
 		if($status == 0){
 			$newStatus	= 1;
 		}else{
 			$newStatus	= 0;
 			
 		}
-		$result			= $this->User_Model->changecampaignstatus($campaignId, $newStatus);
+		$result			= $this->Advertiser_Model->changecampaignstatus($campaignId, $newStatus);
 		echo json_encode(array('newstatus' => $newStatus));
 		
 
@@ -478,8 +485,22 @@ class Advertiser extends Auth_Controller{
 	public function viewcompaign(){
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewcompaign';
-		
-		if(isset($_GET['clientid'])){
+		$userId	= $this->session->userdata('uid');
+		//echo $_POST['campaign_sort_type']; echo '<br>'; echo $_POST['advertiserlist'];
+
+		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
+			$campaignSortType		= $this->input->post('campaign_sort_type'); 
+			$AdvId					= $this->input->post('advertiserlist');
+			if(empty($AdvId)) { $AdvId = 0;}
+			
+			$data['new']		= array("sortBy"=>$campaignSortType,"AdvId"=>$AdvId);
+			//print_r($data['new']);
+			$data['campaign']		= $this->Advertiser_Model->getSortedCampaign($AdvId,$campaignSortType,$userId);
+			$data['advertiserlist']	= $this->Advertiser_Model->getadvertiser();
+			//print_r($data['campaign']);
+			
+		}
+		elseif(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
 			$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientid);
 		}elseif(isset($_GET['campaignid'])){
@@ -487,6 +508,7 @@ class Advertiser extends Auth_Controller{
 			$data['campaign']			= $this->Advertiser_Model->getcampaigns($campaignid);
 		}else{
 			$data['advertiserlist']			= $this->Advertiser_Model->getadvertiser();
+			//print_r($data['advertiserlist']);
 			$clientId						= $this->Advertiser_Model->getclients($data['advertiserlist']);
 	
 			if(!(empty($clientId))){
@@ -505,7 +527,7 @@ class Advertiser extends Auth_Controller{
 		$data['activeaction']			= 'viewcompaign';
 		$this->load->view('advertiser/header',$data);
 		$this->load->view('advertiser/leftsidebar', $data);
-		$this->load->view("advertiser/viewcompaign");
+		$this->load->view("advertiser/viewcompaign",$data);
 	}
 	/**********End of Campaign Section*********************************************************/
 	
@@ -560,17 +582,17 @@ class Advertiser extends Auth_Controller{
 			}else{
 				include APPPATH.'/libraries/banner/newupdatebanner.php';
 			}
-			//echo '<pre>';print_r($data);die;
+			//echo '<pre>';print_r($banner);die;
 			$this->load->view('advertiser/header', $data);
 			$this->load->view('advertiser/leftsidebar', $data);
 			$this->load->view("advertiser/banner",	$data);
 		/************end of form submission handling *****/
 		
-		
-		}else{
+		}else{ 
 				/****add banner to default campaign and advertiser****/
-				if(!isset($_GET['campaignid'])){
+				if(!isset($_GET['campaignid'])){ 
 					$defaultAdvertiser          		= $this->Advertiser_Model->getadvertiser();
+					//print_r($defaultAdvertiser); 
 					if(!empty($defaultAdvertiser)){
 						$data['advertExist']		= true;
 						$clientId					= $defaultAdvertiser[0]->clientid;
@@ -594,11 +616,12 @@ class Advertiser extends Auth_Controller{
 				
 				
 			if(!isset($_GET['type'])){
-				if(isset($_GET['clientid']) && isset($_GET['campaignid']) && isset($_GET['bannerid'])){
+				if(isset($_GET['clientid']) && isset($_GET['campaignid']) && isset($_GET['bannerid'])){ 
 					$clientid					= $this->input->get('clientid');
 					$campaignid					= $this->input->get('campaignid');
 					$bannerid					= $this->input->get('bannerid');
 					$data['banner']				= $this->User_Model->getbanner($campaignid, $bannerid);
+					//print_r($data['banner']);
 					if(isset($data['banner'][0]->url)){
 						$lp				= $data['banner'][0]->url;
 						if(strpos($lp, '&')){
@@ -645,7 +668,7 @@ class Advertiser extends Auth_Controller{
 			//echo '<pre>';print_r($data);	
 			$this->load->view('advertiser/header',$data);
 			$this->load->view('advertiser/leftsidebar', $data);
-			$this->load->view("advertiser/banner");
+			$this->load->view("advertiser/banner", $data);
 		}
 	}
 	
@@ -655,7 +678,21 @@ class Advertiser extends Auth_Controller{
 	public function viewbanner(){
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewbanner';
-		if(isset($_GET['campaignid'])){
+		$uid = $this->session->userdata('uid');
+
+		/********************* Added By Riccha ***********************/
+		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) )
+		{
+			$banner_status		= $this->input->post('banner_status');
+			$sortBy					= $this->input->post('sort_type');
+			if(empty($banner_status)) { $banner_status = 0;}
+			if(empty($sortBy)) { $sortBy = 'name';}
+			$data['new']		= array("sortBy"=>$sortBy,"banner_status"=>$banner_status);
+			//print_r($data['new']);
+			$data['banner']		= $this->Advertiser_Model->getSortedBanner($banner_status,$sortBy,$uid);
+		}
+		/****************************** End **************************/
+		elseif(isset($_GET['campaignid'])){
 			$campaignid					= $this->input->get('campaignid');
 			$data['banner']				= $this->Advertiser_Model->getbanner($campaignid, null, null);
 			
@@ -1174,7 +1211,115 @@ class Advertiser extends Auth_Controller{
 	}
 	/**********End of Statistics Section*********************************************************/
 
+/******************************* Added By Riccha ************************************************/
+public function deleteadvertiser(){	
+	if ($_GET['advertiser_ids']) {
+		$advertzId= trim($_GET['advertiser_ids'],",");
+		$advertzId = explode(',', $advertzId);
+	 }
+	
+	$data['cat']		= 'inventory';
+	if($advertzId[0]=='main_0'){
+		array_shift($advertzId);
+	}
+	//print_r($advertzId); die;
+	foreach ($advertzId as $adv_value) 
+	{
+		$query_camp = $this->db->query("SELECT campaignid FROM `campaigns`  WHERE clientid = '$adv_value'");
+		$res_camp = $query_camp->result_array();
+		$res_camp11 = array_column($res_camp,'campaignid');
+		$res_camp12 = implode(',',$res_camp11);
+		// print_r($res_camp12); die;
+	  	if(!empty($res_camp)){
+			 
+		$query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid IN ($res_camp12)");
+		$res = $query->result_array();
+		$res11 = array_column($res,'bannerid');
+		$res12 = implode(',',$res11);
+		//print_r($res12); die;
+		}
+		if(!empty($res)){
+			$this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+			$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+			$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+			$this->db->query("DELETE FROM `campaigns` WHERE campaignid IN ($res_camp12)");
+			}
+			 $this->db->query("DELETE FROM `clients` WHERE clientid = '$adv_value'");
+	}
+	redirect('advertiser/viewadvertiser');;
+}
 
+public function deletecampaigncheckbox()
+{
+	if ($_GET['campaign_ids']) 
+	{
+		$campaignid = trim($_GET['campaign_ids'],",");
+		$ids = explode(',', $campaignid);
+	}
+	//print_r($ids); die;
+	$data['cat']		= 'inventory';
+	//$campIds			= $this->input->get('campaign_ids');
+	$campIds			= $ids;
+
+	if($campIds[0]=='main_00')
+	{
+		array_shift($campIds);
+		//print_r($campIds); die;
+	}
+	  
+	foreach ($campIds as $campId_value) 
+	{
+		$query = $this->db->query("SELECT bannerid FROM `banners`  WHERE campaignid = '$campId_value'");
+		$res = $query->result_array();
+		$res11 = array_column($res,'bannerid');
+		$res12 = implode(',',$res11);
+		//print_r($res); die;
+		if(!empty($res))
+		{
+
+			$this->db->query("DELETE FROM `banners` WHERE bannerid IN ($res12)");
+			$this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id IN ($res12)");
+			$this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id IN ($res12)");
+		}
+			$this->db->query("DELETE FROM `campaigns` WHERE campaignid = '$campId_value'");
+		 
+	}
+	redirect('advertiser/viewcompaign');
+}
+
+public function deletebannercheckbox()
+{
+	if ($_GET['banner_ids']) 
+	{
+		$bannerId= trim($_GET['banner_ids'],",");
+		$bannerId = explode(',', $bannerId);
+	}	
+   	$data['cat']		= 'inventory';
+ 
+	if($bannerId[0]=='main_0')
+	{
+		$bannerId		= array_shift($bannerId);
+	}
+    //print_r($bannerId); die;
+	foreach ($bannerId as $bann_value) 
+	{
+		if(!empty($bann_value))
+		{
+			
+		  $this->db->query("DELETE FROM `banners` WHERE bannerid = '$bann_value'");
+		  $this->db->query("DELETE FROM `rv_data_summary_ad_hourly` WHERE creative_id = '$bann_value'");
+		  $this->db->query("DELETE FROM `rv_ad_zone_assoc` WHERE ad_id = '$bann_value'");
+		}
+	  
+ 	}
+ 
+	redirect('advertiser/viewbanner');
+
+}
+
+
+
+/************************************ Ends ******************************************************/
 	
 	
 

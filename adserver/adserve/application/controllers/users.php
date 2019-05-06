@@ -4255,6 +4255,148 @@ class Users extends CI_Controller{
 		$this->load->view("statistics/adcampstats", $data); */
 		
 	}
+
+
+	function excelExpo(){
+		if(!$this->session->userdata('is_logged_in')){
+            redirect('admin');
+        }
+    ///////////////// excel code /////////
+
+	require_once 'Spreadsheet/Excel/Writer.php';
+	$workbook  = new Spreadsheet_Excel_Writer();
+	$worksheet = $workbook->addWorksheet();
+	//echo '<pre>';print_r($worksheet);die;
+	//"regular" green
+    $format_regular_green4 =& $workbook->addFormat(array('left' => 5,'right' => 5, 'top' => 5, 'size' => 12,
+	                                                   'pattern' => 1,
+													   'fgcolor' => 'blue','align'=>'center'));
+													   $format_regular_green4->setBold();	
+													   $format_regular_green4->setFontFamily('Times New Roman');
+
+	$format_regular_green5 =& $workbook->addFormat(array('right' => 1, 'top' => 1, 'size' => 11,
+	'pattern' => 1,
+	'fgcolor' => 'grey','align'=>'center'));
+	$format_regular_green5->setBold();	
+	$format_regular_green5->setFontFamily('Times New Roman');
+
+	$format_regular_green =& $workbook->addFormat(array('right' => 1, 'top' => 1, 'size' => 12,
+	                                                   'pattern' => 1,
+													   'fgcolor' => 'grey','align'=>'center'));
+													   $format_regular_green->setBold();	
+													   $format_regular_green->setFontFamily('Times New Roman');
+    $format_regular_green1 =& $workbook->addFormat(array('left' => 5,'right' => 5, 'top' => 5, 'size' => 14,
+														'pattern' => 1, 'bordercolor' => 'black',
+														'fgcolor' => 'blue'));
+														$format_regular_green1->setFontFamily('Times New Roman');
+														$format_regular_green1->setBold();
+    $format_regular_green2 =& $workbook->addFormat(array('right' => 1,'left' => 1, 'top' => 1,'bottom' => 1, 'size' => 11,
+														'pattern' => 1, 'bordercolor' => 'black',
+														'fgcolor' => ''));
+														$format_regular_green2->setFontFamily('Times New Roman');
+														
+	$format_regular_green3 =& $workbook->addFormat(array('right' => 1,'left' => 1, 'top' => 1,'bottom' => 1, 'size' => 10,
+                                                      'pattern' => 1, 'bordercolor' => 'black',
+													  'fgcolor' => '','align'=>'right','align'=>'bottom'));
+													  $format_regular_green3->setFontFamily('Times New Roman');			
+                                                      $format_regular_green3->setBold();													  
+    
+	$workbook->setCustomColor(12, 135, 206, 250);
+	$worksheet->setColumn(0, 10, 30);
+	$worksheet->setColumn(0, 10, 30);
+	$worksheet->setColumn(5, 0, 20);
+	$worksheet->setColumn(5, 1, 20);
+	$worksheet->setColumn(5, 2, 20);
+	$worksheet->setColumn(5, 3, 20);
+	$worksheet->setColumn(5, 4, 20);
+	$worksheet->setColumn(5, 5, 20);
+	$worksheet->write(1, 1, "Advertiser Statistics", $format_regular_green4);
+	$worksheet->write(2, 1, 'Advertiser',$format_regular_green5);
+	$worksheet->write(3, 1, "Start Date", $format_regular_green5);
+	$worksheet->write(4, 1, "End Date", $format_regular_green5);
+	$worksheet->write(7, 1, "Advertiser Statistics", $format_regular_green1);
+	$worksheet->write(8, 1, "Day", $format_regular_green);
+	$worksheet->write(8, 2, "Impr.", $format_regular_green);
+	$worksheet->write(8, 3, "Clicks", $format_regular_green);
+	$worksheet->write(8, 4, "CTR", $format_regular_green);
+	$worksheet->write(8, 5, "Rev.", $format_regular_green);
+	$worksheet->write(8, 6, "ECPM", $format_regular_green);
+
+	//start row
+	$worksheet->write(2, 2, 'Multiple Banner test',$format_regular_green2);
+	$worksheet->write(3, 2, '10-04-2019',$format_regular_green2);
+	$worksheet->write(4, 2, '28-04-2019',$format_regular_green2);
+	//// 1st row 
+	$worksheet->write(9, 1, '10-04-2019', '');
+	$worksheet->write(9, 2, 30, '');
+	$worksheet->write(9, 3, 50, '');
+	$worksheet->write(9, 4, 4, '');
+	$worksheet->write(9, 5, 10, '');
+	$worksheet->write(9, 6, 800, '');
+	// 2nd row
+	$worksheet->write(10, 1, '11-04-2019','');
+	$worksheet->write(10, 2, 30,'');
+	$worksheet->write(10, 3, 50,'');
+	$worksheet->write(10, 4, 3,'');
+	$worksheet->write(10, 5, 30,'');
+	$worksheet->write(10, 6, 300,'');
+	// 3rd row
+	$worksheet->write(11, 1, '12-04-2019','');
+	$worksheet->write(11, 2, 30,'');
+	$worksheet->write(11, 3, 80,'');
+	$worksheet->write(11, 4, 7,'');
+	$worksheet->write(11, 5, 30,'');
+	$worksheet->write(11, 6, 900,'');
+	// 4th row
+	$worksheet->write(12, 1, '13-04-2019','');
+	$worksheet->write(12, 2, 30,'');
+	$worksheet->write(12, 3, 90,'');
+	$worksheet->write(12, 4, 3,'');
+	$worksheet->write(12, 5, 50,'');
+	$worksheet->write(12, 6, 700,'');
+	// 5th row
+	$worksheet->write(13, 1, '14-04-2019','');
+	$worksheet->write(13, 2, 30,'');
+	$worksheet->write(13, 3, 60,'');
+	$worksheet->write(13, 4, 4,'');
+	$worksheet->write(13, 5, 20,'');
+	$worksheet->write(13, 6, 400,'');
+	// 6th row
+	$worksheet->write(14, 1, '15-04-2019','');
+	$worksheet->write(14, 2, 30,'');
+	$worksheet->write(14, 3, 70,'');
+	$worksheet->write(14, 4, 3,'');
+	$worksheet->write(14, 5, 30,'');
+	$worksheet->write(14, 6, 300,'');
+	// 7th row
+	$worksheet->write(15, 1, '16-04-2019','');
+	$worksheet->write(15, 2, 30,'');
+	$worksheet->write(15, 3, 30,'');
+	$worksheet->write(15, 4, 3,'');
+	$worksheet->write(15, 5, 30,'');
+	$worksheet->write(15, 6, 300,'');
+	
+	//// Total row
+	$worksheet->write(16, 1, 'Total',$format_regular_green2);
+	$worksheet->write(16, 2, 210,$format_regular_green3);
+	$worksheet->write(16, 3, 1600,$format_regular_green3);
+	$worksheet->write(16, 4, 80,$format_regular_green3);
+	$worksheet->write(16, 5, 150,$format_regular_green3);
+	$worksheet->write(16, 6, 4000,$format_regular_green3);
+	
+	$worksheet->setColumn(0,3,35);
+	$worksheet->setRow(4,25);
+
+	$workbook->send('greens.xls');
+	$workbook->close();
+
+  ////////// end /////////
+
+		 
+		
+	}
+
+
 	
 	function getplayerdata(){
 		if(!$this->session->userdata('is_logged_in')){
@@ -5640,7 +5782,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 		if($role == 'admin'){
 			$userId	= null;
 		}else{
-			$userId	= $this->session->userdata('uid');;
+			$userId	= $this->session->userdata('uid');
 			
 		}
 		
@@ -5665,7 +5807,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	// end
 		
 		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
-			$campaignSortType		= $this->input->post('campaign_sort_type'); echo '<br>';
+			$campaignSortType		= $this->input->post('campaign_sort_type'); 
 			$AdvId					= $this->input->post('advertiserlist');
 			if(empty($AdvId)) { $AdvId = 0;}
 			
@@ -6663,6 +6805,38 @@ public function deletezone(){
     redirect('users/viewzone');
 	
 }
+
+	public function websiteFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['website_name'] != '')
+		{ $web = trim($_POST['website_name']);  $data['webnew'] = $web; } else { $web='';}
+		$data['affiliates'] 	= $this->User_Model->getWebsiteFilterByName($web);
+		
+		//print_r($data['affiliates']); die;
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view("admin/viewwebsite", $data);
+
+	}
+
+	public function zoneFilterByName()
+	{
+		$data['cat']		= 'inventory';
+		$data['activeaction']			= 'viewzones';
+		//$uid					= $this->session->userdata('uid');
+		//print_r($_POST);
+		if(isset($_POST) && $_POST['zone_name'] != '')
+		{ $zone = trim($_POST['zone_name']); $data['zonenew'] = $zone; } else { $zone='';}
+		$data['zones'] 	= $this->User_Model->getZoneFilterByName($zone);
+		
+		//print_r($data['zones']); die;
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view("admin/viewzones", $data);
+
+	}
 /********************** Ends **********************************/
 	
 }

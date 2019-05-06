@@ -174,7 +174,7 @@
 				<div class="col-md-6">
 					<div class="form-group has-feedback">
 						<label>Skype Id</label>
-						<input type="text" name="company" value="<?php echo $profile->skype;?>" class="form-control">
+						<input type="text" name="skype" value="<?php echo $profile->skype;?>" class="form-control">
 					</div>
 				</div>
 				<div class="row">
@@ -217,7 +217,7 @@
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <input type="submit" name="submit" value="Sign In"
+                                                <input type="submit" name="submit" value="Update"
                                                     class="btn btn-large btn-primary">
                                             </div>
                                         </div>

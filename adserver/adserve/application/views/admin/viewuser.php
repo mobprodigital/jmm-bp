@@ -20,20 +20,20 @@
 							<tbody>
 								<?php foreach($users as $key => $value){?>
 								<tr style="background-color: <?php if($key % 2 == 0){echo '#fff';}else{echo '#fff';}?>">
-									<td><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->id;?>" class="table-first"><?php echo ucfirst($value->username);?></a></td>
-									<td><?php echo $value->date;?></td>
+									<td><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->user_id;?>" class="table-first"><?php echo ucfirst($value->username);?></a></td>
+									<td><?php echo $value->date_created;?></td>
 									<td>
 										<?php if($value->role == 'advertiser'){$color	= 'maroon';}if($value->role == 'publisher'){$color = 'orange';}?>
 										<?php echo ucfirst($value->role);?>
 									</td>
 									<td>
 									<?php if($value->status == 1){ ?>
-										<div  class="active" id="<?php echo $value->id.'_'.$value->status;?>"><?php echo 'Inactive';?></div>
+										<div  class="active" id="<?php echo $value->user_id.'_'.$value->status;?>"><?php echo 'Inactive';?></div>
 									<?php }else{ ?>
-										<div  class="deactive" id="<?php echo $value->id.'_'.$value->status;?>"><?php echo 'Active'?></div>
+										<div  class="deactive" id="<?php echo $value->user_id.'_'.$value->status;?>"><?php echo 'Active'?></div>
 									<?php } ?>
 									</td>
-									<td class="last" style="text-align: right;padding-right:25px;"><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->id;?>" class="fa fa-edit"></a><a href="#" style="padding-left: 10px;" id="<?php echo $value->id;?>"><small id="4" class="fa fa-trash-o" style="color:red;padding-left:10px;"></small></a></td>
+									<td class="last" style="text-align: right;padding-right:25px;"><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->user_id;?>" class="fa fa-edit"></a><a href="#" style="padding-left: 10px;" id="<?php echo $value->user_id;?>"><small id="4" class="fa fa-trash-o" style="color:red;padding-left:10px;"></small></a></td>
 								</tr>                 
 								<?php } ?>
 							</tbody>

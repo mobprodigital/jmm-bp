@@ -17,7 +17,28 @@
 						<img src="http://localhost/adserver/adserve/assets/upimages/icon-websites-large.png" style="float:left"><span>Websites</span>
 						<a href="#" id="publisher-website-delete"><img src="<?php echo base_url()?>assets/img/1011.png" style="margin-left:54px;margin-right:10px;"/>Delete</a>
 					</div>
+					
 					<div class="box-body">
+						<!---------------------------- Filter Section Starts ---------------------------------------------------------------->
+						<?php if(isset($webnew))
+						{  $websiteName = $webnew; } else { $websiteName = '';}?>
+						<form action="<?php echo base_url()?>publisher/websiteFilterByName" method="post" name="filter_form" id="filter_form" autocomplete="off">
+							<div class="row ">
+								<div class="col-md-2 form-group">
+									Website Name :<input type="text" name="website_name" id="website_name" value="<?php echo $websiteName;?> ">
+								</div>
+								
+								<div class="col-md-2 form-group">
+									<input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit" id="submit" style="margin-left: 637px;">
+								</div>
+							</div>
+						</form>
+						<!---------------------------- Filter Section Ends ---------------------------------------------------------------->
+
+
+
+
+
 						<div>
 							<?php if(isset($affiliates) && !empty($affiliates)){ ?>
 							<table id="example" class="table table-bordered table-striped">

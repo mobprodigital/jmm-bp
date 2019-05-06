@@ -108,16 +108,27 @@ class Login extends CI_Controller{
 			$input['firstname']	= $this->input->post('firstname');
 			$input['lastname']	= $this->input->post('lastname');
 			$input['skype']		= $this->input->post('skype');
+			$input['company']		= $this->input->post('company');
 			$input['phone']		= $this->input->post('phone');
 			$input['role']		= 2;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
 	
-			$data['successMsg'] 	 			= $this->Login_Model->saveAdvertiser($input);
+			// Check Duplicate Entry //
+			$checkMsg 	= $this->Login_Model->checkAdvertiser($input);
+			//print_r($checkMsg);
+			if(isset($checkMsg) && $checkMsg['duplicate'] == '1')
+			{
+				$data['msg'] = 'Already Registerd With This Email And Number';
+				$this->load->view('advertiser/signup', $data);
+			}
+			else
+			{   //echo "duplicate 0";
+				$data['successMsg'] 			= $this->Login_Model->saveAdvertiser($input);
+				$this->load->view('advertiser/login', $data);
+			}
+			// Ends //
 
-			//redirect('advertiser/index');
-			$this->load->view('advertiser/login', $data);	
-			
 		}else{
 			$data['country'] = $this->Login_Model->getCountryCode();
 			$this->load->view('advertiser/signup', $data);	
@@ -168,12 +179,28 @@ class Login extends CI_Controller{
 			$input['lastname']	= $this->input->post('lastname');
 			$input['skype']		= $this->input->post('skype');
 			$input['phone']		= $this->input->post('phone');
+			$input['company']		= $this->input->post('company');
 			$input['role']		= 3;
 			$input['date_created']	= date('Y-m-d');
 			$input['date_updated']	= date('Y-m-d');
-			$data['successMsg'] 			= $this->Login_Model->savePublisher($input);
+
+			// Check Duplicate Entry //
+			$checkMsg 	= $this->Login_Model->checkPublisher($input);
+			//print_r($checkMsg);
+			if(isset($checkMsg) && $checkMsg['duplicate'] == '1')
+			{
+				$data['msg'] = 'Already Registerd With This Email And Number';
+				$this->load->view('publisher/signup', $data);
+			}
+			else
+			{   //echo "duplicate 0";
+				$data['successMsg'] 			= $this->Login_Model->savePublisher($input);
+				$this->load->view('publisher/login', $data);
+			}
+			// Ends //
+			
 			//redirect('publisher/index');
-			$this->load->view('publisher/login', $data);
+			
 			
 
 		}else{
