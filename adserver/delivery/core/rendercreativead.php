@@ -14,6 +14,7 @@
 			$dfpClickUrl			= '';
 			$protocol				= '';
 			$protocol 				= $_SERVER['SERVER_PROTOCOL'];
+			//echo $_GET['adurl'];die;
 			if(isset($_GET['adurl'])){
 				$Original_url		= $_SERVER['QUERY_STRING'];
 				$first_index 		= stripos($Original_url, "&click");
@@ -28,6 +29,7 @@
 			
 			$adZoneAssocFile	= $GLOBALS['cachePath']."delivery_ad_zone_".$zoneid.".php";
 			$adZoneAssocData	= json_decode(file_get_contents($adZoneAssocFile), true);
+			//echo '<pre>';print_r($adZoneAssocData);die;
 
 			if((!empty($adZoneAssocData))){
 					$adId					= $adZoneAssocData['ad_id'];
@@ -85,30 +87,88 @@
 			//echo '<pre>';print_r($banner);die;
 			//$player	 = "<a href='".$clickurl."' target='_blank'";
 			//$player	.="><img src='".$src."/banners/images/".$banner['filename']."' width='".$banner['width']."' height='".$banner['height']."' /></a>";
-			//echo $clickurl;
+			//echo $clickurl;die;
 			if($banner['htmltemplate']){
-				//echo $clickurl;
-				$player		= $banner['htmltemplate'];
-				$player 	= str_replace("{clickurl}", "$clickurl", $player);
-				
-				$player	.="<img src='".$src."core/lgimpr.php?bannerid=".$banner['bannerid']."&zoneid=".$zoneid."&cb=".$cb."' width='1' height='1' alt=''>";
-				if($banner['tracking_pixel']){
-					$buster		= $cb;
-					$trackingPixel = str_replace("{cache}","$buster",$banner['tracking_pixel']);
-					$player	.="<img src='".$trackingPixel."' width='1' height='1' alt=''>";
+				$width 			= $banner['width'];
+				if(!($dfpClickUrl  && $width == '1' )){
+					//echo $clickurl;
+					$player		= $banner['htmltemplate'];
+					$player 	= str_replace("{clickurl}", "$clickurl", $player);
+					
+					$player	.="<img src='".$src."core/lgimpr.php?bannerid=".$banner['bannerid']."&zoneid=".$zoneid."&cb=".$cb."' width='1' height='1' alt=''>";
+					if($banner['tracking_pixel']){
+						$buster		= $cb;
+						$trackingPixel = str_replace("{cache}","$buster",$banner['tracking_pixel']);
+						$player	.="<img src='".$trackingPixel."' width='1' height='1' alt=''>";
+					}
+					return $player;
+				}else{
+					$creativeCode = richMediaCode($banner,$zoneid,$src, $dfpClickUrl,$cb);
+					return $creativeCode;
+					
 				}
 				
-				
-				return $player;
 			}else{
 				return "";
 			}
 			
 		}
 		
+		function richMediaCode($banner, $zoneid, $src, $dfpClickUrl,$cb){
+			//echo '<pre>';print_r($banner);die;
+			$type = $banner['rich_media_type'];		
+			if($type == 1){
+				$fileName = 'expandorightleft';
+				
+			}else if($type ==2){
+				$fileName = 'expandotopbottom';
+				
+			}else if($type == 3){
+				$fileName  = 'pagepusher';
+			
+			}else if($type == 4){
+				$fileName  = 'overlay';
+				
+			}
+			
+			$ext 			= '.js';
+			$fileNameExt 	= $fileName.$ext;
+			$filePath 		= $GLOBALS['deliveryPath'].'buster/'.$fileNameExt;
+			
+			//update buster files with image and click url and tracking pixel
+				$creativeImage1					= $GLOBALS['deliveryPath'].'banners/images/'.$banner['filename'];
+				$creativeImage2					= $GLOBALS['deliveryPath'].'banners/images/'.$banner['filename2'];
+				$lgimprTracker					= $src."core/lgimpr.php?bannerid=".$banner['bannerid']."&zoneid=".$zoneid."&cb=".$cb;
+			
+				$thirdParyTracker	= '';
+				if($banner['tracking_pixel']){
+					$buster			= $cb;
+					$trackingPixel  = str_replace("{cache}","$buster",$banner['tracking_pixel']);
+					$thirdParyTracker		= '<img src="'.$trackingPixel.'" width="1" height="1" alt="">';
+				}
+				$busterFileName 				= $filePath;
+				$busterContent   	    		= file_get_contents($busterFileName);
+				$busterContent 					= str_replace("{imagePath1}", "$creativeImage1", $busterContent);
+				$busterContent 					= str_replace("{imagePath2}", "$creativeImage2", $busterContent);
+				$busterContent 					= str_replace("{clickurl}", "$dfpClickUrl", $busterContent);
+				$busterContent 					= str_replace("{lgimprTracker}", $lgimprTracker, $busterContent);
+				$busterContent 					= str_replace("{thirdParyTracker}", $thirdParyTracker, $busterContent);
+				$busterPath						= $GLOBALS['includePathDelivery'].'buster/'.$fileNameExt;
+				$bannerid						= $banner['bannerid'];
+				$putFilePath 					= $GLOBALS['includePathDelivery'].'bustercache/'.$bannerid.'_'.$fileNameExt;
+				file_put_contents($putFilePath, $busterContent);
+				$getFilePath					= $GLOBALS['deliveryPath'].'bustercache/'.$bannerid.'_'.$fileNameExt;;
+
+			
+			$coreJs		    	= '<script src="'.$GLOBALS['deliveryPath'].'assets/js/jQuery-2.1.4.min.js'.'" type="text/javascript"></script>';
+			$scriptFile 		= '<script src='.$getFilePath.'></script>';
+			$ifm 				= "<script type='text/javascript'> 
+			var referenceabc	= '".$dfpClickUrl."';
+			</script>";
+			return $coreJs.$scriptFile.$ifm;
+			
+		}
 		
-	
-	
 		function MAX_javascriptToHTML($string, $varName, $output = true, $localScope = true){
 			$jsLines = array();
 			$search[] = "\\"; $replace[] = "\\\\";
