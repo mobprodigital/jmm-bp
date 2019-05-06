@@ -1,14 +1,3 @@
-<style>
-/* #example1_filter{
-		display: none;
-	}
-	input{
-	border: solid 1px #e4e4e4;
-    height: 25px;
-    background-color: #fff !important;
-    border-radius: 6px;
-	} */
-</style>
 <div class="content-wrapper">
 	<section class="content" >
 		<div class="row">
@@ -27,7 +16,6 @@
 										<?php echo 'Website : '.$affiliates[0]->name;}?>
 									</span>
 								</span>
-								
 								<?php if(isset($zone[0])){ ?>
 										&nbsp;&nbsp;&nbsp; > &nbsp;&nbsp;
 										<img   src="<?php echo base_url();?>assets/upimages/icon-zone.png">
@@ -61,14 +49,6 @@
 							<?php if(isset($_GET['breakthrough']) && $_GET['breakthrough']){ ?>
 								<input type="hidden" value="<?php echo $_GET['breakthrough']; ?>" name="breakthrough"/>
 							<?php } ?>
-							<!--<input type="hidden" value="day" name="statsBreakdown"/>
-							<input type="hidden" value="" name="listorder"/>
-							<input type="hidden" value="up" name="orderdirection"/>
-							<input type="hidden" value="" name="day"/>
-							<input type="hidden" value="15" name="setPerPage"/>
-							<input type="hidden" value="global" name="entity"/>
-							<input type="hidden" value="advertiser" name="breakdown"/>
-							-->
 							
 							<select tabindex="1" onchange="periodFormChange(1)" id="period_preset" name="period_preset">
 								<option  value="today" <?php if(isset($period_preset) && $period_preset=='today'){echo 'selected';} ?>>Today</option>
@@ -78,10 +58,11 @@
 								<option value="specific" <?php if(isset($period_preset) && $period_preset=='specific'){echo 'selected';} ?>>Specific dates</option>
 							</select>
 							<label style="margin-left: 1em" for="period_start"></label>
-							<input type="text" tabindex="0" value="<?php if(isset($period_start)){echo $period_start;} ?>"  id="period_start" name="period_start" class="date" readonly="" style="background-color: rgb(204, 204, 204);"/>
+							<input type="text" tabindex="0" value="<?php if(isset($period_start)){echo $period_start;} ?>"  id="period_start" name="period_start" class="date" readonly="" style="<?php if(isset($period_preset) && !($period_preset=='specific')){echo 'background-color: rgb(204, 204, 204)';}?>;"/>
 							<input type="image" border="0" align="absmiddle" tabindex="0" id="period_start_button" src="<?php echo base_url();?>assets/upimages/icon-calendar-d.gif" disabled="" readonly="" style="cursor: default;">
+							
 							<label style="margin-left: 1em" for="period_end"> </label>
-							<input type="text" tabindex="0" value="<?php if(isset($period_end)){echo $period_end;} ?>"  id="period_end" name="period_end" class="date" readonly="" style="background-color: rgb(204, 204, 204);"/>
+							<input type="text" tabindex="0" value="<?php if(isset($period_end)){echo $period_end;} ?>"  id="period_end" name="period_end" class="date" readonly="" style="<?php if(isset($period_preset) && !($period_preset=='specific')){echo 'background-color: rgb(204, 204, 204)';}?>;"/>
 							<input type="image" border="0" align="absmiddle" tabindex="0" id="period_end_button" src="<?php echo base_url();?>assets/upimages/icon-calendar-d.gif" disabled="" readonly="" style="cursor: default;">
 											
 							<a onclick="return periodFormSubmit()" href="#">
@@ -104,8 +85,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								
-								<?php foreach($publisherStats as $key => $value){ ?>
+								<?php
+								$publisherStats	= array_reverse($publisherStats);
+								$totalImpr=0; 	$totalClk=0;	 $totalCTR=0; 	$totalECP=0;
+								 foreach($publisherStats as $key => $value){ ?>
 								<tr style="outline: thin solid <?php if($key % 2 == 0){echo '#e6e6e6';}else{echo '#ffffff';}?>">
 									<td><img align="absmiddle" width="16" height="16" src="<?php echo base_url();?>assets/upimages/ltr/triangle-l.gif">
 										
@@ -157,7 +140,19 @@
 									
 									<td class="last"><?php echo (($value->impressions / 10000)*2);?></td>
 								</tr>                 
-								<?php } ?>
+								<?php 
+								$totalImpr	= $totalImpr + $value->impressions;
+								$totalClk	= $totalClk + $value->clicks;
+								$totalCTR	= $totalCTR + floor(($value->clicks/$value->impressions)*100);
+								$totalECP	= $totalECP + (($value->impressions / 10000)*2);
+								} ?>
+								<tr style="font-weight: 700;">
+									<td class="last"><b>Total</b></td>
+									<td class="aright last"><?php echo $totalImpr;?></td>
+									<td class="aright last"><?php echo $totalClk;?></td>
+									<td class="aright last"><?php echo round((($totalClk / $totalImpr)*100),2).'%';?></td>
+									<td class="aright last"><?php echo $totalECP;?></td>
+								</tr>
 							</tbody>
 						</table>
 					<?php }else{ ?>
@@ -203,16 +198,15 @@
           return checkDates(this);
         }
 
-        function checkDates(form)
-        {
+        function checkDates(form){
           var startField = form.period_start;
           var endField = form.period_end;
 
           if (!startField.disabled && startField.value != '') {
-            var start = Date.parseDate(startField.value, '%d %B %Y');
+            var start = parseDate(startField.value, '%d %B %Y');
           }
           if (!startField.disabled && endField.value != '') {
-            var end = Date.parseDate(endField.value, '%d %B %Y');
+            var end = parseDate(endField.value, '%d %B %Y');
           }
 
           if ((start != undefined && end != undefined) && (start.getTime() > end.getTime())) {
@@ -283,16 +277,13 @@
                 document.getElementById('period_end_button').tabIndex = null;
             } else {
 				$('#period_start').datepicker({
-			
-			format: 'yyyy-mm-dd',
-			autoclose:true
-
-		});
-		$('#period_end').datepicker({
-			format: 'yyyy-mm-dd',
-			autoclose:true
-
-		});
+					format: 'yyyy-mm-dd',
+					autoclose:true
+				});
+				$('#period_end').datepicker({
+					format: 'yyyy-mm-dd',
+					autoclose:true
+				});
 
                 document.getElementById('period_start').style.backgroundColor = '#FFFFFF';
                 document.getElementById('period_end').style.backgroundColor = '#FFFFFF';
@@ -315,6 +306,10 @@
         }
         periodFormChange(0);
         //-->
+		function parseDate(input) {
+			var parts = input.match(/(\d+)/g);
+			return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+		}
         </script>
 	<?php } ?>
 
@@ -338,42 +333,22 @@ $(document).ready(function() {
 
     } );
 } );
- 
-
 </script>
 	<?php $this->load->view('admin_includes/footer');?>
 	<script src="<?php echo base_url();?>assets/js/adserver.js"></script>
-	<script type="text/javascript">
-	///if(document.getElementById('period_preset') == 'specific'){           
-
-		/* $('#period_start').datepicker({
-			
+	<?php if(isset($period_preset) && ($period_preset=='specific')){ ?>
+	<script>
+		$('#period_start').datepicker({
 			format: 'yyyy-mm-dd',
 			autoclose:true
-
 		});
 		$('#period_end').datepicker({
 			format: 'yyyy-mm-dd',
 			autoclose:true
+		});
+	</script>
+<?php } ?>
 
-		}); */
-	//}
-		/* function customDateSubmission(){
-			var start_date				= document.getElementById('period_start').value;
-			var end_date				= document.getElementById('period_end').value;
-			window.location.href		= "adcampstats?bannerid=99&period=specific&start_date="+start_date+"&end_date="+end_date;
-		} */
-    </script>
 
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/admin/buttons.dataTables.min.css">
-<script src="<?php echo base_url(); ?>assets/js/datatable/dataTables.buttons.min.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/datatable/jszip.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/datatable/pdfmake.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/datatable/vfs_fonts.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/datatable/buttons.html5.min.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/datatable/buttons.print.min.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/datatable/buttons.flash.min.js"></script> 
--->
 
 													
