@@ -447,7 +447,7 @@ class Publisher extends Auth_Controller{
 		$uid					= $this->session->userdata('uid');
 		//print_r($_POST);
 		if(isset($_POST) && $_POST['website_name'] != '')
-		{ $web = trim($_POST['website_name']); }
+		{ $web = trim($_POST['website_name']); } else { $web = '';}
 		$data['affiliates'] 	= $this->Publisher_Model->getWebsiteFilterByName($web,$uid);
 		$data['webnew'] = $web;
 		//print_r($data['affiliates']); die;
@@ -462,7 +462,7 @@ class Publisher extends Auth_Controller{
 		$uid					= $this->session->userdata('uid');
 		//print_r($_POST);
 		if(isset($_POST) && $_POST['zone_name'] != '')
-		{ $zone = trim($_POST['zone_name']); }
+		{ $zone = trim($_POST['zone_name']); }else { $zone = '';} 
 		$data['zones'] 	= $this->Publisher_Model->getZoneFilterByName($zone,$uid);
 		$data['zonenew'] = $zone;
 		//print_r($data['zones']); die;
