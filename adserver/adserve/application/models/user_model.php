@@ -2841,6 +2841,44 @@ if(!is_null($limit)){
 		return $clients;
 		
 	}
+	function fetchAdvtUser($clientId){
+		$this->db->select("*");
+		$this->db->from('users');
+		$this->db->join('client_access', 'client_access.userid = users.user_id');
+		$this->db->where('client_access.clientid', $clientId);
+		
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo '<pre>';print_r($result);die;
+		return $result;
+	}
+	
+	function updateAdvtUserAssoc($advtUserAssoc){
+			$this->db->insert('client_access', $advtUserAssoc);
+			$insert_id 		= $this->db->insert_id();
+			$msg 			= "client user aceess inserted successfully";
+		/* $this->db->select("*");
+		$this->db->from('client_access');
+		$this->db->where('client_access.client_id =', $clientId);
+		$query 			= $this->db->get();
+		$result			= $query->row(); */
+		
+		/* 
+		if(!empty($result)){
+			$this->db->where('client_id', $clientId);
+		   	$this->db->update('client_access', $users);
+			$msg 		= "client access list updated successfully";
+			
+		}else{
+			$this->db->insert('client_access', $users);
+			$insert_id 		= $this->db->insert_id();
+			$msg 			= "client access list inserted successfully";
+		} */
+		
+		return $msg;
+		
+	}
+	
 	
 	function fetchreportusers(){
 		$this->db->select("user_id, username, password, firstname, lastname, role, date_created, status");
