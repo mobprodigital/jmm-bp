@@ -6108,6 +6108,57 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	
 	
 	/**-------------------------Start of advertisemnt module-----------------------------------------------*/
+	function clientAccess(){
+		$data['cat']								= 'inventory';
+		$data['activeaction']						= 'advetiseruserstart';
+		$clientId									= $this->input->get('id');
+		$data['id']									= $clientId;
+		$data['advtUserAssocData']					= $this->User_Model->fetchAdvtUser($clientId);
+		//echo '<pre>';print_r($data);die;
+		
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view('admin/client-access');
+	}
+	
+	function advetiseruserstart(){
+		$data['cat']					= 'inventory';
+		$data['activeaction']			= 'advetiseruserstart';
+		$clientId						= $this->input->get('id');
+		if($this->input->post('submit')){
+			$userdata['username']	= $this->input->post('username');
+			$userdata['password'] 	= $this->input->post('password');
+			$userdata['firstname'] 	= $this->input->post('firstname');
+			$userdata['lastname'] 	= $this->input->post('lastname');
+			$userdata['role'] 		= 4;
+			$userdata['date_created'] 		= date('Y-m-d H:i:s');
+			
+			if(isset($_GET['userid'])){
+				$userId        		= $this->input->get('userid');
+				$this->User_Model->updateuser($userId, $userdata);
+				$data['msg'] 		= "User Is Successful Updated";
+			}else{
+				$userId 			= $this->User_Model->AddUser($userdata);
+				$advtUserAssoc      = array("clientid"=>$clientId,"userid"=>$userId);
+				$id 				= $this->User_Model->updateAdvtUserAssoc($advtUserAssoc);
+				$data['msg']		= "User Is Successful Added";
+			}	
+		}
+		
+		if(isset($_GET['userid'])){
+			$userId        					= $this->input->get('userid');
+			$data['users']					= $this->User_Model->fetchUsers($userId);
+		}
+		
+		//echo '<pre>';print_r($data);die;
+		
+		
+		$this->load->view('admin_includes/header', $data);
+		$this->load->view('admin_includes/left_sidebar', $data);
+		$this->load->view('admin/advetiseruserstart');
+	}
+	
+	
 	
 	public function advertisement(){
 		if(!$this->session->userdata('is_logged_in')){
