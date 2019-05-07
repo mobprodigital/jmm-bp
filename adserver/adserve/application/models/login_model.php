@@ -5,6 +5,24 @@ class Login_Model extends CI_Model {
 		$this->load->database();
 		
 	}
+	
+	function getClientID($uid){
+		$this->db->select("clientid");
+		$this->db->from('client_access');
+		$this->db->where('userid', $uid);
+		
+		$query 					= $this->db->get();
+		$result					= $query->row();
+		
+		/* echo '<pre>';print_r($result);
+		echo $this->db->last_query();die;  */
+		if(!empty($result)){
+			return $result->clientid;
+		}else{
+			return null;
+		}
+	}
+	
 /********************start of County iso code ******************** */
 	function getCountryCode(){
 		$this->db->select("`countries_id`,`countries_name`,`countries_iso_code`,`countries_isd_code`");
