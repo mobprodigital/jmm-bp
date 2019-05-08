@@ -1,5 +1,9 @@
 <?php $this->load->view('advertiser/header');?>
 <?php $this->load->view('advertiser/leftsidebar');?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
+<?php
+if(isset($_GET['pglmt'])){
+$limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 
 <div class="content-wrapper">
 	<section class="content-header">
@@ -77,6 +81,17 @@
 									<?php } ?>
 								</tbody>
 							</table>
+							<div class="pagination-container">
+							<?php echo $this->pagination->create_links(); ?>
+							<select id="page_limit" onChange="pageLimits(this.value);" class="page-limit">
+							<option value="10"<?php if($limt_value == '10'): ?> selected="selected"<?php endif; ?>>10</option>
+							<option value="20"<?php if($limt_value == '20'): ?> selected="selected"<?php endif; ?>>20</option>
+							<option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option>
+							</select>
+							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
+								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
+							-->
+						    </div>
 							<?php }else{ ?>
 								<div class="errormessage" style="margin-top: 2em"><img class="errormessage" src="<?php echo base_url();?>assets/upimages/info.gif" width="16" height="16" border="0" align="absmiddle">No Advertiser Exist</div>
 							<?php } ?>
@@ -114,6 +129,15 @@
 	-->
 	
 </div><?php $this->load->view('admin_includes/footer');?>
+
+<script type="text/javascript">
+	
+		function pageLimits(limit_value) {
+		 window.location = '<?php echo base_url(); ?>advertiser/viewadvertiser?pglmt=' + limit_value;
+
+
+};
+</script>
 
 		
 
