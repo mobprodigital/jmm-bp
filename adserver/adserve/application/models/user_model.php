@@ -2309,7 +2309,31 @@ $this->db->where('banners.delete_status =', 'active');
 	}
   
   
-	function getzones($affiliateid = null, $zoneid = null){
+	function getzones($affiliateid = null, $zoneid = null,$limit=null, $offset=null){
+		$this->db->select("*,affiliates.affiliateid as affiliateid");
+		$this->db->from('zones');
+		$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
+
+		
+		if(!is_null($zoneid)){
+			$this->db->where('zoneid', $zoneid);
+		}elseif(!is_null($affiliateid)){
+			$this->db->where('affiliates.affiliateid', $affiliateid);
+		}
+		$this->db->order_by("zoneid",'desc');
+		if(!is_null($limit)){
+			//echo 'ss';
+        	$this->db->limit($limit,$offset);
+
+		}
+
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo $this->db->last_query();die;	
+		return $result;
+	}
+  
+	function getzonescount($affiliateid = null, $zoneid = null){
 		$this->db->select("*,affiliates.affiliateid as affiliateid");
 		$this->db->from('zones');
 		$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
@@ -2323,11 +2347,10 @@ $this->db->where('banners.delete_status =', 'active');
 		$this->db->order_by("zoneid",'desc');
 
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		$result			= $query->num_rows();
 		//echo $this->db->last_query();die;	
 		return $result;
 	}
-  
   
 	function addwebsite($data, $affiliateid = null){
 		if(!is_null($affiliateid)){

@@ -1,3 +1,7 @@
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
+<?php
+if(isset($_GET['pglmt'])){
+$limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 <div class="content-wrapper">
 	<section class="content-header">
 		<label> <input  class="form-control" style="width:295px;" placeholder="Search"></label><small class="btn btn-large btn-primary" style=" float:right;"><?php echo anchor('users/zone','Add new zones');?></small>
@@ -65,6 +69,17 @@
 									<?php } ?>
 								</tbody>
 							</table>
+							<div class="pagination-container">
+							<?php echo $this->pagination->create_links(); ?>
+							<select id="page_limit" onChange="pageLimits(this.value);" class="page-limit">
+							<option value="10"<?php if($limt_value == '10'): ?> selected="selected"<?php endif; ?>>10</option>
+							<option value="20"<?php if($limt_value == '20'): ?> selected="selected"<?php endif; ?>>20</option>
+							<option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option>
+							</select>
+							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
+								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
+							-->
+						    </div>
 							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
 								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
 							-->
@@ -76,6 +91,15 @@
 	</section>
 </div>
 <?php $this->load->view('admin_includes/footer');?>
+
+<script type="text/javascript">
+	
+		function pageLimits(limit_value) {
+		 window.location = '<?php echo base_url(); ?>publisher/viewzone?pglmt=' + limit_value;
+
+
+};
+</script>
 
 
 

@@ -5189,15 +5189,32 @@ class Users extends CI_Controller{
         }
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewzones';
+
+		/////added by sunil 
+		
+	if(isset($_GET['pglmt'])){
+		$sort_lit = $_GET['pglmt'];
+	  }else{
+		  $tt = $this->uri->segment(3);
+		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+	  }
+	   $this->load->library('pagination');
+	   $config = ['base_url'=>base_url('users/viewzone'),
+	   'per_page'=>$sort_lit,
+	   'total_rows'=>$this->User_Model->getzonescount(),];
+	   $this->pagination->initialize($config);
+	  // print_r($config); die;
+  
+  // end
 		if(isset($_GET['affiliateid']) && isset($_GET['zoneid'])){
 			$affiliateid				= $this->input->get('affiliateid');
-			$data['affiliates']			= $this->User_Model->getzones($affiliateid, $zoneid);
+			$data['affiliates']			= $this->User_Model->getzones($affiliateid, $zoneid,$config['per_page'], $this->uri->segment(3));
 			$data['msg']				= 'zone is successfully updated';
 		}elseif(isset($_GET['affiliateid'])){
 			$affiliateid					= $_GET['affiliateid'];
-			$data['zones']					= $this->User_Model->getzones($affiliateid);
+			$data['zones']					= $this->User_Model->getzones($affiliateid,null,$config['per_page'], $this->uri->segment(3));
 		}else{
-			$data['zones']					= $this->User_Model->getzones();
+			$data['zones']					= $this->User_Model->getzones(null,null,$config['per_page'], $this->uri->segment(3));
 		}
 		
 		$this->load->view('admin_includes/header', $data);
