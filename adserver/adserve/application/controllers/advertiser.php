@@ -86,6 +86,25 @@ class Advertiser extends Auth_Controller{
 	function delivery(){
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewwebsite';
+		
+		// 	/////added by sunil 
+	   
+	if(isset($_GET['pglmt'])){
+		$sort_lit = $_GET['pglmt'];
+	  }else{
+		  $tt = $this->uri->segment(3);
+		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+	  }
+	 
+	   $this->load->library('pagination');
+	   $config = ['base_url'=>base_url('advertiser/delivery'),
+	   'per_page'=>$sort_lit,
+	   'total_rows'=>$this->Advertiser_Model->getAdvertisercount(),];
+	   $this->pagination->initialize($config);
+	  //print_r($config); die;
+  
+ //   // end
+
 		//echo $this->session->userdata('username');die;
 		$data['advertiser']			= $this->Advertiser_Model->getAdvertiser();
 		$this->load->view('advertiser/delivery', $data);	
@@ -179,6 +198,24 @@ class Advertiser extends Auth_Controller{
 		$data['cat']						= 'inventory';
 		$data['activeaction']				= 'viewadvertiser';
 		$uid    = $this->session->userdata('uid');
+       	// 	/////added by sunil 
+	   
+	if(isset($_GET['pglmt'])){
+		$sort_lit = $_GET['pglmt'];
+	  }else{
+		  $tt = $this->uri->segment(3);
+		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+	  }
+	 
+	   $this->load->library('pagination');
+	   $config = ['base_url'=>base_url('advertiser/viewadvertiser'),
+	   'per_page'=>$sort_lit,
+	   'total_rows'=>$this->Advertiser_Model->getAdvertisercount(),];
+	   $this->pagination->initialize($config);
+	  //print_r($config); die;
+  
+ //   // end
+
 		if(isset($_GET['sortBy'])){
 			$sortBy					= $this->input->get('sortBy');
 			if(empty($sortBy)) { $sortBy = 'name';}
@@ -187,9 +224,9 @@ class Advertiser extends Auth_Controller{
 		}
 		elseif(isset($_GET['clientid'])){
 			$clientid						= $this->input->get('clientid');
-			$data['advertiser']				= $this->Advertiser_Model->getadvertiser($clientid);
+			$data['advertiser']				= $this->Advertiser_Model->getadvertiser($clientid,$config['per_page'], $this->uri->segment(3));
 		}else{
-			$data['advertiser']				= $this->Advertiser_Model->getadvertiser();
+			$data['advertiser']				= $this->Advertiser_Model->getadvertiser(null,$config['per_page'], $this->uri->segment(3));
 		}
 		
 		if(isset($_GET['key'])){
@@ -487,6 +524,26 @@ class Advertiser extends Auth_Controller{
 		$data['activeaction']			= 'viewcompaign';
 		$userId	= $this->session->userdata('uid');
 		//echo $_POST['campaign_sort_type']; echo '<br>'; echo $_POST['advertiserlist'];
+		$clientIdd				 = $this->Advertiser_Model->getclientsss($userId);
+		//print_r($clientIdd); die;
+   
+// 	/////added by sunil 
+	   
+	if(isset($_GET['pglmt'])){
+	   $sort_lit = $_GET['pglmt'];
+	 }else{
+		 $tt = $this->uri->segment(3);
+		 if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+	 }
+	
+	  $this->load->library('pagination');
+	  $config = ['base_url'=>base_url('advertiser/viewcompaign'),
+	  'per_page'=>$sort_lit,
+	  'total_rows'=>$this->Advertiser_Model->getcampaignscount($clientIdd),];
+	  $this->pagination->initialize($config);
+	 //print_r($config); die;
+ 
+//   // end
 
 		if(isset($_POST['campaign_sort_type']) && isset($_POST['advertiserlist']) ){
 			$campaignSortType		= $this->input->post('campaign_sort_type'); 
@@ -499,20 +556,22 @@ class Advertiser extends Auth_Controller{
 			$data['advertiserlist']	= $this->Advertiser_Model->getadvertiser();
 			//print_r($data['campaign']);
 			
+		
+	 
 		}
 		elseif(isset($_GET['clientid'])){
 			$clientid					= $this->input->get('clientid');
-			$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientid);
+			$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientid,null,$config['per_page'], $this->uri->segment(3));
 		}elseif(isset($_GET['campaignid'])){
 			$campaignid					= $this->input->get('campaignid');	
-			$data['campaign']			= $this->Advertiser_Model->getcampaigns($campaignid);
+			$data['campaign']			= $this->Advertiser_Model->getcampaigns($campaignid,null,$config['per_page'], $this->uri->segment(3));
 		}else{
 			$data['advertiserlist']			= $this->Advertiser_Model->getadvertiser();
 			//print_r($data['advertiserlist']);
 			$clientId						= $this->Advertiser_Model->getclients($data['advertiserlist']);
 	
 			if(!(empty($clientId))){
-				$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientId);
+				$data['campaign']			= $this->Advertiser_Model->getcampaigns($clientId,null,$config['per_page'], $this->uri->segment(3));
 			}else{
 				$data['campaign']			= array();
 			}
@@ -679,6 +738,22 @@ class Advertiser extends Auth_Controller{
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewbanner';
 		$uid = $this->session->userdata('uid');
+		
+		/// added by sunil 
+		if(isset($_GET['pglmt'])){
+			$sort_lit = $_GET['pglmt'];
+		}else{
+				$tt = $this->uri->segment(3);
+			if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+			//echo $sort_lit; die;
+		}
+		$this->load->library('pagination');
+		$config = ['base_url'=>base_url('advertiser/viewbanner'),
+		'per_page'=>$sort_lit,
+		'total_rows'=>$this->Advertiser_Model->getbannercount(),];
+	     $this->pagination->initialize($config);
+	  //print_r($config); die;
+		////////end
 
 		/********************* Added By Riccha ***********************/
 		if(isset($_POST['banner_status']) && isset($_POST['sort_type']) )
@@ -694,10 +769,10 @@ class Advertiser extends Auth_Controller{
 		/****************************** End **************************/
 		elseif(isset($_GET['campaignid'])){
 			$campaignid					= $this->input->get('campaignid');
-			$data['banner']				= $this->Advertiser_Model->getbanner($campaignid, null, null);
+			$data['banner']				= $this->Advertiser_Model->getbanner($campaignid,null, $config['per_page'], $this->uri->segment(3));
 			
 		}elseif(isset($_GET['clientid'])){
-			$data['banner']				= $this->Advertiser_Model->getbanner();	
+			$data['banner']				= $this->Advertiser_Model->getbanner(null,null,$config['per_page'], $this->uri->segment(3));	
 			
 		}else{
 				$advertiserList								= $this->Advertiser_Model->getAdvertiser();
@@ -709,7 +784,7 @@ class Advertiser extends Auth_Controller{
 				}
 			
 				if(!empty($campaignIds)){
-					$data['banner']				= $this->Advertiser_Model->getclientbanner($campaignIds);
+					$data['banner']				= $this->Advertiser_Model->getclientbanner($campaignIds,$config['per_page'], $this->uri->segment(3));
 				}else{
 					$data['banner']				= array();
 				}

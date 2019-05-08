@@ -29,7 +29,31 @@ class Publisher_Model extends CI_Model {
 		
 	}
 	
-	function getwebsites($affiliateid = null){
+	function getwebsites($affiliateid = null,$limit=null, $offset=null){
+		$uid		= $this->session->userdata('uid');
+		
+		$this->db->select("*");
+		$this->db->from('affiliates');
+		$this->db->where('userid', $uid);
+
+		if(!is_null($affiliateid)){
+			$this->db->where('affiliateid', $affiliateid);
+		}
+
+		$this->db->order_by("affiliateid",'desc');
+		if(!is_null($limit)){
+			//echo 'ss';
+        	$this->db->limit($limit,$offset);
+
+		}
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo $this->db->last_query();die;
+		//echo '<pre>';print_r($result);die;
+		return $result;
+	}
+
+	function getwebsitescount($affiliateid = null){
 		$uid		= $this->session->userdata('uid');
 		
 		$this->db->select("*");
@@ -42,7 +66,7 @@ class Publisher_Model extends CI_Model {
 
 		$this->db->order_by("affiliateid",'desc');
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		$result			= $query->num_rows();
 		//echo $this->db->last_query();die;
 		//echo '<pre>';print_r($result);die;
 		return $result;
@@ -82,7 +106,32 @@ class Publisher_Model extends CI_Model {
 	}
 	
 	
-	function getzones($affiliateid = null, $zoneid = null){
+	function getzones($affiliateid = null, $zoneid = null,$limit=null, $offset=null){
+		$uid 	= $this->session->userdata('uid');
+		$this->db->select("*,affiliates.affiliateid as affiliateid");
+		$this->db->from('zones');
+		$this->db->join('affiliates', 'affiliates.affiliateid = zones.affiliateid');
+
+		$this->db->where('affiliates.userid', $uid);
+		if(!is_null($zoneid)){
+			$this->db->where('zoneid', $zoneid);
+		}elseif(!is_null($affiliateid)){
+			$this->db->where('affiliates.affiliateid', $affiliateid);
+		}
+		$this->db->order_by("zoneid",'desc');
+		if(!is_null($limit)){
+			//echo 'ss';
+        	$this->db->limit($limit,$offset);
+
+		}
+
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo $this->db->last_query();die;	
+		return $result;
+	}
+
+	function getzonescount($affiliateid = null, $zoneid = null){
 		$uid 	= $this->session->userdata('uid');
 		$this->db->select("*,affiliates.affiliateid as affiliateid");
 		$this->db->from('zones');
@@ -97,7 +146,7 @@ class Publisher_Model extends CI_Model {
 		$this->db->order_by("zoneid",'desc');
 
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		$result			= $query->num_rows();
 		//echo $this->db->last_query();die;	
 		return $result;
 	}

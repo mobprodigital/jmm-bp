@@ -2351,7 +2351,7 @@ $this->db->where('banners.delete_status =', 'active');
 	}
 	
 	
-	function getwebsites($affiliateid = null){
+	function getwebsites($affiliateid = null,$limit=null, $offset=null){
 		$this->db->select("*");
 		$this->db->from('affiliates');
 		if(!is_null($affiliateid)){
@@ -2359,11 +2359,27 @@ $this->db->where('banners.delete_status =', 'active');
 		}
 
 		$this->db->order_by("affiliateid",'desc');
+		if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+          }
 		$query 			= $this->db->get();
+		//echo $this->db->last_query();  
 		$result			= $query->result();
 		return $result;
 	}
-	
+	function getwebsitescount($affiliateid = null){
+		$this->db->select("*");
+		$this->db->from('affiliates');
+		if(!is_null($affiliateid)){
+			$this->db->where('affiliateid =', $affiliateid);
+		}
+
+		$this->db->order_by("affiliateid",'desc');
+		
+		$query 			= $this->db->get();
+		$result			= $query->num_rows();
+		return $result;
+	}
 	public function addadvertiser($user, $advertiser, $advertiserId = null, $userId = null){
 		//echo '<pre>';print_r($user);die;
 	   if(!is_null($advertiserId)){

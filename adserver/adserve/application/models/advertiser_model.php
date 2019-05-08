@@ -30,7 +30,29 @@ class Advertiser_Model extends CI_Model {
 		return $result;
 	}
 	
-	function getAdvertiser($id = null){
+	function getAdvertiser($id = null,$limit=null, $offset=null){
+		$uid		 = $this->session->userdata('uid');
+		$this->db->select("*");
+		$this->db->from('clients');
+		$this->db->where('userid', $uid);
+
+		
+		if(!is_null($id)){
+		  	$this->db->where('clients.clientid', $id);
+		}
+		$this->db->order_by("clientid",'desc');
+		if(!is_null($limit)){
+			//echo 'ss';
+        	$this->db->limit($limit,$offset);
+
+		}
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		//echo $this->db->last_query();
+		return $result;
+	}
+
+	function getAdvertisercount($id = null){
 		$uid		 = $this->session->userdata('uid');
 		$this->db->select("*");
 		$this->db->from('clients');
@@ -42,7 +64,7 @@ class Advertiser_Model extends CI_Model {
 		}
 		$this->db->order_by("clientid",'desc');
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		$result			= $query->num_rows();
 		//echo $this->db->last_query();
 		return $result;
 	}
@@ -135,16 +157,67 @@ class Advertiser_Model extends CI_Model {
 	}
 	
 	function getclients($result){
+		// print_r($result); die;
 		$clientArr		= array();
 		if(!empty($result)){
 			foreach($result as $key => $value){
 				$clientArr[]	= $value->clientid;
 			}
 		}
+		 // print_r($clientArr); die;
 		return $clientArr;
 	}
+	function getclientsss($userId){
+		$this->db->select("clientid");
+		$this->db->from('clients');
+		if(!is_null($userId)){
+		  	$this->db->where('clients.agencyid =', $userId);
+		}
+		
+		$this->db->order_by("clientid",'desc');
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		$clientArr		= array();
+		if(!empty($result)){
+			foreach($result as $key => $value){
+				$clientArr[]	= $value->clientid;
+			}
+			
+		}
+		 //echo '<pre>';print_r($clientArr);die;
+		return $clientArr;
+   }
 	
-	function getcampaigns($clientid = null, $campaignId = null){
+	function getcampaigns($clientid = null, $campaignId = null,$limit=null, $offset=null){
+		$this->db->select("*,campaigns.status as camp_stat");
+		$this->db->from('campaigns');
+		$this->db->join('clients', 'clients.clientid = campaigns.clientid');
+		
+		if(is_array($clientid)){
+			$this->db->where_in('clients.clientid', $clientid);
+		}else{
+			if(!is_null($clientid)){
+				$this->db->where('clients.clientid', $clientid);
+			}
+		}
+		
+		if(!is_null($campaignId)){
+			$this->db->where('campaigns.campaignid', $campaignId);
+		}
+		$this->db->order_by("campaignid",'desc');
+		if(!is_null($limit)){
+			//echo 'ss';
+        	$this->db->limit($limit,$offset);
+
+		}
+		$query 			= $this->db->get();
+		$result			= $query->result();
+		return $result;
+	}
+
+
+	function getcampaignscount($clientid = null, $campaignId = null){
+		 
 		$this->db->select("*,campaigns.status as camp_stat");
 		$this->db->from('campaigns');
 		$this->db->join('clients', 'clients.clientid = campaigns.clientid');
@@ -162,9 +235,12 @@ class Advertiser_Model extends CI_Model {
 		}
 		$this->db->order_by("campaignid",'desc');
 		$query 			= $this->db->get();
-		$result			= $query->result();
+		//echo $this->db->last_query();
+		$result			= $query->num_rows();
+		//print_r($result); die;
 		return $result;
 	}
+
 	
 	function getlinkedZones($bannerId){
 		$this->db->select("ad_zone_assoc_id,zone_id,ad_id");
@@ -262,8 +338,29 @@ class Advertiser_Model extends CI_Model {
 		}
 		return $result;
 	}
+	function getbannercount($campaignid=null,$bannerid=null,$limit=null , $offset=null){
+		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
+		$this->db->from('banners');
+		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
+		if(!is_null($bannerid)){
+			$this->db->where('banners.bannerid =', $bannerid);
+		}
+		if(!is_null($campaignid)){
+			$this->db->where('campaigns.campaignid =', $campaignid);
+		}
+		$this->db->order_by("bannerid",'desc');
+		if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+			 
+        }
+		$query 			= $this->db->get();
+		$result			= $query->num_rows();
+		return $result;	
+
+      
+	}
 	
-	function getclientbanner($campaignid=null){
+	function getclientbanner($campaignid=null,$limit=null , $offset=null){
 		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status,banners.updated as updated");
 		$this->db->from('banners');
 		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
@@ -271,11 +368,15 @@ class Advertiser_Model extends CI_Model {
 			$this->db->where_in('campaigns.campaignid', $campaignid);
 		}
 		$this->db->order_by("bannerid", 'desc');
+		if(!is_null($limit)){
+        	$this->db->limit($limit,$offset);
+			 
+        }
 		$query 			= $this->db->get();
 		$result			= $query->result();
 		return $result;
 	}
-	
+
 	
 	/*************** Start of Ad delivery limitations ***********/
 	function updatelimitation($bannerid, $aclPlugins, $compiledLimit){

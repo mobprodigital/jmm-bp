@@ -5255,7 +5255,25 @@ class Users extends CI_Controller{
         }
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewwebsite';
-		$data['affiliates']				= $this->User_Model->getwebsites();
+		
+		//added by sunil
+        if(isset($_GET['pglmt'])){
+			$sort_lit = $_GET['pglmt'];
+		  }else{
+				$tt = $this->uri->segment(3);
+			  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+			  //echo $sort_lit; die;
+		  }
+		  $this->load->library('pagination');
+		  $config = ['base_url'=>base_url('users/viewwebsite'),
+		  'per_page'=>$sort_lit,
+		  'total_rows'=>$this->User_Model->getwebsitescount(),];
+		  $this->pagination->initialize($config);
+		  //print_r($config); die;
+		  
+		 //end
+
+		$data['affiliates']				= $this->User_Model->getwebsites(null,$config['per_page'], $this->uri->segment(3));
 		$this->load->view('admin_includes/header', $data);
 		$this->load->view('admin_includes/left_sidebar', $data);
 		$this->load->view("admin/viewwebsite", $data);
