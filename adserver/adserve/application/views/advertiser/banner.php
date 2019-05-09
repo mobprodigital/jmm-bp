@@ -185,5 +185,5 @@
 	<?php } ?>
 	<?php } ?>
 </div>
-
+<script src="<?php echo base_url();?>assets/js/adserver.js"></script> 
 <?php $this->load->view('advertiser/footer');?>
