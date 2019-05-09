@@ -89,7 +89,7 @@ ol, ul {
 							
 							<div class="stats cf">
 								<ul>
-								<?php if(isset($advertiserStats) && isset(($advertiserStats[0]->impressions))){ ?>
+								<?php if(isset($advertiserStats) && !empty($advertiserStats) && (($advertiserStats[0]->impressions) != '')){ ?>
 									<li class="impressions">
 										<span><?php echo $advertiserStats[0]->impressions;?></span>
 										<em>impressions</em>
