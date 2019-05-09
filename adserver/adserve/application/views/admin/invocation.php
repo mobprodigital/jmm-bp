@@ -32,7 +32,7 @@ hr {
 										<option value="<?php echo $_GET['codetype'];?>"><?php if($_GET['codetype'] == 'scrpt'){echo 'Javascript Tag';}else{echo 'iFrame Tag';}?></option>
 									<?php } ?>
 										<option value="scrpt">Javascript Tag</option>
-										<option value="adframe">iFrame Tag</option>
+										<!-- <option value="adframe">iFrame Tag</option> -->
 									</select>&nbsp;
 								</div>
 							</div>
