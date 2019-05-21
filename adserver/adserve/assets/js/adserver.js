@@ -637,7 +637,18 @@ $("document").ready(function(){
 
 	});
 	
-	$("#startSet_specific").click(function(){
+
+	$('.compaign-star-date').change(function(){
+		if(this.value === 't'){
+			$("#specificStartDateSpan").show();
+			$("#activate_time").val("");
+		} else{
+			$("#specificStartDateSpan").hide();
+			
+		}
+	});
+
+	/* $("#startSet_specific").click(function(){
 		if($(this).is(':checked')){
 			$("#specificStartDateSpan").show();
 		}
@@ -647,7 +658,7 @@ $("document").ready(function(){
 	$("#startSet_immediate").click(function(){
 		$("#specificStartDateSpan").hide();
 
-	});
+	}); */
 	$("#endSet_immediate").click(function(){
 		$("#specificEndDateSpan").hide();
 
@@ -1070,12 +1081,12 @@ $("document").ready(function(){
 
 		//Validation For Email
 		//var emailReg = /^([a-z0-9\+_]+)(\.[a-z0-9\+_]+)*@([a-z0-9]+\.)+[a-z]{2,6}$/;
-		var emailReg = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
+		/* var emailReg = /^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/;
 		if(!email.match(emailReg))
 		{
 			$("#span_email").text("Please Enter Valid Email Address");
 			return false;
-		}
+		} */
 		// Ends
 		
 
