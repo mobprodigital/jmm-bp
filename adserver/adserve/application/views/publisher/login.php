@@ -1,14 +1,29 @@
+<style>
+.bg-img {
+    background-image: url(../assets/img/admin/pexels-photo-1308624.jpeg);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+
+
 <?php $this->load->view('login/header');?>
+
+<div class="bg-img">
+
     <div class="login-box">
-      <div class="login-logo">
-        <a href="#"><b>Publisher</b> Login</a>
-      </div>
-      <div class="login-box-body">
-		<?php if(isset($msg)){ ?>
-			<p id="msg" style="color:red;"><?php echo $msg;?></p>
-		<?php } ?>
-        <p class="login-box-msg">Sign in to start your session</p>
-      <?php 
+        <div class="login-logo">
+            <a href="#"><b>Publisher</b> Login</a>
+        </div>
+        <div class="login-box-body">
+            <?php if(isset($msg)){ ?>
+            <p id="msg" style="color:red;"><?php echo $msg;?></p>
+            <?php } ?>
+            <p class="login-box-msg">Sign in to start your session</p>
+            <?php 
 	  if(isset($message_error) && $message_error){
           echo '<div class="alert alert-error">';
             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -43,18 +58,19 @@
       echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
 	  echo '</div></div>';
       echo form_close();
-      ?>      
-     </div>
+      ?>
+        </div>
     </div>
+</div>
 
-    <script src="<?php echo base_url();?>assets/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script>
-      $(function () {
-       $("#msg").fadeOut(3000);
-	  });
+<script src="<?php echo base_url();?>assets/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script>
+$(function() {
+    $("#msg").fadeOut(3000);
+});
+</script>
+</body>
 
-    </script>
-  </body>
 </html>

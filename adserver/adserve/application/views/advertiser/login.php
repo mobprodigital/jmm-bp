@@ -1,4 +1,3 @@
-<?php $this->load->view('login/header');?>
 <style>
 div.message div.close {
     position: absolute;
@@ -10,6 +9,7 @@ div.message div.close {
     text-indent: -2000em;
     cursor: pointer;
 }
+
 div.message div.panel {
     position: relative;
     font-size: 1em;
@@ -19,6 +19,7 @@ div.message div.panel {
     text-align: left;
     background: transparent;
 }
+
 .panel {
     padding: 15px;
     border: 1px solid #ddd;
@@ -29,35 +30,52 @@ div.message div.panel {
     -zoom: 1;
     margin: 10px 0px 15px 0px;
 }
+
 div.message div.confirm {
     color: #045222;
     background-color: #a8e9be;
     border: 1px solid #9ad6b2;
 }
 
+.bg-img {
+    background-image: url(../assets/img/admin/pexels-photo-1308624.jpeg);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
 
-    <div class="login-box">
-	<?php if(isset($successMsg)){ ?>
 
-	<div class="message localMessage">
-		<div class="panel confirm"><div class="icon">
-			</div><p><?php echo $successMsg;?></p>
-			<div class="topleft"></div>
-			<div class="topright"></div>
-			<div class="bottomleft"></div>
-			<div class="bottomright"></div>
-			<div class="close">x</div>
-		</div>
-	</div>
-	<?php } ?>
-      <div class="login-logo">
-        <a href="#"><b>Advertiser</b> Login</a>
-      </div>
-      <div class="login-box-body">
-      
-        <p class="login-box-msg">Sign in to start your session</p>
-      <?php 
+
+
+<?php $this->load->view('login/header');?>
+
+<div class="bg-img">
+    <div class="login-box">
+        <?php if(isset($successMsg)){ ?>
+
+        <div class="message localMessage">
+            <div class="panel confirm">
+                <div class="icon">
+                </div>
+                <p><?php echo $successMsg;?></p>
+                <div class="topleft"></div>
+                <div class="topright"></div>
+                <div class="bottomleft"></div>
+                <div class="bottomright"></div>
+                <div class="close">x</div>
+            </div>
+        </div>
+        <?php } ?>
+        <div class="login-logo">
+            <a href="#"><b>Advertiser</b> Login</a>
+        </div>
+        <div class="login-box-body">
+
+            <p class="login-box-msg">Sign in to start your session</p>
+            <?php 
 	  if(isset($msg) && $msg){
           echo '<div class="alert alert-error">';
             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -92,11 +110,11 @@ div.message div.confirm {
       echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
 	  echo '</div></div>';
       echo form_close();
-      ?>      
-     <br/>
-       <!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-
+      ?>
+            <br />
+            <!-- /.login-box-body -->
+        </div><!-- /.login-box -->
+    </div>
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo base_url();?>assets/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
     <!-- Bootstrap 3.3.2 JS -->
@@ -104,20 +122,20 @@ div.message div.confirm {
     <!-- iCheck -->
     <script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script>
-    $(function () {
+    $(function() {
         $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
         });
-      });
-	$(".close").click(function(){
-		$(".message").hide();
-	});
-      $(function () {
-       $("#msg").fadeOut(3000);
-	  });
-
+    });
+    $(".close").click(function() {
+        $(".message").hide();
+    });
+    $(function() {
+        $("#msg").fadeOut(3000);
+    });
     </script>
-  </body>
-</html>
+    </body>
+
+    </html>
