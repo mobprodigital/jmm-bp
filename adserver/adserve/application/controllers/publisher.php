@@ -78,7 +78,8 @@ class Publisher extends Auth_Controller{
 		$sort_lit = $_GET['pglmt'];
 	  }else{
 		  $tt = $this->uri->segment(3);
-		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=1;}
+		 // if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=25;}
+		 if(isset($tt) && !empty($tt)){ $sort_lit =  25;}else{ $sort_lit=25;}
 	  }
 	 
 	   $this->load->library('pagination');
@@ -253,7 +254,8 @@ class Publisher extends Auth_Controller{
 		$sort_lit = $_GET['pglmt'];
 	  }else{
 		  $tt = $this->uri->segment(3);
-		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+			//if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=25;}
+			if(isset($tt) && !empty($tt)){ $sort_lit =  25;}else{ $sort_lit=25;}
 	  }
 	 
 	   $this->load->library('pagination');
@@ -441,7 +443,8 @@ class Publisher extends Auth_Controller{
 
 
 	/*************************** Added By Riccha *********/
-	public function deletewebsite(){	
+	public function deletewebsite(){
+		if($_GET['website_ids']!=""){	
 		if ($_GET['website_ids']) {
 			$websiteId= trim($_GET['website_ids'],",");
 			$websiteId = explode(',', $websiteId);
@@ -457,10 +460,12 @@ class Publisher extends Auth_Controller{
 		$web_ids = implode(',',$websiteId);
 		
 		$result = $this->Publisher_Model->deleteWebsite($web_ids);
+	}
 		redirect('publisher/viewwebsite');
 	}
 
 	public function deletezone(){	
+		if($_GET['zone_ids']!=""){
 		if ($_GET['zone_ids']) {
 			$zoneId= trim($_GET['zone_ids'],",");
 			$zoneId = explode(',', $zoneId);
@@ -475,6 +480,7 @@ class Publisher extends Auth_Controller{
 		$res_zone = implode(',',$zoneId);
 	
 		$result = $this->Publisher_Model->deleteZone($res_zone);
+	}
 		redirect('publisher/viewzone');
 		
 	}

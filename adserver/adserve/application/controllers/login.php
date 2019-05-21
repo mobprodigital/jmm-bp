@@ -230,7 +230,7 @@ class Login extends CI_Controller{
 		//die;
 		$user_name 		= $this->input->post('user_name');
 		$password 		= $this->input->post('password');
-
+		
 		$is_valid 		= $this->Users_model->validate($user_name, $password, 'admin');
 		//print_r($is_valid);
 		//die;
@@ -259,7 +259,7 @@ class Login extends CI_Controller{
 			/* Ends */
 			
 			//get id of logged in user
-				$uid		= $this->Users_model->getloggedinuser($user_name);
+			$uid		= $this->Users_model->getloggedinuser($user_name);
 			//get role of logged in user
 				$role		= $this->Users_model->getroleuser($user_name);
 			$data = array(

@@ -204,7 +204,9 @@ class Advertiser extends Auth_Controller{
 		$sort_lit = $_GET['pglmt'];
 	  }else{
 		  $tt = $this->uri->segment(3);
-		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+			//if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=25;}
+			if(isset($tt) && !empty($tt)){ $sort_lit =  25;}else{ $sort_lit=25;}
+			
 	  }
 	 
 	   $this->load->library('pagination');
@@ -533,7 +535,8 @@ class Advertiser extends Auth_Controller{
 	   $sort_lit = $_GET['pglmt'];
 	 }else{
 		 $tt = $this->uri->segment(3);
-		 if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+		 //if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=25;}
+		 if(isset($tt) && !empty($tt)){ $sort_lit =  25;}else{ $sort_lit=25;}
 	 }
 	
 	  $this->load->library('pagination');
@@ -744,7 +747,8 @@ class Advertiser extends Auth_Controller{
 			$sort_lit = $_GET['pglmt'];
 		}else{
 				$tt = $this->uri->segment(3);
-			if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
+			//if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=25;}
+			if(isset($tt) && !empty($tt)){ $sort_lit =  25;}else{ $sort_lit=25;}
 			//echo $sort_lit; die;
 		}
 		$this->load->library('pagination');
@@ -1287,7 +1291,9 @@ class Advertiser extends Auth_Controller{
 	/**********End of Statistics Section*********************************************************/
 
 /******************************* Added By Riccha ************************************************/
-public function deleteadvertiser(){	
+public function deleteadvertiser(){
+	
+		if($_GET['advertiser_ids']!=""){
 	if ($_GET['advertiser_ids']) {
 		$advertzId= trim($_GET['advertiser_ids'],",");
 		$advertzId = explode(',', $advertzId);
@@ -1321,11 +1327,13 @@ public function deleteadvertiser(){
 			}
 			 $this->db->query("DELETE FROM `clients` WHERE clientid = '$adv_value'");
 	}
-	redirect('advertiser/viewadvertiser');;
+		}
+	redirect('advertiser/viewadvertiser');
 }
 
 public function deletecampaigncheckbox()
 {
+	if($_GET['campaign_ids']!=""){
 	if ($_GET['campaign_ids']) 
 	{
 		$campaignid = trim($_GET['campaign_ids'],",");
@@ -1359,11 +1367,13 @@ public function deletecampaigncheckbox()
 			$this->db->query("DELETE FROM `campaigns` WHERE campaignid = '$campId_value'");
 		 
 	}
+}
 	redirect('advertiser/viewcompaign');
 }
 
 public function deletebannercheckbox()
 {
+	if($_GET['banner_ids']!=""){
 	if ($_GET['banner_ids']) 
 	{
 		$bannerId= trim($_GET['banner_ids'],",");
@@ -1387,7 +1397,7 @@ public function deletebannercheckbox()
 		}
 	  
  	}
- 
+}
 	redirect('advertiser/viewbanner');
 
 }

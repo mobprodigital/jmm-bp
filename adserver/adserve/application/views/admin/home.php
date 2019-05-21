@@ -35,7 +35,10 @@ if($currency_value=='1'){
   $currency_symb = "€";
 }
   // for impressions 
-                //print_r($chart_data);
+              //  print_r($chart_data);
+                // if(empty($chart_data)){
+                //   $chart_data =array();
+                // } //die;
                 $new_arr = array();
                 $count = count($chart_data);
 
@@ -96,6 +99,12 @@ if($currency_value=='1'){
                  } 
                 $array_click_val = array_values($new_clicks);
                 //print_r($array_click_val); echo "hello";
+                // if(empty($home_chart)){
+                //   $home_chart =array();
+                // }
+                // if(empty($home_chart[0])){
+                //   $home_chart[0]=array();
+                // }
  ?>
 
 <div class="content-wrapper" >
@@ -103,15 +112,12 @@ if($currency_value=='1'){
 		
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
-<style>.col-md-6 {
-    width: 48%;
-}</style>
-<section class="content">
+<section class="">
         <!-- Small boxes (Stat box) -->
-<div class="container">
-  <div class="row home-box">
+<div class="">
+  <div class="row ">
    <div class="col-md-12">
-                 <div class="row mt-15">
+                 <div class="row" style="margin-top:60px;">
                   <div class="col-md-2">
                    <select class="form-select" id="all_period_report" onChange="all_period(this.value);">
                     <option value="today"<?php if($period_value == 'today'): ?> selected="selected"<?php endif; ?>>Today</option>
@@ -207,7 +213,7 @@ if($currency_value=='1'){
  <h2  class="color-blue">
                       <?php
 
-                          $rev = $home_chart[0]->revenue;
+                          $rev =  !empty($home_chart[0]->revenue)?$home_chart[0]->revenue:array();
                           //$rev = 200;
                           if($currency_value=='2'){  $rev = $rev/68; }elseif ($currency_value=='1') { $rev = $rev;}elseif ($currency_value=='3') { $rev = $rev/78; }
                           
@@ -219,7 +225,7 @@ if($currency_value=='1'){
           </div>
   </div>
   </div>
-   <div class="row  home-box">
+   <div class="row ">
   <div class="col-md-12">
      <h3 class="box-title">Demand Comparison</h3>
      <div class="row">

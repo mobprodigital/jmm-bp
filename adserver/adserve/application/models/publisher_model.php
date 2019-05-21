@@ -43,7 +43,9 @@ class Publisher_Model extends CI_Model {
 		$this->db->order_by("affiliateid",'desc');
 		if(!is_null($limit)){
 			//echo 'ss';
-        	$this->db->limit($limit,$offset);
+			if($limit==25){
+			 $this->db->limit($limit,$offset);
+			}
 
 		}
 		$query 			= $this->db->get();
@@ -121,7 +123,9 @@ class Publisher_Model extends CI_Model {
 		$this->db->order_by("zoneid",'desc');
 		if(!is_null($limit)){
 			//echo 'ss';
-        	$this->db->limit($limit,$offset);
+			if($limit==25){
+			$this->db->limit($limit,$offset);
+			}
 
 		}
 

@@ -39,7 +39,62 @@ class Users extends CI_Controller{
 	}
 	
 	
-	
+	function xmlDomParsing(){
+				
+				//$vastnetconnecturl		 = 'http://news.htdscontent.com/news/rss/jackmorris/ht/topnews';
+		$vastnetconnecturl	= 'http://news.htdscontent.com/news/rss/jackmorris/ht/sports';
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,$vastnetconnecturl);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$response = curl_exec($ch);
+		//echo '<pre>';print_r($response);
+		
+		//phpinfo();die;
+		$doc = new DOMDocument();
+		$doc->load($vastnetconnecturl);
+		$items = $doc->getElementsByTagName("item");
+		//echo print_r($items);
+		//echo 'hello';
+		//die;
+
+		$html = '';
+		foreach ($items  as $item) {
+			$html  .= '<table border="1">';
+
+
+
+			$html .= '<tr><td>title</td><td>'.$item->getElementsByTagName('title')[0]->nodeValue.'</tr>';
+			$html .= '<tr><td>body</td><td>'. $item->getElementsByTagName('body')[0]->nodeValue.'</tr>';
+			$html .= '<tr><td>pubDate</td><td>'. $item->getElementsByTagName('pubDate')[0]->nodeValue.'</tr>';
+			$timeStrOld = $item->getElementsByTagName('pubDate')[0]->nodeValue;
+
+			$html .= '<tr><td>date old</td><td>'. $timeStrOld .'</tr>';
+			$html .= '<tr><td>date converted</td><td>'. date('Y-m-d H:i:s',strtotime($timeStrOld)) .'</tr>';
+			$html .= '<tr><td>image</td><td>'. $item->getElementsByTagName('links')[0]->getElementsByTagName('link')[0]->getAttribute('url').'</tr>';
+
+			/* foreach ($item->childNodes as $value) {
+				if ($value->nodeName == '#text') {
+					continue;
+				} else {
+					$html .= '<tr><td>' . $value->nodeName . '</td><td>' . $value->nodeValue . '</tr>';
+					//echo "{$value->nodeName} - {$value->nodeValue}";
+					//echo '<br>'.'<br>';
+				}
+			} */
+
+
+
+
+
+
+			$html .= '</table>';
+
+			$html .= '<p style="background:black; height: 20px"></p>';
+		}
+echo $html;
+	}
 	
 	
 	function mailer(){
@@ -1564,6 +1619,7 @@ class Users extends CI_Controller{
 		
 	}
 	public function home(){
+		//echo "hello"; die;
 		if(!$this->session->userdata('is_logged_in')){
             redirect('admin');
         }
@@ -1578,8 +1634,11 @@ class Users extends CI_Controller{
 		$data['date'] 		= _getSpanDates($all_period);
 		/*print_r($data);*/ 
          $date1 = $data['date']['start'];
-         $date2 = $data['date']['end'];  
+		 $date2 = $data['date']['end'];
+		 //echo "hello111"; die;  
+		// print_r($data);
         }else{
+			//echo "hello"; die;
          //$date1 = $data['date']['start'];  
          //$date2 = $data['date']['end'];
           $data = $this->input->get(); 
@@ -1587,7 +1646,7 @@ class Users extends CI_Controller{
           if(isset($data['period_start'])){ $e = $data['period_end']; }else{ $e = date('Y-m-d'); } 
           $data['date']['start'] = $s;
           $data['date']['end']   = $e;
-         // print_r($data); 
+          //print_r($data); die; 
           $date1 = $data['date']['start'];  
           $date2 = $data['date']['end'];
         }
@@ -1610,10 +1669,20 @@ class Users extends CI_Controller{
 
           }
 
-
+		    //   print_r($date1); echo "<br>";
+		    //   print_r($date2); echo "<br>";
+		    //   print_r($cond);  echo "<br>";  die; 
+		  
          $data['chart_data']         =  $this->Home_Model->getchartres($date1,$date2,$cond);
          $data['home_chart']         =  $this->Home_Model->getres($date1,$date2);
- 
+		   //print_r($data['chart_data']);  die;
+		  if(empty($data['chart_data'])){
+			$data['chart_data'] = array();
+		  }
+		  if(empty($data['home_chart'])){
+			$data['home_chart'] = array();
+		  }
+		  //print_r($data); die;
 		$data['cat']				 ='home';
 		$data['activeaction']		 = 'home';
 		$this->load->view('admin_includes/header', $data);
@@ -3873,44 +3942,9 @@ class Users extends CI_Controller{
 				$entityID	  = $affiliateId;
 			}
 			
-			//echo $entityType.'<br>'.$entityID;die;
 			$data['VideoStats'] 	= $this->Statistics_Model->adCampVideoStats($entityType, $entityID, 'day', $startDate, $endDate);
 		}
-		//echo '<pre>';print_r($data);die;
-		/* if(isset($_GET['clientid']) && isset($_GET['breakthrough'])){
-			$breakthrough				= $this->input->get('breakthrough');
-			if($breakthrough == 'affiliate'){
-				if(isset($_GET['affiliateid'])){
-					$data['advertiserVideoStats'] 	= $this->Statistics_Model->advertiserWebsiteDailyVideoStatus($clientId, $campaignId,$bannerId,$affiliateId, $startDate,$endDate);
-				}else{
-					$data['advertiserVideoStats'] 	= $this->Statistics_Model->advertiserWebsiteVideoStatus($clientId, $campaignId,$bannerId,$startDate, $endDate);
-				}
-			}
-			
-			if($breakthrough == 'banner'){
-				if(isset($_GET['bannerid'])){
-					$data['advertiserVideoStats'] 	= $this->Statistics_Model->advertiserBannerDailyVideoStatus($bannerId, $startDate,$endDate);
-				}else{
-					$data['advertiserVideoStats'] 	= $this->Statistics_Model->advertiserBannerVideoStatus($clientId, $campaignId, $startDate, $endDate);
-				}
-			}
-			
-			if($breakthrough == 'campaign'){
-				if(isset($_GET['campaignid'])){
-					$data['advertiserVideoStats'] 			= $this->Statistics_Model->getadvertiserCampaignDailyVideoStatistics($clientId,$campaignId	,$startDate,$endDate);
-				}else{
-					$data['advertiserVideoStats'] 			= $this->Statistics_Model->advertiserCampaignVideoStatus($clientId,$startDate,$endDate);
-				}
-			}
-			if($breakthrough == 'client'){
-				$data['advertiserVideoStats'] 	= $this->Statistics_Model->advertiserVideoStats($clientId,$startDate,$endDate);
-			}
 		
-		}else if(isset($_GET['clientId'])){
-			$data['advertiserVideoStats'] = $this->Statistics_Model->advertiserVideoStats($clientId, $startDate, $endDate);
-		}else{
-			$data['advertiserVideoStats'] = $this->Statistics_Model->advertiserVideoStats($clientId,$startDate,$endDate);
-		} */
 		
 		//echo '<pre>';print_r($data);die;
 		require_once APPPATH.'libraries/statistics/dateTimeFilter.php';
@@ -4940,7 +4974,7 @@ class Users extends CI_Controller{
 					'priority' => '0',
 					'priority_factor' => '1',
 					'to_be_delivered' => '1',
-					'campaign_id' => $bannerData->campaginid,
+					'campaign_id' => $bannerData->campaignid,
 					'campaign_priority' => $bannerData->campaign_priority,
 					'campaign_weight' => $bannerData->campaign_weight,
 					'campaign_companion' => '0',
@@ -5189,32 +5223,15 @@ class Users extends CI_Controller{
         }
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewzones';
-
-		/////added by sunil 
-		
-	if(isset($_GET['pglmt'])){
-		$sort_lit = $_GET['pglmt'];
-	  }else{
-		  $tt = $this->uri->segment(3);
-		  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
-	  }
-	   $this->load->library('pagination');
-	   $config = ['base_url'=>base_url('users/viewzone'),
-	   'per_page'=>$sort_lit,
-	   'total_rows'=>$this->User_Model->getzonescount(),];
-	   $this->pagination->initialize($config);
-	  // print_r($config); die;
-  
-  // end
 		if(isset($_GET['affiliateid']) && isset($_GET['zoneid'])){
 			$affiliateid				= $this->input->get('affiliateid');
-			$data['affiliates']			= $this->User_Model->getzones($affiliateid, $zoneid,$config['per_page'], $this->uri->segment(3));
+			$data['affiliates']			= $this->User_Model->getzones($affiliateid, $zoneid);
 			$data['msg']				= 'zone is successfully updated';
 		}elseif(isset($_GET['affiliateid'])){
 			$affiliateid					= $_GET['affiliateid'];
-			$data['zones']					= $this->User_Model->getzones($affiliateid,null,$config['per_page'], $this->uri->segment(3));
+			$data['zones']					= $this->User_Model->getzones($affiliateid);
 		}else{
-			$data['zones']					= $this->User_Model->getzones(null,null,$config['per_page'], $this->uri->segment(3));
+			$data['zones']					= $this->User_Model->getzones();
 		}
 		
 		$this->load->view('admin_includes/header', $data);
@@ -5272,25 +5289,7 @@ class Users extends CI_Controller{
         }
 		$data['cat']					= 'inventory';
 		$data['activeaction']			= 'viewwebsite';
-		
-		//added by sunil
-        if(isset($_GET['pglmt'])){
-			$sort_lit = $_GET['pglmt'];
-		  }else{
-				$tt = $this->uri->segment(3);
-			  if(isset($tt) && !empty($tt)){ $sort_lit =  $this->uri->segment(3);}else{ $sort_lit=10;}
-			  //echo $sort_lit; die;
-		  }
-		  $this->load->library('pagination');
-		  $config = ['base_url'=>base_url('users/viewwebsite'),
-		  'per_page'=>$sort_lit,
-		  'total_rows'=>$this->User_Model->getwebsitescount(),];
-		  $this->pagination->initialize($config);
-		  //print_r($config); die;
-		  
-		 //end
-
-		$data['affiliates']				= $this->User_Model->getwebsites(null,$config['per_page'], $this->uri->segment(3));
+		$data['affiliates']				= $this->User_Model->getwebsites();
 		$this->load->view('admin_includes/header', $data);
 		$this->load->view('admin_includes/left_sidebar', $data);
 		$this->load->view("admin/viewwebsite", $data);
@@ -5385,7 +5384,7 @@ class Users extends CI_Controller{
 			$banner['comments']				= $this->input->post('comments');     
 			$banner['keyword']				= $this->input->post('keyword');      
 			$banner['weight']				= $this->input->post('weight');
-			$banner['updated']				= $this->input->post('comments');   
+			$banner['updated']				= date('Y-m-d H:i:s');   
 			
 			if(isset($_GET['bannerid'])){
 				include APPPATH.'/libraries/banner/updatebanner.php';
@@ -5403,6 +5402,7 @@ class Users extends CI_Controller{
 					$campaignid					= $this->input->get('campaignid');
 					$bannerid					= $this->input->get('bannerid');
 					$data['banner']				= $this->User_Model->getbanner($campaignid, $bannerid);
+					
 					if(isset($data['banner'][0]->url)){
 						$lp				= $data['banner'][0]->url;
 						if(strpos($lp, '&')){
@@ -5411,8 +5411,9 @@ class Users extends CI_Controller{
 					}else{
 						$lp		= "http://mediaconversion.com/";		
 					}
-					$data['banner'][0]->url	= $lp;
-					
+					if(!empty($data['banner'])){
+						$data['banner'][0]->url	= $lp;
+					}
 				}elseif(isset($_GET['clientid'])){
 					$clientid					= $this->input->get('clientid');
 					$clientDetails				= $this->User_Model->getadvertiser($clientid);
@@ -5549,7 +5550,7 @@ class Users extends CI_Controller{
 		$data['contract']				= CAMPAIGN_CONTRACT;
 		$data['override']				= CAMPAIGN_OVERRIDE;
 		$campaign['clientid']			= $this->input	->get('clientid');
-//$currency					    = $this->User_Model->getcurrency();
+		//$currency					    = $this->User_Model->getcurrency();
         //$data['currency']             = $currency;
         $data['currency']               = $this->session->userdata['currency'];
 		if ($this->input->post('submit')) {
@@ -5578,7 +5579,7 @@ class Users extends CI_Controller{
 				$campaign['status'] 					= 1;               
 
 			}
-$campaign['currency'] 		        	= $this->input->post("currency_type");
+			$campaign['currency'] 		        		= $this->input->post("currency_type");
 			
 			if($this->input->post("endSet")=='t'){
 				$expiraitonTime							= $this->input->post("expire_time");
@@ -5747,7 +5748,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				}
 				
 				
-				if($data['campaign'][0]->activate_time != "0000-00-00"){
+				if(!is_null($data['campaign'][0]->activate_time)){
 					
 					$data['campaign'][0]->activeaction_calc	= 'yes';
 					$active 							= $data['campaign'][0]->activate_time;
@@ -5759,7 +5760,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				}
 				
 				
-				if($data['campaign'][0]->expire_time != "0000-00-00" ){
+				if(!is_null($data['campaign'][0]->expire_time)){
 					$data['campaign'][0]->expirationtion_calc	= 'yes';
 					$active 							= $data['campaign'][0]->expire_time;
 					$utformat							= date('d-m-Y',strtotime($active));
@@ -6211,6 +6212,8 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			$advertiser['contact']					= $this->input->post('contact');
 			$advertiser['email']					= $this->input->post('email');
 			$advertiser['comments']					= $this->input->post('comment');
+			$advertiser['updated']					= date("Y-m-d H:i:s");   
+
 			
 			//Report
 			$advertiser['reportinterval']			= $this->input->post('report_interval');
@@ -6265,6 +6268,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	}
 	
 	public function deleteadvertiser(){	
+		if($_GET['advertiser_ids']!=""){
 		if ($_GET['advertiser_ids']) {
 			$advertzId= trim($_GET['advertiser_ids'],",");
 			$advertzId = explode(',', $advertzId);
@@ -6306,6 +6310,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				}
 				 $this->db->query("DELETE FROM `clients` WHERE clientid = '$bann_value'");
 		 }
+		}
 		    redirect('users/viewadvertiser');;
 		 
 		
@@ -6315,7 +6320,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 
 		public function deletecampaigncheckbox(){
 			
-			
+			if($_GET['campaign_ids']!=""){
 		if ($_GET['campaign_ids']) {
 			$campaignid = trim($_GET['campaign_ids'],",");
 			$ids = explode(',', $campaignid);
@@ -6346,6 +6351,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 		          $this->db->query("DELETE FROM `campaigns` WHERE campaignid = '$campId_value'");
 			 
 		 }
+		}
 		    redirect('users/viewcompaign');
 		 
 		
@@ -6353,6 +6359,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 
 
 	public function deletebannercheckbox(){
+		if($_GET['banner_ids']!=""){
 		if ($_GET['banner_ids']) {
 			$bannerId= trim($_GET['banner_ids'],",");
 			$bannerId = explode(',', $bannerId);
@@ -6374,7 +6381,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
   }
 		  
 	 }
-	 
+		} 
 	redirect('users/viewbanner');
 	
 }
@@ -6388,6 +6395,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 			
             redirect('admin');
         }
+//print_r($this->session->userdata);
 		if(isset($_GET['pglmt'])){
           $sort_lit = $_GET['pglmt'];
         }else{
@@ -6480,6 +6488,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 	}*/
 	
 	public function login(){
+		//echo "hello"; die;
 		$data['cat']			= 'inventory';
 		if($this->input->post('submit')){
 			$email		= $this->input->post('email');
@@ -6498,7 +6507,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 				$this->load->view('login', $data);
 			}
 		}else{
-			$this->load->view('login');
+			    $this->load->view('login');
 		}
 	}
 	
@@ -6856,6 +6865,7 @@ $campaign['currency'] 		        	= $this->input->post("currency_type");
 
 /********************* Added By Riccha ***********************/
 public function deletewebsite(){	
+	if($_GET['website_ids']!=""){
 	if ($_GET['website_ids']) {
 		$websiteId= trim($_GET['website_ids'],",");
 		$websiteId = explode(',', $websiteId);
@@ -6870,10 +6880,12 @@ public function deletewebsite(){
 	//print_r($websiteId); die;
 	$web_ids = implode(',',$websiteId);
 	$result = $this->User_Model->deleteWebsite($web_ids);
+}
 	redirect('users/viewwebsite');
 }
 
-public function deletezone(){	
+public function deletezone(){
+		if($_GET['zone_ids']!=""){
 	if ($_GET['zone_ids']) {
 		$zoneId= trim($_GET['zone_ids'],",");
 		$zoneId = explode(',', $zoneId);
@@ -6888,6 +6900,7 @@ public function deletezone(){
 	$res_zone = implode(',',$zoneId);
 
 	$result = $this->User_Model->deleteZone($res_zone);
+}
     redirect('users/viewzone');
 	
 }

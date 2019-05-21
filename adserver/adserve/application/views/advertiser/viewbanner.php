@@ -146,9 +146,9 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 							<div class="pagination-container">
 							<?php echo $this->pagination->create_links(); ?>
 							<select id="page_limit" onChange="pageLimits(this.value);" class="page-limit">
-							<option value="10"<?php if($limt_value == '10'): ?> selected="selected"<?php endif; ?>>10</option>
-							<option value="20"<?php if($limt_value == '20'): ?> selected="selected"<?php endif; ?>>20</option>
-							<option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option>
+							<option value="25"<?php if($limt_value == '25'): ?> selected="selected"<?php endif; ?>>25</option>
+							<option value="All"<?php if($limt_value == 'All'): ?> selected="selected"<?php endif; ?>>All</option>
+							<!-- <option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option> -->
 							</select>
 							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
 								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>

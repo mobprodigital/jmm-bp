@@ -3,7 +3,7 @@
 		<div class="row" >
 			<div class="col-md-12">
 				<div class="box box-default">
-					<?php $this->load->view('admin_includes/advertiser_header');?>
+				
 					<div class="box-header with-border">
 						<img src="<?php echo base_url()?>assets/upimages/icon-advertiser-add-large.png" class="header-image"/><h3 class="header"><span style="color:#333333;">Add new user</span></h3>
 					</div>
@@ -20,6 +20,7 @@
 						</div>
 					</div>
 						<div class="box-body">
+						<?php $this->load->view('admin_includes/advertiser_header');?>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="username">Username<font style="color:#900;">*</font></label>

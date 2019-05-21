@@ -1,37 +1,8 @@
-<?php
-$Login_description = 'Media Adserver Admin';
-$title_for_layout = 'Media Adserver'
-?>
+<?php $this->load->view('login/header');?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title><?php echo $title_for_layout;?></title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.4 -->
-    <link href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
-     <link href="<?php echo base_url();?>assets/dist/css/AdminLTE.min.css"  rel="stylesheet" type="text/css">
-    <!-- iCheck -->
-     <link href="<?php echo base_url();?>assets/plugins/iCheck/square/blue.css"  rel="stylesheet" type="text/css">
-	<style>
-	#top-header {
-    background: none repeat scroll 0 0 #093145;
-    padding: 0;
-    line-height: 45px;
-}
-	.form-control{width:100%;}
-	</style>
-  </head>
-  <body class="login-page">
-  <header id="top-header" class="header">&nbsp;</header>
     <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>Media </b>AdServer</a>
+        <a href="#"><b>Mojo </b>Ads</a>
       </div>
       <div class="login-box-body">
       

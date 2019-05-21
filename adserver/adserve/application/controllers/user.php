@@ -10,7 +10,6 @@ class User extends CI_Controller {
     * @return void
     */	
 	function index(){
-		
 		$data['cat']			= 'inventory';
 		$data['activeaction']	= 'viewuser';
 		if($this->session->userdata('is_logged_in')){
@@ -27,21 +26,13 @@ class User extends CI_Controller {
     * @return void
     */
 	function validate_credentials(){
-	
 		$this->load->model('Users_model');
-		//echo $this->input->post('user_name');
-		//die;
 		$user_name 		= $this->input->post('user_name');
 		$password 		= $this->input->post('password');
-
 		$is_valid 		= $this->Users_model->validate($user_name, $password, 'admin');
-		//print_r($is_valid);
-		//die;
-		
 		if($is_valid){
 			
 			/* Load Notification Model */
-
 			$this->load->model('Notification_Model');
 			$data['get_under_dlvr_campaigns'] = array();
 			$data['get_active_campaigns'] = array();
@@ -53,45 +44,38 @@ class User extends CI_Controller {
 			if(empty($data['get_under_dlvr_campaigns'])) { $data['get_under_dlvr_campaigns'] = array(); }
 			if(empty($data['get_active_campaigns'])) { $data['get_active_campaigns'] = array(); }
 			
-			$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns']);
+		        $data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns']);
 			
-			
-			//print_r($data['my_array']);
-			//die;
 			
 			/* Ends */
 			
 			//get id of logged in user
-               $currency	= $this->Users_model->getloggedinusercurrency($user_name);
-				$uid		= $this->Users_model->getloggedinuser($user_name);
+                        $currency	= $this->Users_model->getloggedinusercurrency($user_name);
+		        $uid		= $this->Users_model->getloggedinuser($user_name);
 			//get role of logged in user
-				$role		= $this->Users_model->getroleuser($user_name);
+			$role		= $this->Users_model->getroleuser($user_name);
 			$data = array(
 				'username' 	=> $user_name,
 				'uid' 		=> $uid	,
-'currency'		=> $currency,
+				'currency'	=> $currency,
 				'role'		=> $role,
 				'notification_array' => $data['my_array'],
 				'is_logged_in' => true
-			);
+			); 
+			/* $data = array(
+				'username' 	=> $user_name,
+				'uid' 		=> $uid	,
+				'role'		=> $role,
+				'is_logged_in' => true
+			); */
 			$count = count($data['notification_array']);
 			$data1 = array("countNotifications"=>$count);
-
-			//print_r($data);
-			//die;
-
-			ini_set('session.gc_maxlifetime', 7200);
-			session_set_cookie_params(7200);
-
-			//echo '<pre>';print_r($data);
 			$this->session->set_userdata(array_merge($data,$data1));
+			//$this->session->set_userdata($data);
+			redirect('admin/dashboard');
+
+			//redirect('users/dashboard/home');
 			
-			//print_r($this->session->userdata('countNotifications')); 
-			//die;
-			//redirect('admin/dashboard');
-			redirect('users/dashboard/home');
-			
-			// incorrect username or password 
 		}else {
 		
 			

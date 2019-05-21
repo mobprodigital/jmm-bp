@@ -149,14 +149,14 @@
 				<li class="treeview  <?php if(isset($activeaction)){if($activeaction=='adcampstats' || $activeaction =='videoadreport' ) {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='adcampstats' || $activeaction =='videoadreport' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/adcampstats';?>"><i class="fa fa-buysellads"></i><span>Advertisers & Campaigns</span><i class="fa fa-angle-left pull-right"></i></a></li>
 				
 				<?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
-				<li class="treeview <?php if(isset($activeaction)){if($activeaction=='history') {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='history' || $activeaction =='history' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/history';?>"><i class="fa fa-history"></i><span>Global History</span><i class="fa fa-angle-left pull-right"></i></a></li>
-				
+				<!--<li class="treeview <?php if(isset($activeaction)){if($activeaction=='history') {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='history' || $activeaction =='history' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/history';?>"><i class="fa fa-history"></i><span>Global History</span><i class="fa fa-angle-left pull-right"></i></a></li>
+				-->
 				<?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
 				<li class="treeview <?php if(isset($activeaction)){if($activeaction == 'webzonestats' || $activeaction=='webzonevideostats'){echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='webzonestats' || $activeaction =='webzonestats' ) {echo 'active-sidebar';}}?>"  href="<?php echo base_url().'users/webzonestats';?>"><i class="fa fa-home"></i><span>Websites & Zones</span><i class="fa fa-angle-left pull-right"></i></a></li>
 				
 				<?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
-				<li class="treeview <?php if(isset($activeaction)){if($activeaction=='report' || $activeaction=='adreport' || $activeaction=='campanalysis' || $activeaction=='campdelivery') {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='report' || $activeaction =='report' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/report';?>"><i class="fa fa-bar-chart"></i><span>Advanced Reports</span><i class="fa fa-angle-left pull-right"></i></a></li>
-					
+				<!--<li class="treeview <?php if(isset($activeaction)){if($activeaction=='report' || $activeaction=='adreport' || $activeaction=='campanalysis' || $activeaction=='campdelivery') {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='report' || $activeaction =='report' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/report';?>"><i class="fa fa-bar-chart"></i><span>Advanced Reports</span><i class="fa fa-angle-left pull-right"></i></a></li>
+				-->	
 				
 				
 				<?php } ?>
@@ -175,7 +175,7 @@
 				echo 'none';
 			} ?>">
 				<?php if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
-				<li class="treeview <?php if(isset($activeaction)){if($activeaction=='setting') {echo 'active';}}?>"><a href="<?php echo base_url().'users/updateprofile';?>"><i class="fa fa-user"></i><span>User Preferences</span><i class="fa fa-angle-left pull-right"></i></a>
+				<!--<li class="treeview <?php if(isset($activeaction)){if($activeaction=='setting') {echo 'active';}}?>"><a href="<?php echo base_url().'users/updateprofile';?>"><i class="fa fa-user"></i><span>User Preferences</span><i class="fa fa-angle-left pull-right"></i></a>
 					
 				</li>
 				<?php }if($this->session->userdata('role')=='admin'){ ?>
@@ -197,7 +197,7 @@
 				<?php }if($this->session->userdata('role')=='admin'){ ?>
 				<li class="treeview <?php if(isset($activeaction)){if($activeaction=='targetchannelmgt' || $activeaction== 'addchannel') {echo 'active';}}?>"><a href="<?php echo base_url().'users/targetchannelmgt';?>"><i class="fa fa-twitch"></i><span>Targeting Channel Management</span><i class="fa fa-angle-left pull-right"></i></a>
 				
-				</li>
+				</li>-->
 				<?php } ?>
 			</ul>
 		</section>

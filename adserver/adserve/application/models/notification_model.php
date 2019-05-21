@@ -11,6 +11,7 @@ class Notification_Model extends CI_Model {
 
 	function get_under_dlvr_campaigns()
 	{
+		//return true;
 		$today = date('Y-m-d');
 		$startDate = time();
 		$prevday = date('Y-m-d', strtotime('-2 day', $startDate));
@@ -23,7 +24,7 @@ class Notification_Model extends CI_Model {
 		$this->db->where($where);
 		$this->db->where('status ', 1);
 		$query = $this->db->get();
-		//echo $this->db->last_query(); 
+		//echo $this->db->last_query(); die;
 		$count = $query->num_rows(); 
 		if($count > 0)
 		{
@@ -31,7 +32,7 @@ class Notification_Model extends CI_Model {
 			{ 
 			
 				$arr= $query->result_array();
-				$campaignId = $arr[$i]['campaignid'];
+				$campaignId = $arr[$i]['campaignid']; 
 				$campaignname = $arr[$i]['campaignname'];
 				$expire_time = $arr[$i]['expire_time'];
 				$activate_time = $arr[$i]['activate_time'];
@@ -47,9 +48,10 @@ class Notification_Model extends CI_Model {
 												SUM(s.requests) AS requests, 
 												SUM(s.impressions) AS impressions, 
 												SUM(s.clicks) AS clicks, 
-												SUM(s.total_revenue) AS revenue, 
+												SUM(s.total_revenue) AS revenue,
 												DATE_FORMAT(s.date_time, '%Y-%m-%d') AS day, 
 												HOUR(s.date_time) AS hour 
+												
 											FROM 
 												campaigns AS m
 											LEFT JOIN 

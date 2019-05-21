@@ -37,6 +37,8 @@ class Notification extends CI_Controller{
 		if(empty($data['get_expired_campaigns'])) { $data['get_expired_campaigns'] = array(); }
 		if(empty($data['get_upcoming_campaigns'])) { $data['get_upcoming_campaigns'] = array(); }
 		if(empty($data['get_pause_campaigns'])) { $data['get_pause_campaigns'] = array(); }
+		
+		//print_r($data);die;
 
 		$data['my_array'] = array_merge($data['get_under_dlvr_campaigns'],$data['get_active_campaigns'],$data['get_expired_campaigns'],$data['get_upcoming_campaigns'],$data['get_pause_campaigns']);
 		shuffle($data['my_array']);

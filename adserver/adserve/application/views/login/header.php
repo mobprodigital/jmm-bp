@@ -94,14 +94,17 @@ $title_for_layout = 'Adserver'
 		<a href="<?php echo base_url();?>registration" class="signup-link">Sign Up</a>
 	</div>
 	<div class="login-select">
+		
 		<a href="#" class="login-link">Login</a>
-			<div class="login-item">
-				<ul>
-					<li><a href="<?php echo base_url();?>publisher/login">Publisher</a></li>
-					<li><a href="<?php echo base_url();?>advertiser/login">Advertiser</a></li>
 
-				</ul>
-			</div>
+	
+		<div class="login-item">
+			<ul>
+				<li><a href="<?php echo base_url();?>publisher/login">Publisher</a></li>
+				<li><a href="<?php echo base_url();?>advertiser/login">Advertiser</a></li>
+
+			</ul>
+		</div>
 	</div>
 	
   

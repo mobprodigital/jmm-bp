@@ -53,18 +53,12 @@
 								<div class="form-group">
 									<label >Role</label>
 									<select class="form-control  errorhandle" name="role" id="role" class="form-control">
-										<?php if(isset($users[0]->role)){?>
-										<option value="<?php echo $users[0]->role;?>"><?php echo ucfirst($users[0]->role);?></option>
-										<?php } ?>
-										<option value="">--Role--</option>
-										<option value="advertiser">Advertiser</option>
-										<option value="publisher">Publisher</option>
-										<option value="view report">View Report</option>
+										<option <?php if( isset($users[0]->role) && $users[0]->role == 2){}?>value="2">Advertiser</option>
+										<option <?php if( isset($users[0]->role) && $users[0]->role == 3){}?>value="3">Publisher</option>
 									</select>
 									<span style="color:red"  class="errorspan" id="span_role"></span>
 								</div>
 							</div>
-						
 							<div class="col-md-12">
 								<div class="form-group">
 									<input type="submit"  class="btn btn-primary" value="Submit" name="submit" id="submit">

@@ -13,7 +13,7 @@ table td:not(:last-child) { padding: 0 10px 0 0; }
 			<div id="thirdLevelHeader" class="hasTabs">
 				<?php if(!empty($bannerData)){ ?>
 				<div class=" hasIcon iconTargetingChannelsLarge">
-					<h3>
+					<h3 class="box-header with-border">
 						<img src="<?php echo base_url()?>assets/upimages/icon-banner-large.png">
 						<span>Banner : <?php echo $bannerData->description;?></span>            
 					</h3>
@@ -33,6 +33,7 @@ table td:not(:last-child) { padding: 0 10px 0 0; }
 		<div class="row" >
 			<div class="col-md-12"> 
 				<div class="box box-default">
+				
 				<?php $this->load->view("admin_includes/banner_header");?>
 				<?php echo $aclselect;?>
 				</div>

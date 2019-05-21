@@ -7,13 +7,16 @@ form{margin-top: 20px;}
 table td,th{font-size:12px;}
 table td:not(:last-child) { padding: 0 10px 0 0; }
 </style>
+
+
+
 <div class="content-wrapper">
     <section class="content-header">
 	<div class="hasIcon iconTargetingChannelsLarge" style="margin-bottom:20px;">
 			<div id="thirdLevelHeader" class="hasTabs">
 				<?php if(!empty($bannerData)){ ?>
 				<div class=" hasIcon iconTargetingChannelsLarge">
-					<h3>
+					<h3  class="box-header with-border">
 						<img src="<?php echo base_url()?>assets/upimages/icon-banner-large.png">
 						<span>Banner : <?php echo $bannerData->description;?></span>            
 					</h3>

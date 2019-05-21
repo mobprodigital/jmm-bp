@@ -1,7 +1,3 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/dist/css/home.css">
-<?php
-if(isset($_GET['pglmt'])){
-$limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 <div class="content-wrapper">
 	<section class="content-header">
 		<label> <input  class="form-control" style="width:295px;" placeholder="Search"></label><small class="btn btn-large btn-primary" style=" float:right;"><?php echo anchor('users/zone','Add new zones');?></small>
@@ -18,15 +14,16 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 					<?php if(isset($zonenew))
 					{  $zoneName = $zonenew; } else { $zoneName = '';}?>
 						<form action="<?php echo base_url()?>users/zoneFilterByName" method="post" name="filter_form" id="filter_form" autocomplete="off">
-							<div class="row ">
-								<div class="col-md-2 form-group">
-									Zone Name :<input type="text" name="zone_name" id="zone_name" value="<?php echo $zoneName;?> ">
-								</div>
-								
-								<div class="col-md-2 form-group">
-									<input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit" id="submit" style="margin-left: 637px;">
-								</div>
-							</div>
+						
+						
+						<div class="text-right">
+                                <label><input name="zone_name" id="zone_name" class="search form-control"
+                                        style="width:295px;" placeholder="Search Zone"
+                                        value="<?php echo $zoneName;?>"></label>
+                                <input type="submit" class="btn btn-primary" name="submit" id="submit" value="search">
+                            </div>
+						
+							
 						</form>
 					<!---------------------------- Filter Section Ends ---------------------------------------------------------------->
 
@@ -69,17 +66,6 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 									<?php } ?>
 								</tbody>
 							</table>
-							<div class="pagination-container">
-							<?php echo $this->pagination->create_links(); ?>
-							<select id="page_limit" onChange="pageLimits(this.value);" class="page-limit">
-							<option value="10"<?php if($limt_value == '10'): ?> selected="selected"<?php endif; ?>>10</option>
-							<option value="20"<?php if($limt_value == '20'): ?> selected="selected"<?php endif; ?>>20</option>
-							<option value="30"<?php if($limt_value == '30'): ?> selected="selected"<?php endif; ?>>30</option>
-							</select>
-							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
-								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
-							-->
-						    </div>
 							<!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
 								<script src="<?php echo base_url();?>assets/common/user-app.js"></script>
 							-->
@@ -91,15 +77,6 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
 	</section>
 </div>
 <?php $this->load->view('admin_includes/footer');?>
-
-<script type="text/javascript">
-	
-		function pageLimits(limit_value) {
-		 window.location = '<?php echo base_url(); ?>publisher/viewzone?pglmt=' + limit_value;
-
-
-};
-</script>
 
 
 

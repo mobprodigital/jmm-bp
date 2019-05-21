@@ -44,8 +44,9 @@
 	</div>
 	<div style="clear:both"></div>
 </div>
+
 <div id="creative-image" style="display:<?php if(isset($banner[0]->rich_media_type) && (($banner[0]->rich_media_type == 1)||($banner[0]->rich_media_type == 2) || ($banner[0]->rich_media_type == 3)|| ($banner[0]->rich_media_type == 4))){echo 'block';}else{echo 'none';}?>">
-	<div class="col-md-7">
+	<div class="col-md-7" id="first-creative-image">
 		<div class="form-group">
 			<label for="name" class="fieldlabel">Creative Image First</label>
 			<input type="file" class="formfield" name="richmediaimg1" id="richmediaimg1" style="display: inline;">
@@ -56,7 +57,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-7" style="display:<?php if(isset($banner[0]->rich_media_type) && (($banner[0]->rich_media_type == 1)||($banner[0]->rich_media_type == 2) || ($banner[0]->rich_media_type == 3))){echo 'block';}else{echo 'none';}?>">
+	<div class="col-md-7" id="second-creative-image" style="display:<?php if(isset($banner[0]->rich_media_type) && (($banner[0]->rich_media_type == 1)||($banner[0]->rich_media_type == 2) || ($banner[0]->rich_media_type == 3))){echo 'block';}else{echo 'none';}?>">
 		<div class="form-group">
 			<label for="name" class="fieldlabel">Creative Image Second</label>
 			<input type="file" class="formfield" name="richmediaimg2" id="richmediaimg2" style="display: inline;">
@@ -77,6 +78,7 @@ function checkType(){
 	//alert(x);
 	if(x == 1  || x == 2 || x==3){
 		document.getElementById("creative-image").style.display='block';
+		document.getElementById("second-creative-image").style.display='block';
 		document.getElementById("creative-code-block").style.display='none';
 	}else{
 		document.getElementById("creative-image").style.display='none';
@@ -84,6 +86,8 @@ function checkType(){
 	}
 	
 	if(x == 4){
+		document.getElementById("creative-image").style.display='block';
+		document.getElementById("first-creative-image").style.display='block';
 		document.getElementById("creative-code-block").style.display='none';
 
 	}

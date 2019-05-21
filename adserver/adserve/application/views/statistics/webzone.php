@@ -34,13 +34,15 @@ if($currency_value=='1'){
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="box">
+				<h3 class="box-header with-border">
+									<span>Website Statistics</span>            
+								</h3>
 					<div class="box-body">
+					
 						<div class="hasIcon iconTargetingChannelsLarge" style="margin-bottom:20px;">
 						<div id="thirdLevelHeader" class="hasTabs">
 							<div class=" hasIcon iconTargetingChannelsLarge">
-								<h3>
-									<span>Website Statistics</span>            
-								</h3>
+							
 								<span class="entityLinks">
 									<span class="ent inlineIcon webs"><?php if(isset($affiliates[0])){ ?>
 										<img   src="<?php echo base_url();?>assets/upimages/icon-website.png">
@@ -108,7 +110,7 @@ if($currency_value=='1'){
 								<img border="0" tabindex="6" src="<?php echo base_url();?>assets/upimages/ltr/go_blue.gif"></a>
 							
 							</form></br></br>
-							<a accesskey="e"  style="float:right;" href="stats.php?statsBreakdown=day&amp;period_preset=today&amp;period_start=2016-04-18&amp;period_end=2016-04-18&amp;listorder=name&amp;orderdirection=up&amp;day=&amp;setPerPage=15&amp;entity=global&amp;breakdown=history&amp;plugin=advertiser:statshistory">
+							<a  class="btn btn-default" accesskey="e"  style="float:right;" href="stats.php?statsBreakdown=day&amp;period_preset=today&amp;period_start=2016-04-18&amp;period_end=2016-04-18&amp;listorder=name&amp;orderdirection=up&amp;day=&amp;setPerPage=15&amp;entity=global&amp;breakdown=history&amp;plugin=advertiser:statshistory">
 							<img border="0" alt="" src="<?php echo base_url();?>assets/upimages/excel.gif"> <u>E</u>xport Statistics to Excel                </a>
 							<img width="100%" style="height:1px;" src="<?php echo 'base_url';?>assets/upimages/break.gif">
 							

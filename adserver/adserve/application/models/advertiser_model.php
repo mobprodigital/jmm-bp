@@ -43,7 +43,9 @@ class Advertiser_Model extends CI_Model {
 		$this->db->order_by("clientid",'desc');
 		if(!is_null($limit)){
 			//echo 'ss';
-        	$this->db->limit($limit,$offset);
+			if($limit==25){
+			   $this->db->limit($limit,$offset);
+			}
 
 		}
 		$query 			= $this->db->get();
@@ -207,7 +209,9 @@ class Advertiser_Model extends CI_Model {
 		$this->db->order_by("campaignid",'desc');
 		if(!is_null($limit)){
 			//echo 'ss';
-        	$this->db->limit($limit,$offset);
+			if($limit==25){
+			  $this->db->limit($limit,$offset);
+			}
 
 		}
 		$query 			= $this->db->get();
@@ -319,7 +323,7 @@ class Advertiser_Model extends CI_Model {
 		
 	}
 	
-	function getbanner($campaignid=null, $bannerid=null, $row=null){
+	function getbanner($campaignid=null, $bannerid=null, $row=null,$limit=null , $offset=null){
 		$this->db->select("*,campaigns.status as campaignstatu,banners.status as banner_status");
 		$this->db->from('banners');
 		$this->db->join('campaigns', 'campaigns.campaignid = banners.campaignid');
@@ -330,7 +334,11 @@ class Advertiser_Model extends CI_Model {
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
 		$this->db->order_by("bannerid",'desc');
+	//	if($limit==2){
+			$this->db->limit($limit,$offset);
+		  //}
 		$query 			= $this->db->get();
+		 //echo $this->db->last_query();  
 		if($row){
 			$result			= $query->row();
 		}else{
@@ -349,10 +357,11 @@ class Advertiser_Model extends CI_Model {
 			$this->db->where('campaigns.campaignid =', $campaignid);
 		}
 		$this->db->order_by("bannerid",'desc');
-		if(!is_null($limit)){
-        	$this->db->limit($limit,$offset);
+		// if(!is_null($limit)){
+			
+        // 	$this->db->limit($limit,$offset);
 			 
-        }
+        // }
 		$query 			= $this->db->get();
 		$result			= $query->num_rows();
 		return $result;	
@@ -369,10 +378,13 @@ class Advertiser_Model extends CI_Model {
 		}
 		$this->db->order_by("bannerid", 'desc');
 		if(!is_null($limit)){
-        	$this->db->limit($limit,$offset);
+		if($limit==25){
+			$this->db->limit($limit,$offset);
+			}
 			 
         }
 		$query 			= $this->db->get();
+		//echo $this->db->last_query();
 		$result			= $query->result();
 		return $result;
 	}

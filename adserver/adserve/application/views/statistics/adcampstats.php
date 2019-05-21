@@ -30,10 +30,12 @@ if(isset($_GET['breakthrough'])){
  
  
 if(isset($currency)){
+	//echo "------->33"; die;
     $currency_value = $currency;
   }else{
     $currency_value = '1';
 }
+//echo "------->" .$currency_value; die;
 if($currency_value=='1'){
    $currency_nm = "INR";
    $currency_symb = "₹";	
@@ -57,13 +59,14 @@ if($currency_value=='1'){
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="box">
+				<h3 class="box-header with-border">
+									<span>Advertisers & Campaigns</span>            
+								</h3>
 					<div class="box-body">
 						<div class="hasIcon iconTargetingChannelsLarge" style="margin-bottom:20px;">
 						<div id="thirdLevelHeader" class="hasTabs">
 							<div class=" hasIcon iconTargetingChannelsLarge">
-								<h3>
-									<span>Advertisers & Campaigns</span>            
-								</h3>
+							
 								<span class="entityLinks">
 									<span class="ent inlineIcon webs"><?php if(isset($advertiser[0])){ ?>
 										<img   src="<?php echo base_url();?>assets/upimages/icon-advertiser.png">
@@ -148,7 +151,7 @@ if($currency_value=='1'){
 								<img border="0" tabindex="6" src="<?php echo base_url();?>assets/upimages/ltr/go_blue.gif"></a>
 							
 							</form></br></br>
-							<a accesskey="e"  style="float:right;" href="<?php echo base_url();?>users/excelExpo">
+							<a class="btn btn-default" accesskey="e"  style="float:right;" href="<?php echo base_url();?>users/excelExpo">
 							<img border="0" alt="" src="<?php echo base_url();?>assets/upimages/excel.gif"> <u>E</u>xport Statistics to Excel                </a>
 							<img width="100%" style="height:1px;" src="<?php echo 'base_url';?>assets/upimages/break.gif">
 							

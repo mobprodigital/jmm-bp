@@ -70,7 +70,7 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                         <td width="2%" ><input type="checkbox" class="banner" id="<?php echo $value->bannerid;?>"></td>
                                         <td width="40%" ><img src="<?php echo base_url();?>/assets/upimages/
 										<?php 
-										if($value->contenttype=='html'){
+										if($value->contenttype == 'html'){
 											echo 'icon-banner-html.png';
 										}else if($value->contenttype=='html5'){
 											echo 'html5.png';

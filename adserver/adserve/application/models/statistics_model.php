@@ -361,11 +361,15 @@ class Statistics_Model extends CI_Model {
     }
 	
 	function adCampVideoStats($entity, $entityId, $dimension, $startDate, $endDate){
+		
 		if(($startDate == '')&& ($startDate == $endDate)){
+			
 				$startDate = $this->getEntityCreationDate($entity,$entityId);
 				$endDate   = date("Y-m-d");
 		}
+		
 		$result 	 = $this->getVastStatistics($entity,$entityId,$dimension,$startDate,$endDate);
+		
 		$summaryRow  = $this->getSummaryRowFromDataTable($result);
 		
 		if($entity == 'zone'){
@@ -378,19 +382,7 @@ class Statistics_Model extends CI_Model {
 			$where		=  " p.affiliateid = $entityId";
 		}
 		
-		/* $sql = 
-			"select
-				z.zonename,p.name
-			from 
-				affiliates as p
-			join 
-				 zones z on p.affiliateid = z.affiliateid 
-			where ".$where
-		;
-		$rowResult 						= $this->db->query($sql);
-		$entityDetails					= $rowResult->row();
-		 */
-		 $entityDetails	= array("ss");
+		$entityDetails	= array("ss");
 		if(!empty($entityDetails)){
 			$expansionDetails	= array(
 				'type'	=> $entity,
@@ -411,29 +403,7 @@ class Statistics_Model extends CI_Model {
 		return $VideoStats;
 
 		
-		/* if(!is_null($zoneId)){
-			$zoneWhere	=  "AND z.zoneid = $zoneId";
-		}else{
-			$zoneWhere	= '';
-		}
-		$query = "
-			SELECT
-				sum(count) as count,			
-				DATE(interval_start) as dimension_id,
-				DATE(interval_start) as dimension_name,
-				vast_event_id as event_id
-			FROM rv_stats_vast AS s 
-			JOIN zones as z ON s.zone_id = z.zoneid 
-			WHERE z.affiliateid = 1
-				AND 
-				interval_start >= '2019-02-26 23:00:00'
-				AND interval_start <= '2019-02-27 22:59:59'	
-			GROUP BY 
-				zone_id, vast_event_id
-		";
-		$rowResult 					= $this->db->query($query);
-		$videoStats					= $rowResult->result();
-		echo '<pre>';print_r($videoStats); */
+		
 	}
 	
 	function getVastStatistics($entity, // advertiser, campaign, banner
@@ -602,6 +572,40 @@ class Statistics_Model extends CI_Model {
 		}
 		// only works because we know there are no event_id == 0
 		return array('Total') + $totalMetrics;
+	}
+	
+	function getEntityCreationDate($entity,$entityId){
+		//echo $entity;die;
+		if($entity == 'campaign'){
+			$from		= 'campaigns';
+			$where		=  " campaignid = $entityId";
+			
+		}elseif($entity == 'advertiser'){
+			$from		= 'campaigns';
+			$where		=  "clientid = $entityId";	
+			
+		}elseif($entity == 'banner'){
+			$from		= 'banners join campaigns on banners.campaignid=campaigns.campaignid';
+			$where		=  "bannerid = $entityId";			
+		
+		}else{
+			/* $from		= 'affiliates';
+			$where		=  " affiliateid = $entityId";*/
+		}
+		
+		$sql = 
+			"select
+				activate_time
+			from 
+				$from
+			
+			where ".$where
+		;
+		//echo $sql;die;
+		$rowResult 						= $this->db->query($sql);
+		$entityDetails					= $rowResult->row();
+		return date("Y-m-d", strtotime($entityDetails->activate_time));
+		$entityDetails					= $rowResult;
 	}
 	
 	

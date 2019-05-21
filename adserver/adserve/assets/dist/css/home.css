@@ -67,14 +67,14 @@ background: transparent;
 width:150%;
 }
 .pagination-container{
-    text-align: center;
+    text-align: right;
 }
 .pagination-container a,strong 
 {
 	background-color: #e3e3e3;
     padding: 5px 8px;
     border-radius: 4px;
-font-size:16px
+font-size:16px;    font-weight: 500;
 		
 	}
 	.page-limit{
@@ -107,5 +107,8 @@ font-size:16px
 {
     position: relative;
     padding: 0px 15px !important;
+}
+.d-block{
+display:block;
 }
 /**************** Ends **********************************/
