@@ -76,6 +76,7 @@ $route['publisher/validate_credentials']	= 'login/validateUser';
 $route['publisher/logout']					= 'login/publisherLogout';
 $route['publisher/login']					= 'login/publisherLogin';
 $route['publisher/signup']					= 'login/publisherSignup';
+$route['publisher/forgotpassword']			= 'login/forgotPassword';
 
 
 
@@ -94,6 +95,7 @@ $route['users/client-access']		= 'users/clientAccess';
 
 $route['admin'] 				    = 'user/index';
 $route['admin/login'] 				= 'user/index';
+$route['admin/adminprofile'] 		= 'users/adminProfile';
 $route['admin/logout'] 				= 'user/logout';
 $route['admin/login/validate_credentials'] = 'user/validate_credentials';
 $route['(:any)/dashboard']			='dashboard';

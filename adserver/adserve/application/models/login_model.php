@@ -133,4 +133,58 @@ class Login_Model extends CI_Model {
 		}
 
 	}
+
+	function send_email($email,$msg,$subject) 
+	{
+		$config = Array(
+			'protocol' => 'smtp',
+			'smtp_host' => 'mail.onetracky.com',
+			'smtp_port' => 25,
+			'smtp_user' => 'support@onetracky.com', // change it to yours
+			'smtp_pass' => 'Q1w2@Jmm@123', // change it to yours
+			'mailtype' => 'html',
+			'charset' => 'iso-8859-1',
+			'wordwrap' => TRUE
+		); 
+		 
+	    $from_email = "support@onetracky.com";
+		$to_email = $email;
+      
+		$this->load->library('email');
+        $this->email->initialize($config);
+		$this->email->set_newline("\r\n");
+		
+		$this->email->from($from_email, 'Onetracky');
+		$this->email->to($to_email);
+		$this->email->subject($subject);
+		$this->email->message($msg);
+        //Send mail
+		if($this->email->send())
+		{
+			//echo "email Send";
+			//$this->session->set_flashdata("email_sent","Congragulation Email Send Successfully.");
+		}
+		else
+		{
+			//echo "email not send";
+			//show_error($this->email->print_debugger());
+			//$this->session->set_flashdata("email_sent","You have encountered an error");
+			//$this->load->view('contact_email_form');
+		}
+  	}
+	
+	function forgotPassword($email,$pass,$loginType){
+		$this->db->select("*");
+		$this->db->from('users');
+		$this->db->where('username', $email);
+		$this->db->where('role', $loginType);
+		$query 					    = $this->db->get();
+		//echo $this->db->last_query(); die;
+		$results					= $query->result_array();
+		//print_r($results[0]['user_id']); die;
+		if(count($results)>0){
+			 $query 				= $this->db->query("update users set password ='$pass' where user_id = '$results[0][user_id]'");
+		}
+		return $results;
+	} 
 }

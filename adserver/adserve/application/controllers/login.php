@@ -218,6 +218,47 @@ class Login extends CI_Controller{
 		redirect('publisher/login');
 	}
 	
+	function forgotPassword(){
+		$data	 		=  array();
+	   
+   if(isset($_POST['submit'])){
+	   $rand_password = rand(1, 1000000); 
+	   
+	   $input['email']	    = $this->input->post('email');
+	   $loginType      = $this->uri->segment(1);
+	   if($loginType == 'executive'){
+		   $loginID		= 4;
+	   
+	   }elseif($loginType == 'publisher'){
+		   $loginID		= 3;
+	   
+	   }else if($loginType == 'advertiser'){
+		   $loginID		= 2;
+		   
+	   }else{
+		   $loginID		= 1;
+	   }
+	   $checkEmail 	    = $this->Login_Model->forgotPassword($input['email'],$rand_password,$loginID);
+		
+	   if(count($checkEmail)>0){ 
+		
+	   $msg  ="";
+	   $msg .= "Onetracky account,<br><br>";
+	   $msg .= "Your new Password is here:   $rand_password\r\n<br><br>";
+	   $msg .= "Thanks,\r\n<br>";
+	   $msg .= "Onetracky team.";
+	   $forPass 	    = $this->Login_Model->send_email($input['email'],$msg,'Onetracky account new password');
+	   $data['msg']    = 'Email Sent successfully.';
+	   }else{
+		   
+		   redirect('publisher/forgotpassword');
+		   $data['msg'] = 'Incorrect Email';
+	   }
+	   
+	   }	
+	   
+	   $this->load->view('publisher/forgotpassword', $data);	
+   }
 	
 	 /**
     * check the username and the password with the database

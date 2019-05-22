@@ -6474,7 +6474,14 @@ echo $html;
 	
 	
 	
-	 
+	public function adminProfile(){
+		// if(!$this->session->userdata('is_logged_in')){
+        //     redirect('admin');
+        // }		
+		//$data['cat']			= 'inventory';
+		//echo "hello"; die;
+		$this->load->view('admin/adminprofile');
+	}
 	 
 	 
 	 
