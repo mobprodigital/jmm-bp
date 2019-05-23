@@ -30,55 +30,56 @@ hr {
                                 </div>
                             </div>
 
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Basic information</h2></br>
                                 <img width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Website URL<font style="color:#F44336;">*
+                                    <label for="name" class="">Website URL<font style="color:#F44336;">*
                                         </font></label>
-                                    <input type="text" class="formfield" name="website" id="website"
+                                    <input type="text" class="form-control" name="website" id="website"
                                         value="<?php if(isset($affiliates[0]->website)){echo $affiliates[0]->website;}else{echo 'http://';}?>" />
                                     <span style="color:red" id="span_website" class="errorspan"></span>
 
                                 </div>
-                            </div>
-                            <div class="col-md-7">
+
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Name<font style="color:#F44336;">*</font>
+                                    <label for="name" class="">Name<font style="color:#F44336;">*</font>
                                     </label>
-                                    <input type="text" class="formfield" name="name" id="name"
+                                    <input type="text" class="form-control" name="name" id="name"
                                         value="<?php if(isset($affiliates[0]->name)){echo $affiliates[0]->name;}?>" />
                                     <span style="color:red" id="span_name" class="errorspan"></span>
 
                                 </div>
-                            </div>
-                            <div class="col-md-7">
+
                                 <div class="form-group">
-                                    <label for="contact" class="fieldlabel">Contact<font style="color:#F44336;">*
+                                    <label for="contact" class="">Contact<font style="color:#F44336;">*
                                         </font>
                                     </label>
-                                    <input type="text" class="formfield" name="contact" id="contact"
+                                    <input type="text" class="form-control" name="contact" id="contact"
                                         value="<?php if(isset($affiliates[0]->contact)){echo $affiliates[0]->contact;}?>" />
                                     <span style="color:red" id="span_contact" class="errorspan"></span>
 
                                 </div>
-                            </div>
-                            <div class="col-md-7">
+
                                 <div class="form-group">
-                                    <label for="email" class="fieldlabel">Email<font style="color:#F44336;">*</font>
+                                    <label for="email" class="">Email<font style="color:#F44336;">*</font>
                                     </label>
-                                    <input type="text" class="formfield" name="email" id="email"
+                                    <input type="text" class="form-control" name="email" id="email"
                                         value="<?php if(isset($affiliates[0]->email)){echo $affiliates[0]->email;}?>" />
                                     <span style="color:red" id="span_email" class="errorspan"></span>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input class="btn btn-primary" name="submit" id="submit" type="submit"
+                                        value="Submit">
+                                </div>
+                            </div>
                         </div>
-                        <div class="box-footer">
-                            <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit">
-                        </div>
+
                 </div>
                 </form>
 

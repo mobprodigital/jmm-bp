@@ -40,7 +40,7 @@
                                         <td>
                                             <?php if($CampData['type'] == 'under_delivered')
 										{ ?>
-                                            <div class="btn bg-green btn-xs">Under Delivered</div>
+                                            <div style="width: 97%;" class="btn bg-green btn-xs">Under Delivered</div>
                                             <?php } elseif($CampData['type'] == 'active') { ?>
                                             <div style="width: 97%;" class="btn bg-purple btn-xs">Activated</div>
                                             <?php } elseif($CampData['type'] == 'expired') { ?>

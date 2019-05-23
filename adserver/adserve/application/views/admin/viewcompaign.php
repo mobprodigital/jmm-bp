@@ -81,10 +81,10 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                         <th width="2%"><input type="checkbox" class="campaign" id="main_00"
                                                 value="adchk"></th>
                                         <th width="20%">Name</th>
-                                        <th width="20%">Date</th>
+                                        <th width="10%">Date</th>
                                         <th width="10%" class="center-align">Status</th>
                                         <th width="20%" class="center-align">Action</th>
-                                        <th width="20%" class="center-align">Details</th>
+                                        <th width="30%" class="center-align">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,12 +94,12 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                         style="background-color: <?php if($key % 2 == 0){echo '#f1f1f1';}else{echo '#ffffff';}?>">
                                         <td width="2%"><input type="checkbox" class="campaign"
                                                 id="<?php echo $value->campaignid;?>"></td>
-                                        <td><img
+                                        <td width="20%"><img
                                                 src="<?php echo base_url();?>/assets/upimages/icon-campaign-disabled.png">&nbsp;&nbsp;<a
                                                 href="<?php echo base_url();?>users/compaign?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"><?php echo $value->campaignname;?></a>
                                         </td>
-                                        <td><?php echo $value->activate_time;?></td>
-                                        <td class="center-align">
+                                        <td width="10%"><?php echo $value->activate_time;?></td>
+                                        <td width="10%" class="center-align">
                                             <select name="camstatus" id="campaign_<?php echo $value->campaignid;?>"
                                                 class="camstatus view-banner-filter">
                                                 <option value="1"
@@ -111,18 +111,18 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                             </select>
                                         </td>
 
-                                        <td class="center-align">
+                                        <td width="20%" class="center-align">
                                             <a
                                                 href="<?php echo base_url();?>users/banner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>">
                                                 <div class="btn bg-blue btn-xs">Add new banner</div>
                                             </a>
-                                            <a href="<?php echo base_url();?>users/viewbanner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>"
-                                                style="padding: 0px 20px;">
+                                            <a
+                                                href="<?php echo base_url();?>users/viewbanner?clientid=<?php echo $value->clientid;?>&campaignid=<?php echo $value->campaignid;?>">
                                                 <div class="btn bg-purple btn-xs">Banners</div>
                                             </a>
 
                                         </td>
-                                        <td>
+                                        <td width="30%">
                                             <style>
                                             .panel table td {
                                                 padding-left: 5px;
