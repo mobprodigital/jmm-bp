@@ -3,7 +3,7 @@ ob_start();
 error_reporting(E_ALL); //E_ALL ^ E_NOTICE ^ E_DEPRECATED
 ini_set('display_errors', 1);
 
-$Admin_description = 'Adserver Admin';
+$Admin_description = 'Adserver Admin'; 
 $title_for_admin = 'Adserver'
 
 ?>
