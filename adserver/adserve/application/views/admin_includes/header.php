@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<meta charset="UTF-8">
-		<title>onetracky<?php //echo $title_for_admin;?></title>
+		<title>Media Adserver<?php //echo $title_for_admin;?></title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<link href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -67,8 +67,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="<?= base_url(); ?>users/dashboard/home" class="logo">
-					<span class="logo-mini"><b>One</b>T</span>
-					<span class="logo-lg"><b>Onetracky </b></span>
+					<span class="logo-mini"><b>M</b>Ads</span>
+					<span class="logo-lg"><b>Media </b> Adserver</span>
 				</a>
 				<nav class="navbar navbar-static-top" role="navigation">
 				<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -166,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</li>
 									<li class="user-footer">
 										<div class="pull-left">
-											<a href="<?php echo base_url().'users/preferences/setting?uid='.$this->session->userdata('uid');?>" class="btn btn-default btn-flat">Profile</a>
+											<a href="<?php echo base_url().'users/adminProfile?uid='.$this->session->userdata('uid');?>" class="btn btn-default btn-flat">Profile</a>
 										</div>
 										<div class="pull-right">
 											<a href="<?php echo site_url('admin/logout') ?>" class="btn btn-default btn-flat">Sign out</a>
