@@ -26,8 +26,9 @@
                                     </div>
                                 </div>
                                 <?php if(isset($banner[0]->bannerid)){$this->load->view('admin_includes/banner_header');}?>
-                                <div class="html5-creative" style="margin-top: 10px;width:100%;height:500px;display:<?php if(isset($banner[0]->htmltemplate) && ($banner[0]->storagetype =='html5')){echo 'block';}else{echo 'none';}?>">
-                                 <?php if(isset($banner[0]->htmltemplate) && ($banner[0]->storagetype =='html5')){ 
+                                <div class="html5-creative"
+                                    style="margin-top: 10px;width:100%;height:500px;display:<?php if(isset($banner[0]->htmltemplate) && ($banner[0]->storagetype =='html5')){echo 'block';}else{echo 'none';}?>">
+                                    <?php if(isset($banner[0]->htmltemplate) && ($banner[0]->storagetype =='html5')){ 
 									header("X-XSS-Protection: 0");
 									if(isset($banner[0]->rich_media_type) && (($banner[0]->rich_media_type == 1)||($banner[0]->rich_media_type == 2) || ($banner[0]->rich_media_type == 3)|| ($banner[0]->rich_media_type == 4))){
 										$creativeCode 		= $banner[0]->htmltemplate;
@@ -47,12 +48,11 @@
                         <form method="post" name="addbanner" id="addbanner" enctype="multipart/form-data"
                             style="margin-top: 37px;">
                             <div class="box-body">
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name" class="fieldlabel" style="font-weight:700">Please choose type
-                                            of
-                                            banner</label>
-                                        <select tabindex="1" name="type" id="type" class="formfield">
+                                        <label for="name" class="" style="font-weight:700">Please choose type
+                                            of banner</label>
+                                        <select tabindex="1" name="type" id="type" class="form-control">
                                             <?php if(isset($banner[0]->contenttype)){ ?>
                                             <optgroup label="<?php echo $banner[0]->storagetype;?>">
                                                 <option selected="selected"
@@ -91,19 +91,21 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     <h2 class="formfieldheading">Basic information</h2>
                                     <img width="100%" style="height:1px;margin-bottom:20px;"
                                         src="<?php echo base_url()?>/assets/upimages/break.gif">
+                                </div>
+
+                                <div class="col-md-6">
 
                                     <div class="form-group">
                                         <label for="name" class="fieldlabel">Name<font color="red">*</font></label>
-                                        <input type="text" class="formfield" name="description" id="description"
+                                        <input type="text" class="form-control" name="description" id="description"
                                             value="<?php if(isset($banner[0]->description)){echo $banner[0]->description;}?>" />
                                         <span style="color:red" id="span_description" class="errorspan"></span>
                                     </div>
                                 </div>
-
 
                                 <!--html5 banner code-->
                                 <div id="html5div" style="display:<?php 
@@ -161,37 +163,37 @@
 
 
                             </div>
-
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Additional data</h2>
                                 <img width="100%" style="height:1px;margin-bottom:20px;"
                                     src="<?php echo base_url()?>assets/upimages/break.gif" />
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="fieldlabel">Keywords</label>
-                                    <input type="text" class="formfield" name="keyword" id="keyword"
+                                    <input type="text" class="form-control" name="keyword" id="keyword"
                                         value="<?php if(isset($banner[0]->keyword)){echo $banner[0]->keyword;}?>" />
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="name" class="fieldlabel">Weight</label>
-                                    <input type="text" class="formfield" name="weight" id="weight"
+                                    <input type="text" class="form-control" name="weight" id="weight"
                                         value="<?php if(isset($banner[0]->weight)){echo $banner[0]->weight;}else{echo '1';}?>" />
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <label for="name" class="fieldlabel">Comments</label>
-                                    <textarea style="width:483px;height:144px;" class="textarea-field" name="comments"
+                                    <textarea rows="6" class="form-control" name="comments"
                                         id="comments"><?php if(isset($banner[0]->comments)){echo $banner[0]->comments;}?></textarea>
                                 </div>
                             </div>
-
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input class="btn btn-primary" name="submit" id="submit" type="submit"
+                                        value="Submit">
+                                </div>
+                            </div>
                     </div>
                 </div>
-                <div class="box-footer" style="text-align:center">
-                    <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit">
-                </div>
+
             </div>
         </div>
         <?php if(isset($_GET['bannerid'])){ ?>
