@@ -1,11 +1,14 @@
 <style>
 .bg-img {
-    background-image: url(../adserve/assets/img/admin/pexels-photo-1308624.jpeg);
+    background-image: url(../adserve/assets/img/admin/bg-admin.png);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-position: center-top;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 </style>
 
@@ -16,11 +19,11 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Mojo </b>Ads</a>
+            <h2><b>Admin</b></h2>
         </div>
         <div class="login-box-body">
 
-            <p class="login-box-msg">Sign in to start your session</p>
+
             <?php 
 	  if(isset($message_error) && $message_error){
           echo '<div class="alert alert-error">';
@@ -52,15 +55,15 @@
           </div>';
       
       
-      echo '<div class="row"><div class="col-xs-8"></div><div class="col-xs-4" style="padding-left: 32px;">';
-      echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
-	  echo '</div></div>';
-      echo form_close();
-      ?>
-
-            <a href="#">Forgot Password </a>
-            <br />
+      echo '<div class="row"><div class="col-xs-8"> </div>
+        <div class="col-xs-4" style="padding-left: 32px;">';
+            echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
+            echo '</div>
+    </div>';
+    echo form_close();
+    ?>
             <!-- /.login-box-body -->
+            <a href="<?php echo base_url();?>publisher/forgotpassword">I forgot my password </a>
         </div>
     </div><!-- /.login-box -->
 

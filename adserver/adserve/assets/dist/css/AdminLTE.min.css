@@ -5086,11 +5086,10 @@ table.text-center th {
 }
 
 .form-group {
-    padding-left: 20px;
 }
 
 .form-control {
-    width: 50%;
+    width: 100%;
 }
 
 .chk-label {
@@ -5123,4 +5122,12 @@ table.text-center th {
 
 .active-submenu {
     color: green;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.display-block {
+    display: block;
 }
