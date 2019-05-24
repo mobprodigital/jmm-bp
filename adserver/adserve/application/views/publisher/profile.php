@@ -165,8 +165,8 @@
                                         <div class="form-group">
                                             <input type="submit" name="submit" value="Update"
                                                 class="btn btn-large btn-primary">
-                                            <a href="" style="right: 0;position: absolute;margin-top: 10px;"> Reset
-                                                Password</a>
+                                            <a href="" style="right: 0;position: absolute;margin-top: 10px;color: #00a9e8;"> Change
+                                                Password ?</a>
                                         </div>
                                     </div>
                                 </form>
