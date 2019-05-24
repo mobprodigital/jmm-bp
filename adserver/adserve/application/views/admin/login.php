@@ -4,22 +4,29 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-position: center-top;
+    flex-direction: column;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.login-box {
+    margin: 4% 0% 0% 12% !important;
+}
+
+.login-box-body {
+    box-shadow: 2px 2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, 2px 2px 4px 2px #e6e6e6;
 }
 </style>
 
 
-<?php $this->load->view('login/header');?>
-<div class="bg-img">
 
+<div class="bg-img">
+    <?php $this->load->view('login/header');?>
 
     <div class="login-box">
         <div class="login-logo">
-            <h2><b>Admin</b></h2>
+            <a href="#"><b>Admin</b> Login</a>
         </div>
         <div class="login-box-body">
 
@@ -63,7 +70,7 @@
     echo form_close();
     ?>
             <!-- /.login-box-body -->
-            <a href="<?php echo base_url();?>publisher/forgotpassword">I forgot my password </a>
+            <a style="color:#00a9e8" href="<?php echo base_url();?>publisher/forgotpassword">I forgot my password </a>
         </div>
     </div><!-- /.login-box -->
 

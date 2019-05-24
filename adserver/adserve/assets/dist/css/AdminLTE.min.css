@@ -3611,6 +3611,7 @@ table.text-center th {
     border-top: 0;
     color: #666;
     border: 1px solid #d9d8d1;
+    border-radius: 6px;
 }
 
 .login-box-body .form-control-feedback,

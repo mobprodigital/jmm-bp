@@ -1,18 +1,30 @@
 <style>
 .bg-img {
-    background-image: url(../assets/img/admin/pexels-photo-1308624.jpeg);
+    background-image: url(../assets/img/admin/bg-publisher.png);
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-box {
+    margin: 4% 0% 0% 12% !important;
+}
+
+
+.login-box-body {
+    box-shadow: 2px 2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, 2px 2px 4px 2px #e6e6e6;
 }
 </style>
 
 
-<?php $this->load->view('login/header');?>
+
 
 <div class="bg-img">
+    <?php $this->load->view('login/header');?>
 
     <div class="login-box">
         <div class="login-logo">
@@ -58,7 +70,7 @@
       echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
 	  echo '</div></div>';
       echo form_close();
-      ?>
+      ?><a style="color:#00a9e8" href="<?php echo base_url();?>">I forgot my password </a>
         </div>
     </div>
 </div>

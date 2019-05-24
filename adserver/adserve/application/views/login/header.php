@@ -6,7 +6,8 @@ $title_for_layout = 'Adserver'
 
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title><?php echo $title_for_layout;?></title>
     <!-- Tell the browser to be responsive to screen width -->
@@ -14,99 +15,43 @@ $title_for_layout = 'Adserver'
     <!-- Bootstrap 3.3.4 -->
     <link href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css" />
     <!-- Theme style -->
-     <link href="<?php echo base_url();?>assets/dist/css/AdminLTE.min.css"  rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url();?>assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
     <!-- iCheck -->
-     <link href="<?php echo base_url();?>assets/plugins/iCheck/square/blue.css"  rel="stylesheet" type="text/css">
-	<style>
-	#top-header {
-    background: none repeat scroll 0 0 #093145;
-    padding: 0;
-    line-height: 45px;
-}
-	.form-control{width:100%;}
-	.login-select{
-		float:right;
-		width:4%;
+    <link href="<?php echo base_url();?>assets/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css">
+   
+</head>
 
-	}
-	.signup{
-	    float: right;
-		width: 15%;
-	}
-	 .login-link,.signup-link{
-		color:#fff;
-		font-size: 14px;
-		font-weight: 500;
-	}
-	
-	.login-item a {
-		color:black;
-		font-size: 14px;
-		font-weight: 500;
-	}
-	
-	.login-item  li{
-		list-style:none;
-		line-height: 24px;
-	}
-	
-	.login-select{
-		position :relative;
-		
-	}
-	.login-select:hover .login-item {
-		display: block;
-	}
-	
-	.login-item{
-		display: none;
-		position :absolute;
-		z-index:12;
-		background: #ddd;
-		width: 222px;
-		right: 0px;
-		top: 45px;
-		text-align: center;
-	}
-	.col-md-6{width:50%;}
-	.register-box-body{
-		width: 72%;
-		margin-left: 10%;
-		margin-top: 5%;
-	}
-	.head-title{margin-left: 3.5%;padding:0px;}
-	.login-page, .register-page {
-		background: #fff;
-	}
-	.a{
-		color:#fff;
-		
-	
-	}
-	</style>
-  </head>
-  <body class="login-page">
-  <header id="top-header" class="header">
-	<a href="<?php echo base_url();?>" style="color:#fff;">MediaAds</a>
-  <div class="signup">
-		<a href="<?php echo base_url();?>registration" class="signup-link">Sign Up</a>
-	</div>
-	<div class="login-select">
-		
-		<a href="#" class="login-link">Login</a>
+<body class="login-page">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo base_url();?>">Brand</a>
+            </div>
 
-	
-		<div class="login-item">
-			<ul>
-				<li><a href="<?php echo base_url();?>publisher/login">Publisher</a></li>
-				<li><a href="<?php echo base_url();?>advertiser/login">Advertiser</a></li>
-
-			</ul>
-		</div>
-	</div>
-	
-  
-  
-  &nbsp;</header>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-expanded="false">Login <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="<?php echo base_url();?>publisher/login">Publisher</a></li>
+                            <li><a href="<?php echo base_url();?>advertiser/login">Advertiser</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?php echo base_url();?>registration">Sign Up</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
