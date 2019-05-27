@@ -38,28 +38,20 @@ div.message div.confirm {
 }
 
 .bg-img {
-    background-image: url(../assets/img/admin/bg-advertiser.png);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url(../assets/img/advertiser/bg-advertiser.png);
 }
 
-.login-box {
-    margin: 4% 0% 0% 12% !important;
+.title {
+    color: #007dea;
 }
 
-.login-box-body {
-    box-shadow: 2px 2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, 2px 2px 4px 2px #e6e6e6;
+
+.sign-in_btn {
+    background-color: #007dea;
 }
+
 </style>
-
-
-
-
+<link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/login.css">
 
 <div class="bg-img">
     <?php $this->load->view('login/header');?>
@@ -80,13 +72,13 @@ div.message div.confirm {
             </div>
         </div>
         <?php } ?>
-        <div class="login-logo">
-            <a href="#"><b>Advertiser</b> Login</a>
-        </div>
         <div class="login-box-body">
 
-            <p class="login-box-msg">Sign in to start your session</p>
-            <?php 
+            <img class="login-box-body-top-img" src="<?php echo base_url();?>assets/img/advertiser/login-top.png" alt=""
+                srcset="">
+            <div class="input-container">
+                <h3 class="title">Advertiser Login</h3>
+                <?php 
 	  if(isset($msg) && $msg){
           echo '<div class="alert alert-error">';
             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -103,7 +95,7 @@ div.message div.confirm {
 		  'placeholder' => 'Username'
         );
       echo form_input($data);
-	  echo '<span class="glyphicon glyphicon-user form-control-feedback"></span>
+	  echo '<img class="form-control-feedback" src='.base_url().'assets/img/advertiser/user.png alt="" srcset="">
           </div>';
 	  echo '<div class="form-group has-feedback">';
 	  $data = array(
@@ -113,19 +105,20 @@ div.message div.confirm {
 		  'placeholder' => 'Password'
         );
       echo form_password($data);
-      echo '<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      echo '<img class="form-control-feedback" src='.base_url().'assets/img/advertiser/password.png alt="" srcset="">
           </div>';
       
       
-      echo '<div class="row"><div class="col-xs-8"></div><div class="col-xs-4" style="padding-left: 32px;">';
-      echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
+      echo '<div class="row"><div class="col-xs-12">';
+      echo form_submit('submit', 'Sign In', 'class="btn sign-in_btn"');
 	  echo '</div></div>';
       echo form_close();
       ?>
-            <a style="color:#00a9e8" href="<?php echo base_url();?>">I forgot my password </a>
-            <br />
-            <!-- /.login-box-body -->
-        </div><!-- /.login-box -->
+                <a class="forgot-password" href="<?php echo base_url();?>"> forgot password </a>
+                <br />
+                <!-- /.login-box-body -->
+            </div><!-- /.login-box -->
+        </div>
     </div>
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo base_url();?>assets/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>

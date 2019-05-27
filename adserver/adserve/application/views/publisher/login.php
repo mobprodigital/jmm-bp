@@ -1,41 +1,34 @@
 <style>
 .bg-img {
-    background-image: url(../assets/img/admin/bg-publisher.png);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url(../assets/img/publisher/bg-publisher.png);
 }
 
-.login-box {
-    margin: 4% 0% 0% 12% !important;
+.title {
+    color: #ff5732;
 }
 
 
-.login-box-body {
-    box-shadow: 2px 2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, -2px -2px 4px 2px #e6e6e6, 2px 2px 4px 2px #e6e6e6;
+.sign-in_btn {
+    background-color: #fe6843;
 }
 </style>
 
 
-
+<link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/login.css">
 
 <div class="bg-img">
     <?php $this->load->view('login/header');?>
 
     <div class="login-box">
-        <div class="login-logo">
-            <a href="#"><b>Publisher</b> Login</a>
-        </div>
         <div class="login-box-body">
-            <?php if(isset($msg)){ ?>
-            <p id="msg" style="color:red;"><?php echo $msg;?></p>
-            <?php } ?>
-            <p class="login-box-msg">Sign in to start your session</p>
-            <?php 
+            <img class="login-box-body-top-img" src="<?php echo base_url();?>assets/img/publisher/login-top.png" alt=""
+                srcset="">
+            <div class="input-container">
+                <h3 class="title">Publisher Login</h3>
+                <?php if(isset($msg)){ ?>
+                <p id="msg" style="color:red;"><?php echo $msg;?></p>
+                <?php } ?>
+                <?php 
 	  if(isset($message_error) && $message_error){
           echo '<div class="alert alert-error">';
             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -52,8 +45,8 @@
 		  'placeholder' => 'Username'
         );
       echo form_input($data);
-	  echo '<span class="glyphicon glyphicon-user form-control-feedback"></span>
-          </div>';
+    //  $baseUrl = base_url();
+      echo '<img class="form-control-feedback" src='.base_url().'assets/img/publisher/user.png alt="" srcset=""></div>';
 	  echo '<div class="form-group has-feedback">';
 	  $data = array(
           'name'        => 'password',
@@ -62,15 +55,17 @@
 		  'placeholder' => 'Password'
         );
       echo form_password($data);
-      echo '<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      echo '<img class="form-control-feedback" src='.base_url().'assets/img/publisher/password.png alt="" srcset="">
           </div>';
       
       
-      echo '<div class="row"><div class="col-xs-8"></div><div class="col-xs-4" style="padding-left: 32px;">';
-      echo form_submit('submit', 'Sign In', 'class="btn btn-large btn-primary"');
+      echo '<div class="row"><div class="col-xs-12">';
+      echo form_submit('submit', 'Sign In', 'class="btn sign-in_btn"');
 	  echo '</div></div>';
       echo form_close();
-      ?><a style="color:#00a9e8" href="<?php echo base_url();?>">I forgot my password </a>
+      ?><a class="forgot-password" href="<?php echo base_url();?>">forgot password </a>
+
+            </div>
         </div>
     </div>
 </div>
