@@ -146,7 +146,7 @@
     border-top-left-radius: 2px !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-bottom-left-radius: 2px !important
+    border-bottom-left-radius: 2px !important;
 }
 
 .skin-blue .sidebar-form input[type="text"]:focus,
@@ -156,7 +156,7 @@
 }
 
 .skin-blue .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
-    border-left-color: #fff
+    border-left-color: #fff;
 }
 
 .skin-blue .sidebar-form .btn {
