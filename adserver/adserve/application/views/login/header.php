@@ -21,11 +21,11 @@ $title_for_layout = 'Adserver'
     <link href="<?php echo base_url();?>assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css">
     <!-- iCheck -->
     <link href="<?php echo base_url();?>assets/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css">
-   
+
 </head>
 
 <body class="login-page">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="margin-bottom:0px;">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -36,7 +36,8 @@ $title_for_layout = 'Adserver'
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo base_url();?>">Brand</a>
+                <a class="" href="<?php echo base_url();?>"><img src="<?php echo base_url();?>assets/img/logo/logo.png"
+                        alt="" srcset=""></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

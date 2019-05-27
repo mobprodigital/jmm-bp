@@ -68,8 +68,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<div class="wrapper">
 			<header class="main-header">
 				<a href="<?php echo base_url();?>publisher/home" class="logo">
-					<span class="logo-mini"><b>M</b>Ads</span>
-					<span class="logo-lg"><b>Media </b> Adserver</span>
+					<span class="logo-mini"><img src="<?php echo base_url();?>assets/img/logo/logo-icon.png" alt="" srcset=""></span>
+					<span class="logo-lg"><img src="<?php echo base_url();?>assets/img/logo/logo.png" alt="" srcset=""></span>
 				</a>
 				<nav class="navbar navbar-static-top" role="navigation">
 				<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
