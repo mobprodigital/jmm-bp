@@ -213,7 +213,8 @@ body {
     background: #fff;
     padding: 15px;
     color: #444;
-    border-top: 1px solid #d2d6de
+    border-top: 1px solid #d2d6de;
+    margin: 0;
 }
 
 .fixed .main-header,
@@ -373,12 +374,12 @@ a:focus {
     float: left;
     background-color: transparent;
     background-image: none;
-    padding: 15px 15px;
+    padding:13px 15px 0px 15px;
     font-family: fontAwesome
 }
 
 .main-header .sidebar-toggle:before {
-    content: "\f0c9"
+    content: ""
 }
 
 .main-header .sidebar-toggle:hover {
@@ -2582,8 +2583,8 @@ a:focus {
 }
 
 .btn-success {
-    background-color: #093145;
-    border-color: #093145
+    background-color: #5cb85c;
+    border-color: #5cb85c
 }
 
 .btn-success:hover,
@@ -4996,13 +4997,15 @@ table.text-center th {
 .ad-menu {
     margin-top: 0px;
     margin-left: 0px;
+    width: 100%;
 }
 
 
 .ad-menu .menu1 {
     padding: 0;
     list-style-type: none;
-    height: 42px;
+    display: flex;
+    /* height: 42px; */
     /*width           :500px;margin:0 auto;*/
     /*Uncomment this line to make the menu center-aligned.*/
 }
@@ -5010,6 +5013,7 @@ table.text-center th {
 .ad-menu .menu1 ul {
     margin-top: 0;
     margin-bottom: 0px;
+    flex-grow: 1;
 }
 
 .ad-menu .menu1 li {
@@ -5021,6 +5025,7 @@ table.text-center th {
     float: left;
     display: block;
     color: White;
+    flex-grow: 1;
 }
 
 .ad-menu .menu1 li.lastItem {
@@ -5031,19 +5036,24 @@ table.text-center th {
 .ad-menu .menu1 li a {
     padding: 5px 65px;
     color: White;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
     display: block;
     float: left;
     font-size: 14px;
     line-height: 26px;
+    width: 100%;
 
 }
 
 .ad-menu .menu1 li a:hover,
 .ad-menu.menu1 li a.current {
     background-position: 0 -40px;
-    background-color: #0072b1;
+    background-color: #969696;
+}
+
+.ad-menu.menu1 li a.active {
+    background-color: #76be2c;
 }
 
 .sidebar-menu {
@@ -5086,8 +5096,7 @@ table.text-center th {
     width: 50%;
 }
 
-.form-group {
-}
+.form-group {}
 
 .form-control {
     width: 100%;
@@ -5131,4 +5140,12 @@ table.text-center th {
 
 .display-block {
     display: block;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.flex {
+    display: flex;
 }

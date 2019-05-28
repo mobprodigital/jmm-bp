@@ -28,7 +28,7 @@
 }
 
 .skin-blue .main-header .navbar .sidebar-toggle:hover {
-    background-color: #367fa9
+    background-color: transparent;
 }
 
 @media (max-width:767px) {
@@ -83,14 +83,14 @@
 }
 
 .skin-blue .sidebar-menu>li:hover>a {
-    background: #09947473;
+    background: #9b9b9b;
     color: #fff;
     border-top-right-radius: 3pc;
     border-bottom-right-radius: 3pc;
 }
 
 .skin-blue .sidebar-menu>li.active>a {
-    background: #1b72bd87;
+    background: #76be2c;
     color: #fff;
     border-top-right-radius: 3pc;
     border-bottom-right-radius: 3pc;
@@ -111,14 +111,14 @@
 .skin-blue .treeview-menu>li>a {}
 
 .skin-blue .treeview-menu>li.active>a {
-    background: #1b9fbd87;
+    background: #76be2c;
     color: #fff;
     border-top-right-radius: 3pc;
     border-bottom-right-radius: 3pc;
 }
 
 .skin-blue .treeview-menu>li>a:hover {
-    background: #09944173;
+    background: #9b9b9b;
     color: #fff;
     border-top-right-radius: 3pc;
     border-bottom-right-radius: 3pc;
@@ -146,7 +146,7 @@
     border-top-left-radius: 2px !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    border-bottom-left-radius: 2px !important;
+    border-bottom-left-radius: 2px !important
 }
 
 .skin-blue .sidebar-form input[type="text"]:focus,
@@ -156,7 +156,7 @@
 }
 
 .skin-blue .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
-    border-left-color: #fff;
+    border-left-color: #fff
 }
 
 .skin-blue .sidebar-form .btn {
