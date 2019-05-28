@@ -43,6 +43,7 @@ hr {
                     <!-- <?php print_r($campaign); ?> -->
                     <form method="post" name="addcampaign" id="addcampaign">
                         <div class="box-body">
+
                             <div class="message localMessage"
                                 style="display:<?php if(isset($msg)){echo 'block';}else{echo 'none';}?>">
                                 <div class="panelMessage confirm">
@@ -55,43 +56,44 @@ hr {
                                     <div class="close">x</div>
                                 </div>
                             </div>
-                            <h2 class="formfieldheading">Basic Information</h2>
-                            <img class="border-img" width="100%" style="height:1px;"
-                                src="<?php echo base_url()?>/assets/upimages/break.gif">
-                            <div class="">
+
+                            <div class="col-md-12">
+                                <h2 class="formfieldheading">Basic Information</h2>
+                                <img class="border-img" width="100%" style="height:1px;"
+                                    src="<?php echo base_url()?>/assets/upimages/break.gif">
+                            </div>
+
+
+
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="fieldlabel">Name<font color="red">*</font></label>
-                                    <input type="text" class="formfield" name="campaign" id="campaign"
+                                    <input type="text" class="form-control" name="campaign" id="campaign"
                                         value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->campaignname;}?><?php if(isset($defaultCampaign)){echo $defaultCampaign;?> - Default Campaign<?php } ?>"
                                         required /></br>
                                     <span style="color:red" id="span_campaign"></span>
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="type" class="fieldlabel">Type</label>
-                                    <input type="radio" class="campaign-radio" name="campaign_type" id="remnant"
-                                        value="1"
+                                    <label for="type" class="display-block">Type</label>
+                                    <input type="radio" class="campaign-radio cursor-pointer" name="campaign_type"
+                                        id="remnant" value="1"
                                         <?php if(isset($campaign[0]->campaign_type) && $campaign[0]->campaign_type=='1'){echo 'checked';}?> />&nbsp;&nbsp;<b>Remnant</b>
                                     <div style="display:<?php if(isset($campaign[0]->campaign_type)){if( $campaign[0]->campaign_type=='1'){echo 'block';}else{echo 'none';}}else{echo 'block';}?>"
                                         class="campaign-type" id="campaign_remnant"><?php echo $remnant;?></div>
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel"></label>
-                                    <input type="radio" class="campaign-radio" name="campaign_type" id="contract"
-                                        value="2"
+
+                                    <input type="radio" class="campaign-radio cursor-pointer" name="campaign_type"
+                                        id="contract" value="2"
                                         <?php if(isset($campaign[0]->campaign_type) && $campaign[0]->campaign_type=='2'){echo 'checked';}?> />&nbsp;&nbsp;<b>Contract</b>
                                     <div style="display:<?php if(isset($campaign[0]->campaign_type)){if( $campaign[0]->campaign_type=='2'){echo 'block';}else{echo 'none';}}else{echo 'block';}?>"
                                         class="campaign-type" id="campaign_contract"><?php echo $contract;?></div>
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel"> </label>
-                                    <input type="radio" class="campaign-radio" name="campaign_type" id="override"
-                                        value="3"
+
+                                    <input type="radio" class="campaign-radio cursor-pointer" name="campaign_type"
+                                        id="override" value="3"
                                         <?php if(isset($campaign[0]->campaign_type) && $campaign[0]->campaign_type=='3'){echo 'checked';}?> />&nbsp;&nbsp;<b>Override</b>
 
                                     <div style="display:<?php if(isset($campaign[0]->campaign_type)){if( $campaign[0]->campaign_type=='3'){echo 'block';}else{echo 'none';}}else{echo 'block';}?>"
@@ -99,7 +101,8 @@ hr {
                                 </div>
                             </div>
 
-                            <div class="">
+
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Date</h2>
                                 <img class="border-img" width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
@@ -107,13 +110,13 @@ hr {
                                     <label class="title-label">Start Date</label>
 
                                     <label class="radio-button-label"><input id="startSet_immediate" name="startSet"
-                                            value="f"
+                                            value="f" class="compaign-star-date"
                                             <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc !='yes'){echo 'checked="checked"';}}else{echo 'checked="checked"';} ?>
                                             type="radio"> Start immediately
                                     </label>
 
                                     <label class="radio-button-label">
-                                        <input id="startSet_specific" name="startSet"
+                                        <input class="compaign-star-date" id="startSet_specific" name="startSet"
                                             <?php if(isset($campaign[0]->campaignid)){if($campaign[0]->activeaction_calc =='yes'){echo 'checked="checked"';}} ?>value="t"
                                             type="radio"> Set specific date
                                     </label>
@@ -133,7 +136,10 @@ hr {
                                     </span>
                                 </div>
                             </div>
-                            <div class="">
+
+
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="title-label">End Date</label>
                                     <label class="radio-button-label">
@@ -169,14 +175,19 @@ hr {
                                     </span>
                                 </div>
                             </div>
-                            <div class="">
+
+
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Pricing</h2>
                                 <img class="border-img" width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
 
+                            </div>
+                            <div class="col-md-6">
+
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Pricing Model</label>
-                                    <select name="revenue_type" id="revenue_type" class="formfield" />
+                                    <label for="name" class="">Pricing Model</label>
+                                    <select name="revenue_type" id="revenue_type" class="form-control" />
                                     <?php if(isset($campaign[0]->revenue_type)){ ?>
                                     <?php if($campaign[0]->revenue_type == 1){ ?>
                                     <option value="1">CPM</option>
@@ -192,39 +203,38 @@ hr {
                                     <option value="3">Tenancy</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Rate / Price<font style="color:red;">*</font>
+                                    <label for="name" class="">Rate / Price<font style="color:red;">*</font>
                                     </label>
-                                    <input type="text" class="formfield" name="revenue" id="revenue"
+                                    <input type="text" class="form-control" name="revenue" id="revenue"
                                         value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->revenue;}?>"
                                         required />
                                     <span style="color:red" id="span_revenue"></span>
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Impression</label>
-                                    <input type="text" class="formfield" name="impressions" id="impressions"
+                                    <label for="name" class="">Impression</label>
+                                    <input type="text" class="form-control" name="impressions" id="impressions"
                                         value="<?php if(isset($campaign[0]->views) && $campaign[0]->views !=-1){echo $campaign[0]->views;}?>"
                                         <?php if(isset($campaign[0]->views) && $campaign[0]->views ==-1){echo 'disabled';}?> />
-                                    <input type="checkbox" value="-1" class="camp-chk" name="views" id="views"
-                                        <?php if(isset($campaign[0]) && $campaign[0]->views == -1){echo 'checked';}?> />&nbsp;&nbsp;Unlimited
+                                    <label style="margin-top:20px;" class="cursor-pointer">
+                                        <input type="checkbox" value="-1" class="" name="views" id="views"
+                                            <?php if(isset($campaign[0]) && $campaign[0]->views == -1){echo 'checked';}?> />
+                                        Unlimited</label>
 
                                 </div>
                             </div>
-                            <div class="">
+
+
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Priority In relation to other module</h2>
                                 <img class="border-img" width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
                             </div>
-                            <div class="">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Priority level</label>
-                                    <select style="width:9%" class="multiplefield" name="high_priority_value"
-                                        id="high_priority_value" style="display:inline;" />
+                                    <label for="name" class="display-block">Priority level</label>
+                                    <select class="form-control" name="high_priority_value" id="high_priority_value"
+                                        style="display: inline;width: 25%;" />
                                     <?php if(isset($campaign[0]->priority)){ ?>
                                     <option value="<?php echo $campaign[0]->priority;?>">
                                         <?php echo $campaign[0]->priority;?></option>
@@ -241,8 +251,9 @@ hr {
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                     <option value="11">11</option>
-                                    </select>&nbsp;&nbsp;-Limit
-                                    <select style="width:8%" name="target_type" id="target_type" />
+                                    </select>&nbsp;&nbsp;Limit
+                                    <select class="form-control" name="target_type" id="target_type"
+                                        style="display: inline;width: 25%;" />
                                     <?php if(isset($campaign[0]->tracking_type)){?>
                                     <option
                                         value="<?php if($campaign[0]->tracking_type){ echo $campaign[0]->tracking_type;?>">
@@ -255,36 +266,36 @@ hr {
                                     <option value="target_click">Clicks</option>
                                     <option value="target_conversion">Converiosn</option>
                                     </select>&nbsp;&nbsp;to
-                                    <input type="text" style="width:8%" name="target_value" id="target_value"
-                                        value="<?php if(isset($campaign[0]->target_value)){ echo $campaign[0]->target_value;}else{echo '0';}?>">per
+                                    <input type="text" class="form-control" name="target_value" id="target_value"
+                                        style="display: inline;width: 25%;"
+                                        value="<?php if(isset($campaign[0]->target_value)){ echo $campaign[0]->target_value;}else{echo '0';}?>">&nbsp;&nbsp;per
                                     day
                                 </div>
                             </div>
 
-                            <div class="">
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Delivery Capping per Visitor</h2>
                                 <img class="border-img" width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
-                                <div class="form-group">
-                                    <label for="name" class="fieldlabel">Amount</label>
-                                    <input type="text" class="formfield" name="capping_amount" id="capping_amount"
-                                        value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->capping_amount;}?>" />
-                                </div>
+
                             </div>
 
-                            <div class="">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Period</label>
-                                    <input type="text" class="formfield" name="capping_period_value"
+                                    <label for="name" class="">Period</label>
+                                    <input type="text" class="form-control" name="capping_period_value"
                                         id="capping_period_value"
                                         value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->capping_period_value;}?>" />
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Period Type</label>
-                                    <select style="width:8%;margin-left: 40px;" class="capping_period_type"
-                                        name="capping_period_type" id="capping_period_type" style="display:inline;" />
+                                    <label for="name" class="">Amount</label>
+                                    <input type="text" class="form-control" name="capping_amount" id="capping_amount"
+                                        value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->capping_amount;}?>" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="">Period Type</label>
+                                    <select class="form-control capping_period_type" name="capping_period_type"
+                                        id="capping_period_type" style="display:inline;" />
                                     <?php if(isset($campaign[0]->priority)){ ?>
                                     <option value="<?php echo $campaign[0]->capping_period_type;?>">
                                         <?php echo $campaign[0]->capping_period_type;?></option>
@@ -297,67 +308,39 @@ hr {
                                     </select>
                                 </div>
                             </div>
-                            <!--<div class="">
-								<div class="form-group">
-									<label for="name" class="fieldlabel">Limit campaign views to</label>
-									<input type="text" 	 class="formfield" name="session_capping" id="session_capping" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->session_capping;}?>"/>&nbsp;&nbsp;per session
-								</div>
-							</div>
-							
-							
-							<div class="">
-								<div class="form-group">
-									<label for="name" class="fieldlabel">Limit campaign views to</label>
-									<input type="text" 	 class="formfield" name="session_capping" id="session_capping" value="<?php if(isset($campaign[0]->campaignid)){echo $campaign[0]->session_capping;}?>"/>&nbsp;&nbsp;per session
-								</div>
-							</div>
-							<div class="">
-								<div class="form-group">
-									<label for="name" 	class="fieldlabel">Reset view counters after </label>
-									<input type="text" 	name	= "hours" 	id	= "hours" 		class="smalltextbox" value="<?php if(isset($campaign[0]->hours)){echo $campaign[0]->hours;}?>">&nbsp;&nbsp;Hours
-									<input type="text" 	name	= "mintues" id	= "mintues" 	class="smalltextbox" value="<?php if(isset($campaign[0]->mintues)){echo $campaign[0]->mintues;die;}?>">&nbsp;&nbsp;Mintues
-									<input type="text" 	name	= "second" 	id	= "second" 		class="smalltextbox" value="<?php if(isset($campaign[0]->second)){echo $campaign[0]->second;}?>" style="margin-left: 32px;"/>&nbsp;&nbsp;Seconds
-								</div>
-							</div>
-							
-							
-							<div class="">
-								<div class="form-group">
-									<label for="name" class="fieldlabel">Cookies </label>
-									<input type="checkbox" 	value="1" class="camp-chk" name="show_capped_no_cookie" id="show_capped_no_cookie" <?php if(isset($campaign[0]) && $campaign[0]->show_capped_no_cookie == 1){echo 'checked';}?>/>&nbsp;&nbsp;Show capped ads if cookies are disabled
-								</div>
-							</div>
-							-->
-                            <div class="">
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Miscellaneous</h2></br>
                                 <img class="border-img" width="100%" style="height:1px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group" style="display:none;">
                                     <label for="name" class="fieldlabel">Miscellaneous</label>
                                     <input type="checkbox" name="anonymous" id="anonymous" value="t" class="camp-chk"
                                         <?php if(isset($campaign[0]) && $campaign[0]->anonymous == 't'){echo 'checked';}?> />&nbsp;&nbsp;Hide
                                     the advertiser and websites of this campaign.
                                 </div>
-                            </div>
-                            <div class="" style="display:none;">
-                                <div class="form-group">
+                                <div class="form-group" style="display:none;">
                                     <label for="name" class="fieldlabel">Miscellaneous</label>
                                     <input type="checkbox" name="companion" id="companion" value="1" class="camp-chk"
                                         <?php if(isset($campaign[0]) && $campaign[0]->companion == 1){echo 'checked';}?> />&nbsp;&nbsp;Companion
                                     positioning:
                                 </div>
-                            </div>
-                            <div class="">
                                 <div class="form-group">
                                     <label for="name" class="fieldlabel">Comment</label>
-                                    <textarea class="textarea-field" name="comments"
+                                    <textarea class="form-control" name="comments" rows="6"
                                         id="comments"><?php if(isset($campaign[0]->comments)){echo $campaign[0]->comments;}?></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success" name="submit" id="submit"
+                                        value="submit">
+                                </div>
+                            </div>
                         </div>
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-primary" name="submit" id="submit" value="submit">
-                        </div>
+
+
                     </form>
                 </div>
             </div>

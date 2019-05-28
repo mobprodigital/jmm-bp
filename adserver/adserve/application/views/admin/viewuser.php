@@ -58,7 +58,7 @@
 										<div  class="deactive" id="<?php echo $value->user_id.'_'.$value->status;?>"><?php echo 'Inctive'?></div>
 									<?php } ?>
 									</td>
-									<td class="last" style="text-align: right;padding-right:25px;"><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->user_id;?>" class="fa fa-edit"></a><a href="#" style="padding-left: 10px;" id="<?php echo $value->user_id;?>"><small id="4" class="fa fa-trash-o" style="color:red;padding-left:10px;"></small></a></td>
+									<td class="last" style="text-align: right;padding-right:25px;"><a href="<?php echo base_url();?>admin/users/create?id=<?php echo $value->user_id;?>" class="fa fa-edit"></a><a href="#" style="padding-left: 10px;" id="<?php echo $value->user_id;?>"><i id="4" class="fa fa-trash" style="color:red;padding-left:10px;"></i></a></td>
 								</tr>                 
 								<?php } ?>
 							</tbody>
