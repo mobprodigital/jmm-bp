@@ -124,7 +124,7 @@ hr {
 
                             <div class="col-md-12">
                                 <div class=" form-group">
-                                    <input type="submit" class="btn btn-primary" name="submit" id="submit"
+                                    <input type="submit" class="btn btn-success" name="submit" id="submit"
                                         value="submit">
                                 </div>
                             </div>

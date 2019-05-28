@@ -67,7 +67,7 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                                     <?php } ?>
                                 </div>
                                 <div class="col-md-2 form-group">
-                                    <input class="btn btn-sm btn-info" type="submit" value="Submit" name="submit"
+                                    <input class="btn btn-sm btn-success" type="submit" value="Submit" name="submit"
                                         id="submit" style="margin-left: 637px;">
                                 </div>
                             </div>

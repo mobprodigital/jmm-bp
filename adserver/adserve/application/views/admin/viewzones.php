@@ -20,7 +20,7 @@
                                 <label><input name="zone_name" id="zone_name" class="search form-control"
                                         style="width:295px;" placeholder="Search Zone"
                                         value="<?php echo $zoneName;?>"></label>
-                                <input type="submit" class="btn btn-primary" name="submit" id="submit" value="search">
+                                <input type="submit" class="btn btn-success" name="submit" id="submit" value="search">
                             </div>
 						
 							

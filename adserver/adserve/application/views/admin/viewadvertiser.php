@@ -27,7 +27,7 @@ $limt_value = $_GET['pglmt'];}else{$limt_value = "";} ?>
                             <label><input name="clients" id="clients" class="search form-control" style="width:295px;"
                                     placeholder="Search"
                                     value="<?php if(isset($searchInput)){echo $searchInput;}?>"></label>
-                            <input type="submit" class="btn btn-primary" name="submit" id="submit" value="search">
+                            <input type="submit" class="btn btn-success" name="submit" id="submit" value="search">
                             <div class="dropdown-content">
                             </div>
                             <small class="btn btn-large btn-primary"

@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div style="margin-top:25px" class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-sm" value="Submit" name="submit"
+                                        <input type="submit" class="btn btn-success btn-sm" value="Submit" name="submit"
                                             id="submit">
                                     </div>
                                 </div>

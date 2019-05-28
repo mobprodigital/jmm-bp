@@ -187,7 +187,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input class="btn btn-primary" name="submit" id="submit" type="submit"
+                                    <input class="btn btn-success" name="submit" id="submit" type="submit"
                                         value="Submit">
                                 </div>
                             </div>
@@ -203,11 +203,8 @@
         <?php } ?>
 
         </form>
-</div>
-</div>
-</div>
-</div>
-</section>
+
+    </section>
 </div>
 
 <!--<script src="<?php echo base_url();?>assets/common/angular.min.js"></script>
