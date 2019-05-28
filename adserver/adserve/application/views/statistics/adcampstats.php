@@ -163,7 +163,8 @@ if($currency_value=='1'){
 									<th width="12%">Impr.</th>
 									<th width="12%">Clicks</th>
 									<th width="12%">CTR</th>
-									<th width="12%">ECPM (<?php echo $currency_nm; ?>)</th>
+									<th width="12%">Revenue</th
+									<!-- <th width="12%">ECPM (<?php echo $currency_nm; ?>)</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -231,7 +232,7 @@ if($currency_value=='1'){
 									
 									<td class="last">
 									<?php
-									    $ecpm = (($value->impressions / 10000)*2);
+									    	$ecpm = $value->revenue ? $value->revenue :0;//$ecpm = (($value->impressions / 10000)*2);
 
                            // $currency_value = 200;
                           if($currency_value=='2'){  $ecpm = $ecpm/68; }elseif ($currency_value=='1') { $ecpm = $ecpm;}elseif ($currency_value=='3') { $ecpm = $ecpm/78; }

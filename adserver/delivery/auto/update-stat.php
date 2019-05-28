@@ -40,8 +40,13 @@ function dboperation(){
 
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
-			$iquery	= "INSERT INTO rv_stats_vast (`interval_start`, `creative_id`, `zone_id`,`vast_event_id`, `count`) VALUES ('".$row['interval_start']."', ".$row['creative_id'].", ".$row['zone_id'].",".$row['vast_event_id'].",  ".$row['count'].")";
-			$result11 = mysqli_query($dbLink, $iquery);
+			$query_banner = "SELECT revenue FROM campaigns a,banners b WHERE b.campaignid = a.campaignid AND b.bannerid='$row[creative_id]'";
+			$banner_ress  = mysqli_query($dbLink,$query_banner);
+			$banner_data  = mysqli_fetch_assoc($banner_ress);
+			$rev 		  = $banner_data['revenue']*($row['mcount']/1000);
+			$updated      = date('Y-m-d H:i:s');
+			$iquery			= "INSERT INTO rv_data_summary_ad_hourly (`date_time`, `creative_id`, `zone_id`, `impressions`,`clicks`,`total_revenue`,`updated`) VALUES ('".$row['interval_start']."', ".$row['creative_id'].", ".$row['zone_id'].", ".$row['mcount'].", ".$row['ccount'].", ".$rev.", '".$updated."')";
+			$result12 		= mysqli_query($dbLink, $iquery);
 		
 		}
 	}
