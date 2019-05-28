@@ -63,40 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     var uname = <?php echo json_encode($this->session->userdata('username')); ?>;
     var siteurl = '<?php echo base_url();?>';
     </script>
-    <style>
-    .content-header .form-control {
-        display: none;
-    }
 
-    .content-header #submit {
-        display: block;
-    }
-
-    .content-header .btn-primary {
-        display: none;
-    }
-
-    .ad-menu .menu1 li a {
-        background: #093145;
-    }
-
-    .sidebar-menu .treeview-menu>li.active>a {
-        background: #c3c2c2;
-        color: #3a3030;
-    }
-
-    .sidebar-menu .treeview-menu>li>a {
-        padding: 5px 5px 5px 60px;
-    }
-
-    .sidebar-menu .treeview-menu {
-        padding-left: 0px;
-    }
-
-    .skin-blue .sidebar-menu>li>.treeview-menu {
-        margin: 0px;
-    }
-    </style>
 </head>
 
 <body class="skin-blue sidebar-mini">
