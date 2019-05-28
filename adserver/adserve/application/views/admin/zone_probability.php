@@ -21,15 +21,18 @@ hr {
                             <p id="msg2" style="color:green"><?php echo $msg;?></p>
                             <?php }?>
 
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <strong>There are no active banners linked to this zone.</strong>
                             </div>
-
+                            <div class="col-md-12" style="margin-top:10px;">
+                                <div class="form-group">
+                                    <input class="btn btn-success" name="submit" id="submit" type="submit"
+                                        value="Submit">
+                                </div>
+                            </div>
                         </div>
                 </div>
-                <div class="box-footer">
-                    <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit">
-                </div>
+
             </div>
             </form>
         </div>

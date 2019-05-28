@@ -17,10 +17,10 @@ hr {
                         <img style="float: left;" src="<?php echo base_url()?>assets/upimages/icon-zones-large.png" />
                         <h3 style="padding-left: 10px;margin-top:12px;"><?php echo $zoneData[0]->name;?></h3>
                     </section>
-                   
+
                     <form method="post" name="addbanner" id="addbanner">
                         <div class="box-body">
-												<?php $this->load->view("admin_includes/zoneheader");?>
+                            <?php $this->load->view("admin_includes/zoneheader");?>
                             <?php if(isset($this->session->userdata['zonedata'])){ ?>
                             <?php $msg	= $this->session->userdata['zonedata']['msg'];?>
                             <div class="errormessage" id="warning_change_zone_size"
@@ -46,15 +46,16 @@ hr {
                             <?php //	 echo '<pre>';print_r($this->session->userdata());die;?>
 
                             <?php }?>
-
-                            <div class="col-md-7">
-                                <hr class="formline">
+                            <div class="col-md-12">
                                 <h2 class="formfieldheading">Please choose what to link to this zone</h2>
-                                <hr class="formline">
+                                <img width="100%" style="height:1px;margin-bottom:20px;"
+                                    src="<?php echo base_url()?>/assets/upimages/break.gif">
                             </div>
-                            <div class="col-md-7">
+
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <select name="view" id="view">
+                                    <select name="view" id="view" class="form-control">
                                         <option value="ad">Link individual banners</option>
                                         <!--<option selected="" value="placement">Link banners by parent campaign</option>
 										<option value='category'>Link banners by category</option>
@@ -63,18 +64,18 @@ hr {
                                 </div>
                             </div>
                     </form>
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <img width="100%" style="height:1px;" src="<?php echo base_url()?>/assets/upimages/break.gif">
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="form-group" style="">
                             Select the campaign you would like to link to this zone</br>
                             <img align="absmiddle" src="<?php echo base_url()?>/assets/upimages/icon-advertiser.gif">
-                            <input type="hidden" name="affiliateid"
+                            <input type="hidden" name="affiliateid" class="form-control"
                                 value="<?php if(isset($_GET['affiliateid'])){echo $_GET['affiliateid'];} ?>">
-                            <input type="hidden" name="zoneid"
+                            <input type="hidden" name="zoneid" class="form-control"
                                 value="<?php if(isset($_GET['zoneid'])){ echo $_GET['zoneid'];}?>">
-                            <select tabindex="1" name="clientid" id="clientid">
+                            <select tabindex="1" name="clientid" id="clientid" class="form-control">
 
                                 <!--<?php if(isset($clientszone[0]->clientid)){ ?>
 										<option  value="<?php echo $clientszone[0]->clientid;?>"><?php echo $clientszone[0]->clientname;?></option>

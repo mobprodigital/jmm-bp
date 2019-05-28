@@ -2,6 +2,10 @@
 hr {
     margin-bottom: 9px;
 }
+
+.margin-top-10 {
+    margin-top: 10px;
+}
 </style>
 
 <div class="content-wrapper">
@@ -36,53 +40,60 @@ hr {
                                     <div class="close">x</div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
-                                <h2 class="formfieldheading">Basic information</h2></br>
-                                <img width="100%" style="height:1px;"
-                                    src="<?php echo base_url()?>/assets/upimages/break.gif">
 
+
+                            <div class="col-md-12">
+                                <h2 class="formfieldheading">Basic information</h2>
+                                <img width="100%" style="height:1px;margin-bottom:20px;"
+                                    src="<?php echo base_url()?>/assets/upimages/break.gif">
                             </div>
-                            <div class="col-md-7">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Name<font style="color:#F44336;">*</font>
+                                    <label for="name" class="">Name<font style="color:#F44336;">*</font>
                                     </label>
-                                    <input type="text" style="margin-left:5px;" class="formfield" name="zonename"
-                                        id="zonename"
+                                    <input type="text" class="form-control" name="zonename" id="zonename"
                                         value="<?php if(isset($default[0]->zonename)){echo $default[0]->zonename;?>-Default <?php }elseif(isset($zones[0]->zonename)){ echo $zones[0]->zonename;} ?>" />
                                     <span style="color:red" id="span_zonename" class="errorspan"></span>
-                                    <input type="hidden" style="margin-left:5px;" class="formfield" name="default"
-                                        id="default"
+                                    <input type="hidden" class="form-control" name="default" id="default"
                                         value="<?php if(isset($default[0]->zonename)){echo $default[0]->affiliateid;}?>" />
 
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Description</label>
-                                    <input type="text" style="margin-left:5px;" class="formfield" name="description"
-                                        id="description"
+                                    <label for="name" class="">Description</label>
+                                    <input type="text" class="form-control" name="description" id="description"
                                         value="<?php if(isset($zones[0]->description)){ echo $zones[0]->description;} ?>" />
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Zone type</label>
-                                    <input type="radio" value="web" name="delivery" class="zone" id="delivery-b"
-                                        <?php if(isset($zones[0]->delivery) && $zones[0]->delivery =='web'){echo 'checked'; } ?>
-                                        style="margin-left:5px;">&nbsp; <label for="delivery-b"><img align="absmiddle"
-                                            src="<?php echo base_url();?>assets/upimages/icon-zone.gif">&nbsp;Standerd
-                                        Banner</label><br>
-                                    <input type="radio" value="html5" name="delivery" class="zonetype zone"
-                                        id="delivery-h"
-                                        <?php if(isset($zones[0]->delivery) && $zones[0]->delivery=='html5'){echo 'checked';} ?>>&nbsp;&nbsp;<label
-                                        for="delivery-i"><img align="absmiddle"
-                                            src="<?php echo base_url();?>assets/upimages/icon-interstitial.gif">&nbsp;HTML5</label><br>
-                                    <input type="radio" value="html" name="delivery" class="zonetype zone"
-                                        id="delivery-vi"
-                                        <?php if(isset($zones[0]->delivery) && $zones[0]->delivery=='html'){echo 'checked';} ?>>&nbsp;&nbsp;<label
-                                        for="delivery-vi"><img align="absmiddle"
-                                            src="<?php echo base_url();?>assets/upimages/icon-zone-video-instream.png">&nbsp;Inline
-                                        Video ad</label><br>
+                                    <label for="name" class="display-block">Zone type</label>
+
+
+
+                                    <div>
+                                        <div class="display-inline-block"><input type="radio" value="web"
+                                                name="delivery" class="zone " id="delivery-b"
+                                                <?php if(isset($zones[0]->delivery) && $zones[0]->delivery =='web'){echo 'checked'; } ?>>&nbsp;
+                                            <label class="cursor-pointer" style="font-weight:500" for="delivery-b"><img
+                                                    align="absmiddle"
+                                                    src="<?php echo base_url();?>assets/upimages/icon-zone.gif">&nbsp;Standerd
+                                                Banner &nbsp;&nbsp;</label></div>
+                                        <div class="display-inline-block"><input type="radio" value="html5"
+                                                name="delivery" class=" zone" id="delivery-h"
+                                                <?php if(isset($zones[0]->delivery) && $zones[0]->delivery=='html5'){echo 'checked';} ?>>&nbsp;&nbsp;<label
+                                                style="font-weight:500" class="cursor-pointer" for="delivery-h"><img
+                                                    align="absmiddle"
+                                                    src="<?php echo base_url();?>assets/upimages/icon-interstitial.gif">&nbsp;HTML5
+                                                &nbsp;&nbsp;</label>
+                                        </div>
+                                        <div class="display-inline-block"><input type="radio" value="html"
+                                                name="delivery" class=" zone" id="delivery-vi"
+                                                <?php if(isset($zones[0]->delivery) && $zones[0]->delivery=='html'){echo 'checked';} ?>>&nbsp;&nbsp;<label
+                                                style="font-weight:500" class="cursor-pointer" for="delivery-vi"><img
+                                                    align="absmiddle"
+                                                    src="<?php echo base_url();?>assets/upimages/icon-zone-video-instream.png">&nbsp;Inline
+                                                Video ad</label></div>
+                                    </div>
+
                                     <!--
 									<input type="radio" value="2" name="delivery" class="zonetype zone"   id="delivery-t"  <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype==2){echo 'checked';} ?>>&nbsp;&nbsp;<label for="delivery-t"><img align="absmiddle" src="<?php echo base_url();?>assets/upimages/icon-textzone.gif">&nbsp;Text ad</label><br>
 									<input type="radio" value="3" name="delivery" class="zonetype zone"   id="delivery-e"  <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype==3){echo 'checked';} ?>>&nbsp;&nbsp;<label for="delivery-e"><img align="absmiddle" src="<?php echo base_url();?>assets/upimages/icon-zone-email.gif">&nbsp;Email/Newsletter zone</label><br>
@@ -90,20 +101,19 @@ hr {
 									<input type="radio" value="5" name="delivery" class="zonetype zone"   id="delivery-vo" <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype==5){echo 'checked';} ?>>&nbsp;&nbsp;<label for="delivery-vo"><img align="absmiddle" src="<?php echo base_url();?>assets/upimages/icon-zone-video-overlay.png">&nbsp;Overlay Video ad</label><br>
 									-->
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Size</label>
-                                    <td width="100%">
-
-                                        <input type="radio" value="default" name="sizetype" id="size-d"
-                                            style="margin-left:5px;"
+                                    <label for="name" class="display-block">Size</label>
+                                    <div class="flex">
+                                        <input class="margin-top-10" type="radio" value="default" name="sizetype"
+                                            id="size-d"
                                             <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype == 'default'){echo 'checked';} ?>>
+                                        &nbsp;&nbsp;
                                         <select
                                             onchange="phpAds_formSelectSize(this); oa_sizeChangeUpdateMessage(&quot;warning_change_zone_size&quot;);"
-                                            id="size" name="size" class="medium">
+                                            id="size" name="size" class="medium form-control">
                                             <?php if(isset($zones[0]->size)){ ?>
-                                            <option value="<?php $zones[0]->size;?>"><?php $zones[0]->size;?></option>
+                                            <option value="<?php $zones[0]->size;?>"><?php $zones[0]->size;?>
+                                            </option>
                                             <?php } ?>
 
                                             <option value="468x60"
@@ -162,43 +172,54 @@ hr {
                                                 Custom</option>
 
                                         </select>
-                                        <br>
-                                        <input type="radio" value="custom" name="sizetype" id="size-c" class="zonetype"
+                                    </div>
+
+                                    <br>
+
+                                    <div class="flex">
+
+                                        <input class="margin-top-10" type="radio" value="custom" name="sizetype"
+                                            id="size-c" class=""
                                             <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype == 'custom'){echo 'checked';} ?>
-                                            <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype=='html'){echo 'disabled';}?>>&nbsp;&nbsp;&nbsp;Width:
-                                        &nbsp;&nbsp;&nbsp;
-                                        <input type="text" class="x-small" id="width"
+                                            <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype=='html'){echo 'disabled';}?>>
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="width" placeholder="width"
                                             value="<?php if(isset($zones[0]->width)){ echo $zones[0]->width;} ?>"
                                             name="width"
-                                            <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype=='html'){echo 'disabled';}?>>&nbsp;&nbsp;&nbsp;Height:
-                                        &nbsp;&nbsp;&nbsp;
-                                        <input type="text" class="x-small" id="height"
+                                            <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype=='html'){echo 'disabled';}?>>
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="height" placeholder="height"
                                             value="<?php if(isset($zones[0]->height)){ echo $zones[0]->height;} ?>"
                                             name="height"
                                             <?php if(isset($zones[0]->zonetype) && $zones[0]->zonetype=='html'){echo 'disabled';}?>>
-                                        <br>
-                                    </td>
+
+
+                                    </div>
+
+
+                                    <br>
+
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
                                     <label class="fieldlabel">Comment</label>
-                                    <textarea name="comment" id="comment" class="formfield"
-                                        style="width: 413px; height: 100px;margin-left:7px;"><?php if(isset($zones[0]->comments) ){echo $zones[0]->comments; }?></textarea>
+                                    <textarea name="comment" id="comment" class="form-control"
+                                        rows="6"><?php if(isset($zones[0]->comments) ){echo $zones[0]->comments; }?></textarea>
                                     <span style="color:red"></span>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input class="btn btn-success" name="submit" id="submit" type="submit"
+                                        value="Submit">
+                                </div>
+                            </div>
                         </div>
-                </div>
-                <div class="box-footer">
-                    <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit">
+
+                    </form>
                 </div>
             </div>
-            </form>
         </div>
-</div>
-</div>
-</section>
+    </section>
 </div>
 
 <script language='JavaScript'>

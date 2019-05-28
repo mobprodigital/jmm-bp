@@ -2,6 +2,14 @@
 hr {
     margin-bottom: 9px;
 }
+
+.nowarp {
+    white-space: nowrap;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
 </style>
 <div class="content-wrapper">
 
@@ -20,96 +28,99 @@ hr {
                             <?php if(isset($msg)){?>
                             <p id="msg2" style="color:green"><?php echo $msg;?></p>
                             <?php }?>
-
-                            <div class="col-md-7">
-                                <h2 class="formfieldheading">Chain settings</h2></br>
-                                <img width="100%" style="height:1px;"
+                            <div class="col-md-12">
+                                <h2 class="formfieldheading">Chain settings</h2>
+                                <img width="100%" style="height:1px;margin-bottom:20px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
                             </div>
-                            <div class="col-md-7">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">If no banners from this zone can be delivered,
-                                        try to... </label>
-                                    <input type="radio" value="1" name="delivery" style="margin-left: 38px;"
-                                        id="delivery-i">&nbsp;&nbsp;<label for="delivery-i">&nbsp;Stop delivery and
+                                    <label class="">If no banners from this zone can be delivered, try to... </label>
+                                    <br>
+                                    <label class="cursor-pointer font-weight-500"> <input type="radio" value="1"
+                                            name="delivery" id="">
+                                        &nbsp;Stop
+                                        delivery and
                                         don't show a banner</label><br>
-                                    <input type="radio" value="2" name="delivery" style="margin-left: 196px;"
-                                        id="delivery-t">&nbsp;&nbsp;<label for="delivery-t">&nbsp;Display the selected
+                                    <label class="cursor-pointer font-weight-500"><input type="radio" value="2"
+                                            name="delivery" id="delivery-t">&nbsp;Display
+                                        the selected
                                         zone instead</label><br>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="name" class="">Limit zone views to</label>
+                                    <div class="flex">
+                                        <input type="text" class="form-control" name="target_value" id="target_value"
+                                            placeholder="0" />&nbsp;&nbsp;
+                                        <div class="nowarp">in total</div>
+                                    </div>
 
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label for="name" class="fieldlabel">Limit zone views to</label>
-                                    <input type="text" class="formfield" style="width:8%" name="target_value"
-                                        id="target_value" placeholder="0" />&nbsp;&nbsp;in total
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Limit zone views to</label>
-                                    <input type="text" class="formfield" style="width:8%" name="target_value"
-                                        id="target_value" placeholder="0" />&nbsp;&nbsp;per session
+                                    <label for="name" class="">Limit zone views to</label>
+                                    <div class="flex">
+                                        <input type="text" class="form-control" name="target_value" id="target_value"
+                                            placeholder="0" />&nbsp;&nbsp;
+                                        <div class="nowarp">per session</div>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Reset view counters after: </label>
-                                    <input type="text" class="formfield" style="width:8%" name="target_value"
-                                        id="target_value" placeholder="-" />&nbsp;&nbsp;hours
-                                    &nbsp;&nbsp;-Limit
-                                    <input type="text" class="formfield" style="width:8%" name="target_value"
-                                        id="target_value" placeholder="-" />&nbsp;&nbsp;mintues
-                                    <input type="text" style="width:8%" name="target_value" id="target_value"
-                                        placeholder="-" />&nbsp;&nbsp;seconds
+                                    <label for="name" class="">Reset view counters after: </label>
+                                    <input placeholder="Hours" type="text" class="form-control" name="target_value"
+                                        id="target_value" placeholder="-" />
+                                    <br>
+                                    <input placeholder="mintues" type="text" class="form-control" name="target_value"
+                                        id="target_value" placeholder="-" />
+                                    <br>
+                                    <input placeholder="seconds" type="text" class="form-control" name="target_value"
+                                        id="target_value" placeholder="-" />
                                 </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="fieldlabel">Cookies</label>
-                                    <input type="checkbox" value="1" name="delivery" style="margin-left: 38px;"
-                                        id="delivery-i">&nbsp;&nbsp;<label for="delivery-i">&nbsp;Show capped ads if
+                                    <label for="name" class="display-block">Cookies</label>
+                                    <label class="font-weight-500">
+                                        <input type="checkbox" value="1" name="delivery" class="" id="">&nbsp;Show
+                                        capped ads if
                                         cookies are disabled</label><br>
                                 </div>
                             </div>
-                            <div class="col-md-7">
-                                <h2 class="formfieldheading">Append and prepend settings</h2></br>
-                                <img width="100%" style="height:1px;"
+
+                            <div class="col-md-12">
+                                <h2 class="formfieldheading">Append and prepend settings</h2>
+                                <img width="100%" style="height:1px;margin-bottom:20px;"
                                     src="<?php echo base_url()?>/assets/upimages/break.gif">
-
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="checkbox" value="1" name="delivery" style="margin-left: 38px;"
-                                        id="delivery-i">&nbsp;&nbsp;<label for="delivery-i">&nbsp;Prepend/Append even if
+                                    <label class="font-weight-500"><input type="checkbox" value="1" name="delivery"
+                                            id="">&nbsp;&nbsp;&nbsp;Prepend/Append even if
                                         no banner delivered</label><br>
+                                </div>
 
-                                </div>
-                            </div>
-                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label class="fieldlabel">Always prepend the following HTML code to banners
+                                    <label class="">Always prepend the following HTML code to banners
                                         displayed by this zone </label>
-                                    <textarea name="comment" id="comment" class="formfield"
-                                        style="width: 394px; height: 88px;"></textarea>
+                                    <textarea name="comment" rows="6" id="comment" class="form-control"></textarea>
+                                    <span style="color:red"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="">Always append the following HTML code to banners displayed
+                                        by this zone </label>
+                                    <textarea name="comment" rows="6" id="comment" class="form-control"></textarea>
                                     <span style="color:red"></span>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="fieldlabel">Always append the following HTML code to banners displayed
-                                        by this zone </label>
-                                    <textarea name="comment" id="comment" class="formfield"
-                                        style="width: 394px; height: 88px;"></textarea>
-                                    <span style="color:red"></span>
+                                    <input class="btn btn-success" name="submit" id="submit" type="submit"
+                                        value="Submit">
                                 </div>
                             </div>
                         </div>
                 </div>
-                <div class="box-footer">
-                    <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit">
-                </div>
+
             </div>
             </form>
         </div>
