@@ -74,10 +74,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     .content-header .btn-primary {
         display: none;
     }
-
-    .ad-menu .menu1 li a {
-        background: #093145;
-    }
     </style>
 </head>
 
