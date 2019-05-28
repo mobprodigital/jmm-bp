@@ -20,19 +20,21 @@
             <?php if($this->session->userdata('username')=='admin'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='createuser' || $activeaction == 'viewuser') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-user"></i> <span>Users</span><i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-user"></i><span>Users</span><i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'createuser'){ echo 'active';}}?>>
-                        <?php echo anchor('admin/users/create','Create User');?></li>
+                        <a href="<?php echo base_url();?>admin/users/create"><i class="fa fa-plus"
+                                aria-hidden="true"></i>Create User</a></li>
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'viewuser'){ echo 'active';}}?>>
-                        <?php echo anchor('users/viewuser', 'List Users');?></a></li>
+                        <a href="<?php echo base_url();?>users/viewuser"> <i class="fa fa-eye"
+                                aria-hidden="true"></i>List Users</a> </li>
                 </ul>
             </li>
 
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){  ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='advertisement' || $activeaction == 'viewadvertiser') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-buysellads"></i><span>Advertisers</span><i
+                <a href="#"><i class="fa fa-ad"></i><span>Advertisers</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'advertisement'){ echo 'active';}}?>><a
@@ -63,40 +65,58 @@
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='banner' || $activeaction == 'viewbanner'|| $activeaction == 'banner_acl' || $activeaction == 'invocation' || $activeaction == 'generatevasttags') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-book"></i><span>Banners</span><i
+                <a href="#"><i class="fa fa-desktop"></i><span>Banners</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'banner'){ echo 'active';}}?>>
-                        <?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;$campaignid=1;} if(isset($_GET['campaignid'])){$campaignid=$_GET['campaignid'];}else{$campaignid=1;}echo anchor('users/banner?clientid='.$client."&campaignid=".$campaignid, 'Add banner');?></a>
+                        <?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;$campaignid=1;} if(isset($_GET['campaignid'])){$campaignid=$_GET['campaignid'];}else{$campaignid=1;}
+                        // echo anchor('users/banner?clientid='.$client."&campaignid=".$campaignid, 'Add banner');
+                        ?>
+                        <a
+                            href="<?php echo base_url();?>users/banner?clientid=<?= $client ?>&campaignid=<?= $campaignid ?>"><i
+                                class="fa fa-plus" aria-hidden="true"></i>
+                            Add banner</a>
+
                     </li>
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'viewbanner'){echo 'active';}}?>>
-                        <?php echo anchor('users/viewbanner', 'View banner');?></li>
+                        <a href="<?php echo base_url();?>users/viewbanner"><i class="fa fa-eye" aria-hidden="true"></i>
+                            View banner</a> </li>
                 </ul>
             </li>
 
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='website' || $activeaction == 'viewwebsite') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-home"></i><span>Website</span><i
+                <a href="#"><i class="fa  fa-globe"></i><span>Website</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'website'){ echo 'active';}}?>>
-                        <?php echo anchor('users/website', 'Add Website');?></a></li>
+                        <a href="<?php echo base_url();?>users/website"><i class="fa fa-plus" aria-hidden="true"></i>Add
+                            Website</a>
+                    </li>
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'viewwebsite'){echo 'active';}}?>>
-                        <?php echo anchor('users/viewwebsite', 'View Website');?></li>
+                        <a href="<?php echo base_url();?>users/viewwebsite"><i class="fa fa-eye"
+                                aria-hidden="true"></i>View Website</a>
+                    </li>
                 </ul>
             </li>
 
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='zones' || $activeaction == 'viewzones' || $activeaction == 'zones' || $activeaction == 'zone_advance' || $activeaction == 'zone_include' || $activeaction == 'zone_probability' || $activeaction == 'zone_invocation') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-file-o"></i><span>Zones</span><i
+                <a href="#"><i class="fa fa-window-restore"></i><span>Zones</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'zones'){ echo 'active';}}?>>
-                        <?php echo anchor('users/zone', 'Add zones');?></a></li>
+
+                        <a href="<?php echo base_url();?>users/zone"> <i class="fa fa-plus" aria-hidden="true"></i>Add
+                            zones</a>
+
+                    </li>
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'viewzones' ){echo 'active';}}?>>
-                        <?php echo anchor('users/viewzone', 'View zones');?></li>
+
+                        <a href="<?php echo base_url();?>users/viewzone"><i class="fa fa-eye"
+                                aria-hidden="true"></i>View zones</a></li>
                 </ul>
             </li>
 
@@ -130,7 +150,7 @@
             <?php	if(isset($activeaction)){if($cat=='home'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='advertisement' || $activeaction == 'viewadvertiser') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-buysellads"></i><span>Advertisers</span><i
+                <a href="#"><i class="fa fa-ad"></i><span>Advertisers</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'advertisement'){ echo 'active';}}?>><a
@@ -142,6 +162,7 @@
                 </ul>
             </li>
             <?php } } ?>
+
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='compaign' ||  $activeaction == 'targeting'||$activeaction == 'viewcompaign'|| $activeaction == 'linked_zone'|| $activeaction == 'linked_trackers') {echo 'active';}}?>">
@@ -161,17 +182,27 @@
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction=='banner' || $activeaction == 'viewbanner'|| $activeaction == 'banner_acl' || $activeaction == 'invocation' || $activeaction == 'generatevasttags') {echo 'active';}}?>">
-                <a href="#"><i class="fa fa-book"></i><span>Banners</span><i
+                <a href="#"><i class="fa fa-desktop"></i><span>Banners</span><i
                         class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'banner'){ echo 'active';}}?>>
-                        <?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;$campaignid=1;} if(isset($_GET['campaignid'])){$campaignid=$_GET['campaignid'];}else{$campaignid=1;}echo anchor('users/banner?clientid='.$client."&campaignid=".$campaignid, 'Add banner');?></a>
+                        <?php if(isset($_GET['clientid'])){$client=$_GET['clientid'];}else{$client=2;$campaignid=1;} if(isset($_GET['campaignid'])){$campaignid=$_GET['campaignid'];}else{$campaignid=1;}
+                        // echo anchor('users/banner?clientid='.$client."&campaignid=".$campaignid, 'Add banner');
+                        ?>
+
+                        <a
+                            href="<?php echo base_url();?>users/banner?clientid=<?= $client ?>&campaignid=<?= $campaignid ?>"><i
+                                class="fa fa-plus" aria-hidden="true"></i>
+                            Add banner</a>
+
+
                     </li>
                     <li class=<?php if(isset($activeaction)){if($activeaction == 'viewbanner'){echo 'active';}}?>><a
                             href="<?php echo base_url();?>users/viewbanner"><i class="fa fa-eye" aria-hidden="true"></i>
                             View banner</a></li>
                 </ul>
             </li>
+
             <?php } ?>
         </ul>
         <!-- /.sidebar-menu -->
@@ -185,7 +216,7 @@
                 class="treeview  <?php if(isset($activeaction)){if($activeaction=='adcampstats' || $activeaction =='videoadreport' ) {echo 'active';}}?>">
                 <a class="<?php if(isset($activeaction)){if($activeaction=='adcampstats' || $activeaction =='videoadreport' ) {echo 'active-sidebar';}}?>"
                     href="<?php echo base_url().'users/adcampstats';?>"><i
-                        class="fa fa-buysellads"></i><span>Advertisers & Campaigns</span></a></li>
+                        class="fa fa-ad"></i><span>Advertisers & Campaigns</span></a></li>
 
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
             <!--<li class="treeview <?php if(isset($activeaction)){if($activeaction=='history') {echo 'active';}}?>"><a class="<?php if(isset($activeaction)){if($activeaction=='history' || $activeaction =='history' ) {echo 'active-sidebar';}}?>" href="<?php echo base_url().'users/history';?>"><i class="fa fa-history"></i><span>Global History</span><i class="fa fa-angle-left pull-right"></i></a></li>
@@ -194,7 +225,7 @@
             <li
                 class="treeview <?php if(isset($activeaction)){if($activeaction == 'webzonestats' || $activeaction=='webzonevideostats'){echo 'active';}}?>">
                 <a class="<?php if(isset($activeaction)){if($activeaction=='webzonestats' || $activeaction =='webzonestats' ) {echo 'active-sidebar';}}?>"
-                    href="<?php echo base_url().'users/webzonestats';?>"><i class="fa fa-home"></i><span>Websites &
+                    href="<?php echo base_url().'users/webzonestats';?>"><i class="fa fa-globe"></i><span>Websites &
                         Zones</span></a></li>
 
             <?php }if($this->session->userdata('role')=='admin' || $this->session->userdata('role')=='advertiser'){ ?>
