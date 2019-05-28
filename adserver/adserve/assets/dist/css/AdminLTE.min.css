@@ -5026,7 +5026,9 @@ table.text-center th {
     display: block;
     color: White;
     flex-grow: 1;
+    border-right:solid 1px #fff;
 }
+
 
 .ad-menu .menu1 li.lastItem {
     /*     border-right:1px solid #65A2DC;
